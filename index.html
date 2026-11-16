@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5eee2">
+<title>Issu &amp; Poomol — The Sacred Garden</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#f5eee2;--paper:#fffaf1;--wine:#672b38;--gold:#b18a50;--ink:#302820;--muted:#756b60}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:"DM Sans",sans-serif}button{font:inherit}
+#cover{position:fixed;inset:0;z-index:20;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at center,#fffaf2 0,#e9ddca 100%);padding:20px;transition:opacity 1.2s ease,visibility 1.2s ease}
+#cover.opened{opacity:0;visibility:hidden;pointer-events:none}
+.envelope{position:relative;width:min(88vw,540px);height:min(66vh,390px);min-height:270px;perspective:1200px;filter:drop-shadow(0 25px 30px #4a34251f)}
+.env-back{position:absolute;inset:0;background:linear-gradient(145deg,#fffaf1,#e9d9c3);border:1px solid #c9ad7d;border-radius:4px}
+.env-front{position:absolute;inset:0;background:linear-gradient(135deg,#f9f0e2,#e8d7c0);clip-path:polygon(0 0,50% 58%,100% 0,100% 100%,0 100%);border:1px solid #c7a978}
+.env-flap{position:absolute;inset:0 0 auto;height:58%;transform-origin:top;transform:rotateX(0);transition:transform 2.2s cubic-bezier(.2,.7,.2,1);z-index:3;background:linear-gradient(160deg,#fff9ee,#e6d4bb);clip-path:polygon(0 0,100% 0,50% 100%);backface-visibility:hidden}
+.envelope.open .env-flap{transform:rotateX(180deg)}
+.seal{position:absolute;z-index:5;left:50%;top:53%;transform:translate(-50%,-50%);width:78px;height:78px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#9b5960,#642a37 70%);color:#f5dfb3;border:2px solid #c5a36a;box-shadow:0 5px 14px #3c202c55;font:600 25px "Cormorant Garamond",serif;transition:opacity .7s,transform .7s}
+.envelope.open .seal{opacity:0;transform:translate(-50%,-50%) scale(.5)}
+.cover-copy{position:absolute;z-index:6;bottom:10%;left:0;right:0;text-align:center;color:var(--wine);letter-spacing:.28em;font-size:10px}
+.open-btn{position:absolute;inset:0;z-index:8;border:0;background:transparent;cursor:pointer}
+.open-btn:focus-visible{outline:3px solid var(--gold);outline-offset:5px}
+main{overflow:hidden}.hero{min-height:92svh;display:grid;place-items:center;text-align:center;padding:80px 20px;background:linear-gradient(#f5eee2dd,#f5eee2dd),radial-gradient(ellipse at center,#fffaf1,#d9c8ae)}
+.kicker,.eyebrow{color:var(--gold);letter-spacing:.28em;text-transform:uppercase;font-size:10px}.hero h1{font:500 clamp(58px,12vw,112px)/.9 "Cormorant Garamond",serif;color:var(--wine);margin:28px 0}.amp{font-style:italic;color:var(--gold);font-size:.65em}.hero-date{font:500 16px "Cormorant Garamond",serif;letter-spacing:.2em}.ornament{width:90px;height:1px;background:var(--gold);margin:28px auto}
+section{padding:90px 22px}.inner{max-width:900px;margin:auto;text-align:center}.section-title{font:500 clamp(40px,7vw,66px)/1 "Cormorant Garamond",serif;color:var(--wine);margin:16px 0 24px}.body-copy{max-width:620px;margin:0 auto;color:var(--muted);line-height:1.9;font-size:14px}
+.story{background:var(--paper)}.events{background:#e9dece}.event-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:42px}.event{padding:30px 18px;border:1px solid #c9b58f;background:#f8f1e6}.event h3{font:500 30px "Cormorant Garamond",serif;color:var(--wine);margin:12px 0}.event p{font-size:13px;line-height:1.8;color:var(--muted);margin:5px 0}.dress{background:var(--paper)}.palette{display:flex;justify-content:center;gap:12px;margin:28px 0}.swatch{width:42px;height:42px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #c8b99e}.countdown{display:flex;justify-content:center;gap:clamp(12px,4vw,36px);margin:34px 0}.countdown strong{display:block;font:500 clamp(30px,6vw,48px) "Cormorant Garamond",serif;color:var(--wine)}.countdown span{font-size:9px;letter-spacing:.16em;color:var(--muted);text-transform:uppercase}
+.rsvp{background:var(--wine);color:#f8efe2}.rsvp .section-title{color:#f8efe2}.rsvp .eyebrow{color:#d7b77e}.rsvp .body-copy{color:#ead9ca}.rsvp-form{max-width:440px;margin:30px auto 0;display:grid;gap:12px}.rsvp-form input,.rsvp-form select,.rsvp-form textarea{width:100%;padding:14px 15px;border:1px solid #b18a50;background:#fffaf1;color:#302820;border-radius:0;font:14px "DM Sans",sans-serif}.rsvp-form button{padding:15px;background:#c6a46d;color:#302820;border:0;letter-spacing:.18em;text-transform:uppercase;cursor:pointer}.form-note{font-size:11px;color:#e5d4c4;line-height:1.6}.footer{padding:30px 15px;text-align:center;background:#4e202b;color:#e9d8c3;font:italic 22px "Cormorant Garamond",serif}
+@media(max-width:650px){.event-grid{grid-template-columns:1fr}.event{padding:25px 16px}section{padding:72px 20px}.hero{min-height:88svh}.envelope{width:90vw;height:54svh;min-height:250px}.seal{width:68px;height:68px}.countdown{gap:18px}}
+</style>
+</head>
+<body>
+<div id="cover" aria-label="Wedding invitation envelope">
+ <div class="envelope" id="envelope">
+  <div class="env-back"></div><div class="env-flap"></div><div class="env-front"></div>
+  <div class="seal">I <span style="font-size:15px">&amp;</span> P</div>
+  <div class="cover-copy">YOU ARE CORDIALLY INVITED</div>
+  <button class="open-btn" id="openInvite" aria-label="Open wedding invitation"></button>
+ </div>
+</div>
+<main>
+ <header class="hero">
+  <div><div class="kicker">Together with our families</div><div class="ornament"></div>
+   <p class="eyebrow">Request the pleasure of your company</p>
+   <h1>Issu <span class="amp">&amp;</span><br>Poomol</h1>
+   <div class="hero-date">12 · 12 · 2027</div><div class="ornament"></div>
+   <p class="eyebrow">The Sacred Garden</p>
+   <div class="countdown" id="countdown"><div><strong>--</strong><span>Days</span></div><div><strong>--</strong><span>Hours</span></div><div><strong>--</strong><span>Minutes</span></div><div><strong>--</strong><span>Seconds</span></div></div>
+  </div>
+ </header>
+ <section class="story"><div class="inner"><div class="eyebrow">A little beginning</div><h2 class="section-title">Our Story</h2><div class="ornament"></div><p class="body-copy">With grateful hearts and the blessings of our families, we invite you to share in the joy of our wedding celebration. Your presence will make our special day even more meaningful.</p></div></section>
+ <section class="events"><div class="inner"><div class="eyebrow">Save the moments</div><h2 class="section-title">When &amp; Where</h2><p class="body-copy">Please join us as we celebrate the beginning of our forever.</p>
+  <div class="event-grid">
+   <article class="event"><div class="eyebrow">Celebration</div><h3>Haldi &amp; Mehndi</h3><p>Details to be announced</p></article>
+   <article class="event"><div class="eyebrow">The main day</div><h3>Wedding Ceremony</h3><p>12 December 2027 · 4:00 PM</p><p>Udaipur, Rajasthan</p></article>
+   <article class="event"><div class="eyebrow">After the vows</div><h3>Reception</h3><p>Details to be announced</p></article>
+  </div>
+  <p style="margin-top:30px"><a href="https://www.google.com/maps/search/?api=1&query=Udaipur%2C%20Rajasthan" target="_blank" rel="noopener" style="color:#672b38">View location on Google Maps ↗</a></p>
+ </div></section>
+ <section class="dress"><div class="inner"><div class="eyebrow">A note on attire</div><h2 class="section-title">Dress Code</h2><p class="body-copy">Elegant festive attire. We would love to see you in soft, garden-inspired colours.</p><div class="palette"><i class="swatch" style="background:#d9c6a4"></i><i class="swatch" style="background:#a8aa8b"></i><i class="swatch" style="background:#b77c79"></i><i class="swatch" style="background:#e9dfce"></i><i class="swatch" style="background:#6d7a65"></i></div></div></section>
+ <section class="rsvp"><div class="inner"><div class="eyebrow">We hope you can join us</div><h2 class="section-title">RSVP</h2><p class="body-copy">Kindly let us know if you will be celebrating with us.</p>
+  <form class="rsvp-form" id="rsvpForm"><input name="guest" placeholder="Your name" required><select name="attendance" required><option value="">Will you attend?</option><option>Joyfully accepts</option><option>Regretfully declines</option></select><input name="guests" type="number" min="1" max="10" value="1" aria-label="Number of guests"><textarea name="message" rows="3" placeholder="A note for the couple (optional)"></textarea><button type="submit">Prepare RSVP</button><p class="form-note">This preview does not send or store your RSVP. Connect a form service or database to receive responses.</p></form>
+ </div></section>
+ <footer class="footer">With love, Issu &amp; Poomol</footer>
+</main>
+<script>
+const cover=document.getElementById('cover'),envelope=document.getElementById('envelope');
+function openInvite(){envelope.classList.add('open');setTimeout(()=>cover.classList.add('opened'),1700)}
+document.getElementById('openInvite').addEventListener('click',openInvite);
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&!cover.classList.contains('opened')){e.preventDefault();openInvite()}});
+const target=new Date('2027-12-12T16:00:00+05:30');
+function tick(){let diff=Math.max(0,target-Date.now());let vals=[Math.floor(diff/86400000),Math.floor(diff/3600000)%24,Math.floor(diff/60000)%60,Math.floor(diff/1000)%60];document.querySelectorAll('#countdown strong').forEach((el,i)=>el.textContent=String(vals[i]).padStart(2,'0'))}
+tick();setInterval(tick,1000);
+document.getElementById('rsvpForm').addEventListener('submit',e=>{e.preventDefault();const d=new FormData(e.currentTarget);alert('Thank you, '+d.get('guest')+'! This is a preview only; your RSVP has not been sent.')});
+</script>
+</body>
+</html>
