@@ -45,6 +45,26 @@ section{padding:94px 22px}.inner{max-width:980px;margin:auto;text-align:center}.
 .rsvp{background:var(--wine);color:#f8efe2}.rsvp .section-title{color:#f8efe2}.rsvp .eyebrow{color:#d7b77e}.rsvp .body-copy{color:#ead9ca}.rsvp-form{max-width:440px;margin:30px auto 0;display:grid;gap:12px}.rsvp-form input,.rsvp-form select,.rsvp-form textarea{width:100%;padding:14px 15px;border:1px solid #b18a50;background:#fffaf1;color:#302820;border-radius:0;font:14px "DM Sans",sans-serif}.rsvp-form button{padding:15px;background:#c6a46d;color:#302820;border:0;letter-spacing:.18em;text-transform:uppercase;cursor:pointer}.form-note{font-size:11px;color:#e5d4c4;line-height:1.6}.footer{padding:35px 15px;text-align:center;background:#4e202b;color:#e9d8c3;font:italic 23px "Cormorant Garamond",serif}
 @media(max-width:650px){.event-grid{grid-template-columns:1fr}.event{padding:27px 16px}section{padding:76px 20px}.hero{min-height:92svh}.gallery-grid{grid-template-columns:repeat(2,1fr)}.gallery-tile{min-height:135px}.tap-label{top:70%}}
 @media(min-aspect-ratio:1/1){.envelope-art{background-size:contain;background-color:#f4eee4}.seal-override{top:50%}.tap-label{top:73%}}
+
+/* Sacred Garden inspired full invitation presentation */
+main{opacity:0;transform:translateY(22px);transition:opacity 1.8s ease,transform 2s cubic-bezier(.2,.7,.2,1)}
+#cover.opened+main{opacity:1;transform:translateY(0)}
+.hero{position:relative;min-height:100svh;background:linear-gradient(180deg,rgba(248,242,231,.68),rgba(248,242,231,.94)),url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=85") center/cover}
+.hero:before{content:"";position:absolute;inset:22px;border:1px solid #b7955f88;pointer-events:none}
+.hero>div{position:relative;z-index:1;max-width:760px}
+.hero h1{letter-spacing:-.035em;text-shadow:0 2px 24px #fff9}
+.story{background:linear-gradient(135deg,#fffaf2,#eee3d2)}
+.events{background:linear-gradient(145deg,#e9dece,#f6eee2)}
+.event{position:relative;box-shadow:0 12px 34px #6d4e2b12;border:1px solid #c9b58f}
+.event:before{content:"✧";display:block;color:var(--gold);font-size:22px}
+.gallery{background:#f7f0e5}
+.gallery-tile{position:relative;overflow:hidden;min-height:240px;background:linear-gradient(145deg,#d9c8ae,#f8f0e4);box-shadow:inset 0 0 0 5px #fff8}
+.location{background:linear-gradient(135deg,#e9dfd1,#f8f1e7)}
+.gift{background:#f7f0e5}
+.gift-card{max-width:600px;margin:35px auto 0;padding:36px 24px;border:1px solid #c8ad7d;background:#fffaf2;color:var(--muted);line-height:1.9}
+.rsvp{background:linear-gradient(145deg,#67212d,#401923)}
+.footer{letter-spacing:.06em}
+@media(max-width:650px){.gallery-tile{min-height:175px}}
 </style>
 </head>
 <body>
@@ -65,14 +85,14 @@ section{padding:94px 22px}.inner{max-width:980px;margin:auto;text-align:center}.
  <section class="events"><div class="inner"><div class="eyebrow">Save the moments</div><h2 class="section-title">Schedule of Events</h2><p class="body-copy">Please join us as we celebrate the beginning of our forever.</p><div class="event-grid"><article class="event"><div class="eyebrow">Celebration</div><h3>Haldi &amp; Mehndi</h3><p>Time and venue to be announced</p></article><article class="event"><div class="eyebrow">The main day</div><h3>Wedding Ceremony</h3><p>12 December 2027 · 4:00 PM</p><p>Udaipur, Rajasthan</p></article><article class="event"><div class="eyebrow">After the vows</div><h3>Reception</h3><p>Time and venue to be announced</p></article></div></div></section>
  <section class="gallery"><div class="inner"><div class="eyebrow">Moments to remember</div><h2 class="section-title">Our Gallery</h2><p class="body-copy">A few pages from our story. Photos can be added here when ready.</p><div class="gallery-grid"><div class="gallery-tile">A moment</div><div class="gallery-tile">A memory</div><div class="gallery-tile">Together</div><div class="gallery-tile">Always</div><div class="gallery-tile">Forever</div><div class="gallery-tile">With love</div></div></div></section>
  <section class="location"><div class="inner"><div class="eyebrow">Join our celebration</div><h2 class="section-title">Location</h2><p class="body-copy">Udaipur, Rajasthan</p><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Udaipur%2C%20Rajasthan" target="_blank" rel="noopener">Open Google Maps ↗</a></div></section>
- <section class="dress"><div class="inner"><div class="eyebrow">A note on attire</div><h2 class="section-title">Dress Code</h2><p class="body-copy">Elegant festive attire. We would love to see you in soft, garden-inspired colours.</p><div class="palette"><i class="swatch" style="background:#d9c6a4"></i><i class="swatch" style="background:#a8aa8b"></i><i class="swatch" style="background:#b77c79"></i><i class="swatch" style="background:#e9dfce"></i><i class="swatch" style="background:#6d7a65"></i></div></div></section>
+ <section class="gift"><div class="inner"><div class="eyebrow">A thoughtful note</div><h2 class="section-title">Gift Preference</h2><div class="gift-card">Your presence, prayers and duas are the greatest gifts we could receive. Kindly celebrate this beautiful beginning with us.</div></div></section>\n <section class="dress"><div class="inner"><div class="eyebrow">A note on attire</div><h2 class="section-title">Dress Code</h2><p class="body-copy">Elegant festive attire. We would love to see you in soft, garden-inspired colours.</p><div class="palette"><i class="swatch" style="background:#d9c6a4"></i><i class="swatch" style="background:#a8aa8b"></i><i class="swatch" style="background:#b77c79"></i><i class="swatch" style="background:#e9dfce"></i><i class="swatch" style="background:#6d7a65"></i></div></div></section>
  <section class="rsvp"><div class="inner"><div class="eyebrow">We hope you can join us</div><h2 class="section-title">Confirm Your Attendance</h2><p class="body-copy">To help us prepare for a joyful celebration, kindly confirm your attendance.</p><form class="rsvp-form" id="rsvpForm"><input name="guest" placeholder="Your name" required><select name="attendance" required><option value="">Will you attend?</option><option>Joyfully accepts</option><option>Regretfully declines</option></select><input name="guests" type="number" min="1" max="10" value="1" aria-label="Number of guests"><textarea name="message" rows="3" placeholder="A note for the couple (optional)"></textarea><button type="submit">Prepare RSVP</button><p class="form-note">This is a visual preview only. Your RSVP is not sent or stored yet.</p></form></div></section>
  <footer class="footer">Hope to see you there · Issu &amp; Poomol</footer>
 </main>
 <script>
 const cover=document.getElementById('cover');
 let isOpening=false;
-function openInvite(){if(isOpening)return;isOpening=true;cover.classList.add('opening');setTimeout(()=>cover.classList.add('opened'),6500)}
+function openInvite(){if(isOpening)return;isOpening=true;cover.classList.add('opening');setTimeout(()=>cover.classList.add('opened'),7200)}
 document.getElementById('openInvite').addEventListener('click',openInvite);
 document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&!cover.classList.contains('opened')){e.preventDefault();openInvite()}});
 const target=new Date('2027-12-12T16:00:00+05:30');
