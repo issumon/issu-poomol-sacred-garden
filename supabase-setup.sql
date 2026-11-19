@@ -14,6 +14,7 @@ create table if not exists public.sacred_garden_settings (
   wedding_time text not null default '4:00 PM',
   venue text not null default 'Udaipur, Rajasthan',
   whatsapp_number text not null default '',
+  music_url text not null default '',
   welcome_message text not null default 'Your presence and duas will make our day special.',
   updated_at timestamptz not null default now()
 );
@@ -26,7 +27,7 @@ create table if not exists public.sacred_garden_media (
   created_at timestamptz not null default now()
 );
 
-alter table public.sacred_garden_admins enable row level security;
+alter table public.sacred_garden_settings add column if not exists music_url text not null default '';\n\nalter table public.sacred_garden_admins enable row level security;
 alter table public.sacred_garden_settings enable row level security;
 alter table public.sacred_garden_media enable row level security;
 
@@ -53,7 +54,7 @@ on conflict (id) do nothing;
 
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values ('sacred-garden-media', 'sacred-garden-media', true, 104857600,
-  array['image/jpeg','image/png','image/webp','image/avif','video/mp4','video/webm','video/quicktime'])
+  array['image/jpeg','image/png','image/webp','image/avif','video/mp4','video/webm','video/quicktime','audio/mpeg','audio/mp3','audio/wav','audio/aac','audio/ogg','audio/mp4'])
 on conflict (id) do nothing;
 
 drop policy if exists "Sacred Garden admins upload media" on storage.objects;
