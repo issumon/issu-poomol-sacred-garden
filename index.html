@@ -109,7 +109,7 @@ const musicToggle=document.getElementById('musicToggle');
 const SUPABASE_URL='https://fuwhzkktivbzggiywgnr.supabase.co';
 const SUPABASE_ANON_KEY='sb_publishable_iHaj7KFDgVaHq8BtTY2qUA_3-FFwH6P';
 const sacredDb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-let musicReady=false,musicStarted=false,isOpening=false;
+let musicReady=false,musicStarted=false;
 async function loadGuestMusic(){
  try{
   const {data,error}=await sacredDb.from('sacred_garden_settings').select('music_url').eq('id',true).single();
