@@ -77,6 +77,7 @@ main{opacity:0;transform:translateY(22px);transition:opacity 1.8s ease,transform
 @media(max-width:650px){.env-flap{height:50%;background-size:100% 200%}.invite-card{width:76vw;min-height:42%;gap:12px}.invite-card strong{font-size:clamp(34px,9vw,56px)}}
 
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 <div id="cover" aria-label="A luxury floral wedding invitation envelope">
@@ -90,6 +91,7 @@ main{opacity:0;transform:translateY(22px);transition:opacity 1.8s ease,transform
  </div>
  <button id="openInvite" aria-label="Tap to open the wedding invitation"></button>
 </div>
+<audio id="guestMusic" loop preload="auto"></audio><button id="musicToggle" type="button" aria-label="Toggle background music" style="position:fixed;z-index:30;right:18px;bottom:18px;padding:11px 15px;border:1px solid #b7955f;background:#fffaf0eF;color:#67212d;letter-spacing:.12em;font-size:10px;display:none">♫ MUSIC OFF</button>
 <main>
  <header class="hero"><div><div class="kicker">Together with our families</div><div class="ornament"></div><p class="eyebrow">Request the pleasure of your company</p><h1>Issu <span class="amp">&amp;</span><br>Poomol</h1><div class="hero-date">12 · 12 · 2027</div><div class="ornament"></div><p class="eyebrow">The Sacred Garden</p><div class="countdown" id="countdown"><div><strong>--</strong><span>Days</span></div><div><strong>--</strong><span>Hours</span></div><div><strong>--</strong><span>Minutes</span></div><div><strong>--</strong><span>Seconds</span></div></div></div></header>
  <section class="story"><div class="inner"><div class="eyebrow">A little beginning</div><h2 class="section-title">Two Souls, One Destiny</h2><div class="ornament"></div><p class="body-copy">A lifetime written by Allah. With grateful hearts and the blessings of our families, we invite you to share in the joy of our wedding celebration. Your presence and duas will make our special day even more meaningful.</p></div></section>
@@ -102,8 +104,30 @@ main{opacity:0;transform:translateY(22px);transition:opacity 1.8s ease,transform
 </main>
 <script>
 const cover=document.getElementById('cover');
+const guestMusic=document.getElementById('guestMusic');
+const musicToggle=document.getElementById('musicToggle');
+const SUPABASE_URL='https://fuwhzkktivbzggiywgnr.supabase.co';
+const SUPABASE_ANON_KEY='sb_publishable_iHaj7KFDgVaHq8BtTY2qUA_3-FFwH6P';
+const sacredDb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+let musicReady=false,musicStarted=false,isOpening=false;
+async function loadGuestMusic(){
+ try{
+  const {data,error}=await sacredDb.from('sacred_garden_settings').select('music_url').eq('id',true).single();
+  if(error)throw error;
+  if(data&&data.music_url){guestMusic.src=data.music_url;guestMusic.load();musicReady=true;musicToggle.style.display='block';musicToggle.textContent='♫ MUSIC OFF';}
+ }catch(e){console.warn('Guest music is not configured yet.',e);}
+}
+function startGuestMusic(){
+ if(!musicReady||musicStarted)return;
+ guestMusic.play().then(()=>{musicStarted=true;musicToggle.textContent='♫ MUSIC ON';}).catch(()=>{musicToggle.textContent='♫ TAP FOR MUSIC';});
+}
+musicToggle.addEventListener('click',()=>{
+ if(guestMusic.paused){guestMusic.play().then(()=>{musicStarted=true;musicToggle.textContent='♫ MUSIC ON';}).catch(()=>{});}
+ else{guestMusic.pause();musicToggle.textContent='♫ MUSIC OFF';}
+});
+loadGuestMusic();
 let isOpening=false;
-function openInvite(){if(isOpening)return;isOpening=true;cover.classList.add('opening');setTimeout(()=>cover.classList.add('opened'),6900)}
+function openInvite(){if(isOpening)return;isOpening=true;startGuestMusic();cover.classList.add('opening');setTimeout(()=>cover.classList.add('opened'),6900)}
 document.getElementById('openInvite').addEventListener('click',openInvite);
 document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&!cover.classList.contains('opened')){e.preventDefault();openInvite()}});
 const target=new Date('2027-12-12T16:00:00+05:30');
