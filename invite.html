@@ -93,6 +93,64 @@ h2{font:500 clamp(39px,7vw,66px)/1 "Cormorant Garamond",serif;color:var(--green)
 .layout-page-02 .intro,.layout-page-10 .intro{background:var(--green);color:#f5ead2}.layout-page-02 .intro h2,.layout-page-10 .intro h2{color:#f5ead2}
 .layout-page-03 .event{border-radius:45% 45% 8px 8px;padding-top:40px}.layout-page-04 .section{background:#fff}.layout-page-05 .event{background:var(--green);color:#fff}.layout-page-05 .event h3,.layout-page-05 .event p{color:#f4e9d3}
 .layout-page-06 .event{border:0;border-top:2px solid var(--gold);background:transparent;box-shadow:none}.layout-page-07 .gallery-grid figure{border-radius:100px 100px 4px 4px;overflow:hidden}.layout-page-08 .section-inner{direction:rtl}.layout-page-09 .event-grid{grid-template-columns:1fr;max-width:620px;margin-left:auto;margin-right:auto}
+
+/* DISTINCT GUEST-PAGE ART DIRECTIONS */
+.layout-page-01 .intro{background:linear-gradient(160deg,#fdf8ed,#e8dcc5);border-bottom:8px double #c8a66a}
+.layout-page-01 .section{background:#fbf7ef}
+.layout-page-02 .intro{background:linear-gradient(135deg,#fffdf6,#eadfc9);border-bottom:1px solid #b99a69}
+.layout-page-02 .section:nth-of-type(even){background:#fffdf8}
+.layout-page-03 .intro{background:radial-gradient(ellipse at 50% 0%,#fff8f2,#f1d9d4 72%);border-bottom:1px solid #d9a5a0}
+.layout-page-03 .intro:after{content:'❀  ❧  ❀';display:block;color:#bd7d83;font-size:30px;letter-spacing:18px;margin-top:20px}
+.layout-page-03 .section{background:linear-gradient(180deg,#fffaf7,#f7e8e4)}
+.layout-page-04 .intro{background:radial-gradient(ellipse at 50% 40%,#263c68,#10182f);color:#f8e8c4}
+.layout-page-04 .intro h2,.layout-page-04 .intro .copy{color:#f8e8c4}
+.layout-page-04 .section{background:linear-gradient(145deg,#10182f,#263653);color:#f8e8c4}
+.layout-page-04 .section h2,.layout-page-04 .section .copy{color:#f8e8c4}
+.layout-page-04 .event{background:#ffffff0b;border:1px solid #c8a66a;color:#f8e8c4}
+.layout-page-04 .event h3,.layout-page-04 .event p{color:#f8e8c4}
+.layout-page-05 .intro{background:linear-gradient(135deg,#1c352b,#50664c);color:#f5ead2}
+.layout-page-05 .intro h2,.layout-page-05 .intro .copy{color:#f5ead2}
+.layout-page-05 .section{background:#e8e0d0}
+.layout-page-06 .intro{background:repeating-linear-gradient(45deg,#f5eddd 0 14px,#f0e4ce 14px 28px)}
+.layout-page-06 .intro h2{font-family:Amiri,serif}
+.layout-page-06 .section-inner{max-width:820px}
+.layout-page-06 .event{border:3px double #b89557;background:#faf4e7;box-shadow:none}
+.layout-page-07 .intro{background:linear-gradient(150deg,#e6eddf,#b8c8ad);border-radius:0 0 48% 48% / 0 0 7% 7%}
+.layout-page-07 .section{background:#edf0e7}
+.layout-page-07 .event{border-radius:48% 48% 8px 8px;background:#f8fbf3}
+.layout-page-08 .intro{background:#fdfbf5;border-top:10px solid #29251f;border-bottom:1px solid #29251f;text-align:left;padding-left:max(7vw,24px)}
+.layout-page-08 .intro .countdown{justify-content:flex-start;margin-left:0}
+.layout-page-08 .section{text-align:left}
+.layout-page-08 .section-inner{margin-left:max(7vw,24px);margin-right:max(7vw,24px)}
+.layout-page-09 .intro{background:linear-gradient(180deg,#342b28,#765947);color:#f7e8cb}
+.layout-page-09 .intro h2,.layout-page-09 .intro .copy{color:#f7e8cb}
+.layout-page-09 .section{background:#f2e7d7}
+.layout-page-09 .event{border-radius:2px 28px 2px 28px;border-left:4px solid #c8a66a}
+.layout-page-10 .intro{background:radial-gradient(ellipse at 50% 35%,#303b67,#10182c 72%);color:#f3e7c8}
+.layout-page-10 .intro h2,.layout-page-10 .intro .copy{color:#f3e7c8}
+.layout-page-10 .section{background:#121b32;color:#f3e7c8}
+.layout-page-10 .section h2,.layout-page-10 .section .copy{color:#f3e7c8}
+.layout-page-10 .event{background:#ffffff08;border:1px solid #c8a66a}
+.layout-page-10 .event h3,.layout-page-10 .event p{color:#f3e7c8}
+
+/* LIVING GARDEN: softly swaying botanical branches and a pair of flying birds */
+.garden-life{position:fixed;inset:0;z-index:4;pointer-events:none;overflow:hidden}
+.garden-branch{position:absolute;width:min(31vw,210px);height:auto;opacity:.82;filter:drop-shadow(0 4px 8px #344a2522);transform-origin:bottom center;animation:branchSway 6s ease-in-out infinite}
+.garden-branch.left{left:-22px;top:9vh}
+.garden-branch.right{right:-22px;bottom:5vh;transform:scaleX(-1);animation-delay:-2.4s}
+.garden-branch path.stem{fill:none;stroke:#66865b;stroke-width:4;stroke-linecap:round}
+.garden-branch path.leaf{fill:#8da879;stroke:#5f8057;stroke-width:1}
+.garden-branch .petal{fill:#f3d8d2;stroke:#c88f86;stroke-width:1.2}
+.garden-branch .center{fill:#d5ae62}
+.flying-duo{position:absolute;top:18vh;left:-150px;width:120px;height:70px;animation:birdsAcross 19s linear infinite}
+.flying-duo.second{top:29vh;animation-duration:24s;animation-delay:-9s;transform:scale(.72)}
+.flying-duo .bird{fill:#4a5947;transform-box:fill-box;transform-origin:50% 60%;animation:wingBeat .7s ease-in-out infinite alternate}
+.flying-duo .bird.b{animation-delay:-.35s}
+@keyframes branchSway{0%,100%{rotate:-2deg}50%{rotate:3deg}}
+@keyframes birdsAcross{0%{translate:0 0}25%{translate:28vw -13px}50%{translate:56vw 7px}75%{translate:84vw -12px}100%{translate:calc(100vw + 170px) 0}}
+@keyframes wingBeat{from{scale:1 .65}to{scale:1 1.12}}
+@media(prefers-reduced-motion:reduce){.garden-branch,.flying-duo,.flying-duo .bird{animation:none!important}}
+
 @media(max-width:650px){.event-grid{grid-template-columns:1fr}.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gallery-grid img,.gallery-grid video{height:160px}.countdown{gap:12px}.countdown strong{font-size:31px}.cover:before{inset:12px}.cover:after{inset:20px}}
 </style>
 </head>
@@ -101,6 +159,11 @@ h2{font:500 clamp(39px,7vw,66px)/1 "Cormorant Garamond",serif;color:var(--green)
 <div id="invitation" hidden><audio id="backgroundMusic" loop preload="none"></audio>
 <section id="cover" class="cover"><div class="cover-art"></div><div class="cover-content"><p id="bismillah" class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p><div class="eyebrow" id="coverEyebrow">A sacred beginning</div><h1 id="coverNames">Bride <i class="amp">&amp;</i> Groom</h1><div class="rule"></div><p id="coverWelcome" class="welcome"></p><button id="openInvitation" class="open-btn">Open invitation ✧</button></div></section>
 <main id="mainInvitation">
+<div class="garden-life" aria-hidden="true">
+<svg class="garden-branch left" viewBox="0 0 180 310"><path class="stem" d="M12 300 Q55 230 72 170 T150 20"/><path class="leaf" d="M48 238 Q5 210 8 174 Q50 182 48 238Z"/><path class="leaf" d="M69 190 Q112 190 125 154 Q83 151 69 190Z"/><path class="leaf" d="M94 127 Q48 118 44 82 Q88 88 94 127Z"/><path class="leaf" d="M119 78 Q155 91 169 60 Q133 48 119 78Z"/><g transform="translate(78 167)"><ellipse class="petal" cy="-12" rx="8" ry="13"/><ellipse class="petal" cy="-12" rx="8" ry="13" transform="rotate(72)"/><ellipse class="petal" cy="-12" rx="8" ry="13" transform="rotate(144)"/><ellipse class="petal" cy="-12" rx="8" ry="13" transform="rotate(216)"/><ellipse class="petal" cy="-12" rx="8" ry="13" transform="rotate(288)"/><circle class="center" r="5"/></g><g transform="translate(142 75) scale(.72)"><ellipse class="petal" cy="-12" rx="8" ry="13"/><ellipse class="petal" cy="-12" rx="8" ry="13" transform="rotate(72)"/><ellipse class="petal" cy="-12" rx="8" ry="13" transform="rotate(144)"/><ellipse class="petal" cy="-12" rx="8" ry="13" transform="rotate(216)"/><ellipse class="petal" cy="-12" rx="8" ry="13" transform="rotate(288)"/><circle class="center" r="5"/></g></svg>
+<svg class="garden-branch right" viewBox="0 0 180 310"><path class="stem" d="M12 300 Q55 230 72 170 T150 20"/><path class="leaf" d="M48 238 Q5 210 8 174 Q50 182 48 238Z"/><path class="leaf" d="M69 190 Q112 190 125 154 Q83 151 69 190Z"/><path class="leaf" d="M94 127 Q48 118 44 82 Q88 88 94 127Z"/><path class="leaf" d="M119 78 Q155 91 169 60 Q133 48 119 78Z"/><g transform="translate(78 167)"><ellipse class="petal" cy="-12" rx="8" ry="13"/><ellipse class="petal" cy="-12" rx="8" ry="13" transform="rotate(72)"/><ellipse class="petal" cy="-12" rx="8" ry="13" transform="rotate(144)"/><ellipse class="petal" cy="-12" rx="8" ry="13" transform="rotate(216)"/><ellipse class="petal" cy="-12" rx="8" ry="13" transform="rotate(288)"/><circle class="center" r="5"/></g><g transform="translate(142 75) scale(.72)"><ellipse class="petal" cy="-12" rx="8" ry="13"/><ellipse class="petal" cy="-12" rx="8" ry="13" transform="rotate(72)"/><ellipse class="petal" cy="-12" rx="8" ry="13" transform="rotate(144)"/><ellipse class="petal" cy="-12" rx="8" ry="13" transform="rotate(216)"/><ellipse class="petal" cy="-12" rx="8" ry="13" transform="rotate(288)"/><circle class="center" r="5"/></g></svg>
+<svg class="flying-duo" viewBox="0 0 140 75"><path class="bird" d="M8 36 Q27 7 48 34 Q62 11 81 28 Q61 24 49 45 Q30 24 8 36Z"/><path class="bird b" d="M59 49 Q78 22 98 45 Q113 23 132 39 Q111 35 99 58 Q80 37 59 49Z"/></svg>
+</div>
 <section class="intro"><div class="kicker" id="introKicker">With the blessings of Allah</div><h2 id="introNames">Bride & Groom</h2><p class="copy" id="introWelcome"></p><div id="countdown" class="countdown"><div><strong>--</strong><span>Days</span></div><div><strong>--</strong><span>Hours</span></div><div><strong>--</strong><span>Minutes</span></div><div><strong>--</strong><span>Seconds</span></div></div></section>
 <section class="scratch-wrap" id="scratchSection">
 <div class="kicker">A little surprise</div><h3 id="scratchSectionHeading">Scratch the golden heart</h3><p class="hint">Gently rub the heart to reveal the wedding details</p>
