@@ -151,6 +151,79 @@ main{opacity:0;transform:translateY(22px);transition:opacity 1.8s ease,transform
 @media(max-width:650px){.garden-kicker{font-size:8px;letter-spacing:.24em}.garden-vines{width:12%;opacity:.52}.garden-names{font-size:clamp(51px,13vw,78px)}.arch-outer{width:94vw;height:82vh}.arch-inner{width:84vw;height:75vh}}
 @media(prefers-reduced-motion:reduce){.garden-backdrop,.garden-glow,.garden-vines,.garden-content>*{animation:none!important}}
 
+
+/* Enchanted Garden mobile-first opening — photographic moonlit garden */
+#cover{background:#071d1a;overflow:hidden}
+.garden-backdrop{
+ inset:-2%;
+ background:
+  linear-gradient(180deg,rgba(5,23,25,.16) 0%,rgba(5,28,25,.24) 42%,rgba(4,22,20,.82) 100%),
+  linear-gradient(90deg,rgba(4,24,21,.45),transparent 28%,transparent 72%,rgba(4,24,21,.45)),
+  url("https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1600&q=90") center 43%/cover no-repeat,
+  url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=85") center/cover no-repeat;
+ transform:scale(1.015);
+ animation:moonGardenDrift 24s ease-in-out infinite alternate;
+}
+.garden-backdrop:before{
+ background:
+  linear-gradient(180deg,#071d1a22,#071d1a55),
+  radial-gradient(ellipse at 50% 24%,#d9e6e733,transparent 48%),
+  radial-gradient(ellipse at 50% 100%,#061b17aa,transparent 65%);
+}
+.garden-vignette{
+ background:linear-gradient(90deg,#061b17a0,transparent 18%,transparent 82%,#061b17a0),
+ linear-gradient(0deg,#061b17d9 0%,transparent 30%,#071d1a44 100%);
+}
+.garden-arch{border-color:#d9d7c477;box-shadow:0 0 24px #d7e6e522,inset 0 0 30px #d7e6e510}
+.arch-outer{width:min(94vw,570px);height:min(91svh,900px);border-width:2px}
+.arch-inner{width:min(84vw,500px);height:min(82svh,810px);border-color:#f0e8d888}
+.garden-vines{
+ color:#f0dce0;font-size:clamp(28px,6vw,54px);opacity:.88;
+ text-shadow:0 2px 18px #071d1a,0 0 22px #f6d9e455;
+}
+.vine-left{left:1%;top:9%}.vine-right{right:1%;top:9%}
+.garden-glow{
+ background:radial-gradient(circle,#d8e8ee24 0%,#c7dce311 38%,transparent 70%);
+ filter:blur(34px);animation:moonMist 8s ease-in-out infinite alternate;
+}
+.garden-content{padding:24px 20px 32px;justify-content:center}
+.garden-kicker{color:#e4e9e4;letter-spacing:.27em;font-size:9px;text-shadow:0 2px 10px #061b17}
+.garden-flourish{color:#f0d8dd;font-size:clamp(27px,6vw,40px);margin:clamp(14px,3vh,26px) 0 10px}
+.garden-title{color:#fff9f3;font-size:clamp(19px,4.7vw,27px);text-shadow:0 2px 12px #061b17}
+.garden-names{
+ color:#fff7ef;font-size:clamp(58px,13.4vw,92px);
+ text-shadow:0 4px 24px #041b17,0 1px 2px #041b17;
+ margin:16px 0 10px;
+}
+.garden-names i{color:#e7cbd1}
+.garden-rule{background:linear-gradient(90deg,transparent,#d9c8bd,transparent);width:94px}
+.garden-rule span{background:#173b32;color:#f0d5da}
+.garden-subtitle{color:#e6d9d5;letter-spacing:.29em;font-size:9px}
+.garden-date{color:#fff4ec;font-size:18px;text-shadow:0 2px 12px #061b17}
+.garden-cta{
+ margin-top:clamp(28px,6vh,48px);padding:13px 24px;
+ border:1px solid #e8d9d0a8;border-radius:2px;
+ background:#092a2488;color:#fff7ef;backdrop-filter:blur(8px);
+ box-shadow:0 8px 30px #061b1744;letter-spacing:.2em;
+}
+.garden-cta span{color:#e8cbd2}
+.garden-bottom-flora{color:#f0d7dc;text-shadow:0 2px 14px #061b17;bottom:2.5%;letter-spacing:.2em}
+#openInvite{z-index:11}
+@keyframes moonGardenDrift{from{transform:scale(1.015) translateY(0)}to{transform:scale(1.08) translateY(-1.2%)}}
+@keyframes moonMist{from{opacity:.45;transform:translate(-50%,-50%) scale(.9)}to{opacity:.9;transform:translate(-50%,-50%) scale(1.18)}}
+@media(max-width:650px){
+ #cover{min-height:100svh}
+ .garden-backdrop{background-position:center 45%,center,center}
+ .garden-content{padding:22px 18px 30px}
+ .garden-kicker{font-size:8px;letter-spacing:.22em}
+ .garden-names{font-size:clamp(53px,13.5vw,76px)}
+ .garden-cta{margin-top:32px}
+ .garden-vines{font-size:29px;opacity:.7}
+ .arch-outer{width:96vw;height:90svh}
+ .arch-inner{width:86vw;height:81svh}
+}
+@media(prefers-reduced-motion:reduce){.garden-backdrop,.garden-glow{animation:none!important}}
+
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
