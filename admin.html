@@ -214,6 +214,7 @@ document.addEventListener('click',e=>{
  const type=b.dataset.templateType,host=$(type==='cover'?'coverChoices':'pageChoices');
  host.querySelectorAll('.template-card').forEach(x=>x.classList.toggle('selected',x===b));
  editorConfig[type==='cover'?'cover_template':'page_template']=b.dataset.templateId;
+ if(type==='cover')refreshEditorPreview();
 });
 ['edCouple','edVenue','edDate','edPrimary','edAccent'].forEach(id=>$(id).addEventListener('input',refreshEditorPreview));
 $('edMusicUrl').addEventListener('input',()=>{$('edMusicPreview').src=$('edMusicUrl').value.trim();});
