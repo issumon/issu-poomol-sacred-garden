@@ -164,7 +164,7 @@ async function loadInvitation(){
  if(!grid.children.length){const p=document.createElement('p');p.className='copy';p.textContent='Beautiful moments will appear here.';grid.appendChild(p)}
  $('state').hidden=true;$('invitation').hidden=false;
  $('openInvitation').addEventListener('click',()=>{$('cover').style.transition='opacity 1s ease';$('cover').style.opacity='0';setTimeout(()=>{$('cover').style.display='none';$('mainInvitation').style.display='block';$('mainInvitation').style.animation='fadein 1s ease'},850)});
- startCountdown(config); setupScratchReveal(config,lang);
+ setupScratchReveal(config,lang);
  const labels=[t.days,t.hours,t.minutes,t.seconds];$('countdown').querySelectorAll('span').forEach((el,i)=>el.textContent=labels[i]);
  if(lang==='ar')$('bismillah').textContent='بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ';
 }
@@ -188,7 +188,7 @@ function setupScratchReveal(config,lang){
  ctx.fillStyle='#65491d';ctx.textAlign='center';ctx.font='bold 27px Georgia';ctx.fillText('SCRATCH HERE',270,220);ctx.font='22px Georgia';ctx.fillText('✧  ❦  ✧',270,260);ctx.restore();
  ctx.globalCompositeOperation='destination-out';
  let drawing=false,travel=0,revealed=false,last=null;
- const reveal=()=>{if(revealed)return;revealed=true;canvas.style.transition='opacity .75s';canvas.style.opacity='0';setTimeout(()=>canvas.style.display='none',800);$('scratchReveal').classList.add('show');setText('scratchDate',config.wedding_date?formatDate(config.wedding_date,lang):'Wedding date will be announced');setText('scratchVenue',[config.wedding_time,config.venue,config.location].filter(Boolean).join(' · ')||'Details will be shared soon');startPetals();};
+ const reveal=()=>{if(revealed)return;revealed=true;canvas.style.transition='opacity .75s';canvas.style.opacity='0';setTimeout(()=>canvas.style.display='none',800);$('scratchReveal').classList.add('show');startCountdown(config);setText('scratchDate',config.wedding_date?formatDate(config.wedding_date,lang):'Wedding date will be announced');setText('scratchVenue',[config.wedding_time,config.venue,config.location].filter(Boolean).join(' · ')||'Details will be shared soon');startPetals();};
  const point=e=>{const r=canvas.getBoundingClientRect();return{x:(e.clientX-r.left)/r.width*540,y:(e.clientY-r.top)/r.height*440}};
  canvas.addEventListener('pointerdown',e=>{drawing=true;last=point(e);canvas.setPointerCapture(e.pointerId);e.preventDefault()});
  canvas.addEventListener('pointermove',e=>{if(!drawing||revealed)return;const p=point(e);ctx.save();ctx.clip(heart);ctx.beginPath();ctx.arc(p.x,p.y,34,0,Math.PI*2);ctx.fill();ctx.restore();if(last)travel+=Math.hypot(p.x-last.x,p.y-last.y);last=p;if(travel>520)reveal();e.preventDefault()});
