@@ -84,6 +84,29 @@ main{opacity:0;transform:translateY(22px);transition:opacity 1.8s ease,transform
 .gallery-status{grid-column:1/-1;padding:22px 12px;color:#756b60;font-size:13px;line-height:1.7}
 @media(max-width:650px){.gallery-grid .gallery-media{min-height:145px}.gallery-media img,.gallery-media video{min-height:145px}}
 
+
+/* Original Sacred Garden envelope and scratch-to-reveal experience */
+.env-scene{background:radial-gradient(ellipse at 50% 34%,#fffdf8 0%,#f3e8d7 58%,#e5d3bb 100%)}
+.env-scene:before{background:radial-gradient(ellipse at 50% 28%,#fffdf8 0%,#f7eddf 68%,#e7d6c0 100%);clip-path:none}
+.env-flap{background:linear-gradient(145deg,#fffaf1 0%,#e8d7bf 48%,#fff8ed 100%);border-bottom:1px solid #c7a56f}
+.env-flap:before{content:"✿  ✧  ❀  ✧  ✿";position:absolute;inset:18% 0 auto;text-align:center;color:#b7955f;font:22px Georgia,serif;letter-spacing:.3em;opacity:.72}
+.env-flap{background-image:radial-gradient(circle at 50% 75%,#fff8 0 2px,transparent 3px),linear-gradient(145deg,#fffaf1 0%,#e8d7bf 48%,#fff8ed 100%)}
+.hero{background:radial-gradient(ellipse at 50% 25%,#fffaf2 0%,#f0e5d4 62%,#e4d5c1 100%)}
+.scratch-reveal{margin:20px auto 0;max-width:340px}
+.scratch-hint{font:italic 20px "Cormorant Garamond",serif;color:var(--wine);margin:0 0 9px}
+.scratch-heart-wrap{position:relative;width:min(280px,82vw);height:160px;margin:auto;display:grid;place-items:center;overflow:hidden;border:1px solid #c7a56f;background:linear-gradient(145deg,#fffaf2,#f1e4d0);box-shadow:0 12px 30px #6c4b2818}
+.scratch-heart{font:112px/1 Georgia,serif;color:#b88d50;text-shadow:0 4px 12px #9c703b44;user-select:none}
+#scratchCanvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.scratch-instruction{font-size:10px;letter-spacing:.12em;color:var(--muted);margin:10px 0 0}
+.revealed-note{margin:20px auto 0;padding:18px 16px;max-width:360px;border-top:1px solid var(--gold);border-bottom:1px solid var(--gold);font:italic 21px "Cormorant Garamond",serif;color:var(--wine);line-height:1.5}
+.revealed-note strong{font-weight:600}
+.revealed-note span{font:11px "DM Sans",sans-serif;letter-spacing:.1em;color:var(--muted)}
+.petal-layer{position:fixed;inset:0;z-index:40;overflow:hidden;pointer-events:none}
+.falling-petal{position:absolute;top:-35px;color:#b77c79;text-shadow:0 2px 5px #fff8;animation:petalFall linear forwards;will-change:transform,opacity}
+@keyframes petalFall{0%{transform:translate3d(0,-5vh,0) rotate(0deg);opacity:0}10%{opacity:.9}50%{transform:translate3d(var(--drift),55vh,0) rotate(260deg)}100%{transform:translate3d(calc(var(--drift)*-1),110vh,0) rotate(620deg);opacity:0}}
+[hidden]{display:none!important}
+@media(max-width:650px){.scratch-heart-wrap{height:145px}.scratch-heart{font-size:100px}.scratch-reveal{margin-top:12px}}
+
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -101,12 +124,13 @@ main{opacity:0;transform:translateY(22px);transition:opacity 1.8s ease,transform
 </div>
 <audio id="guestMusic" loop preload="auto"></audio><button id="musicToggle" type="button" aria-label="Toggle background music" style="position:fixed;z-index:30;right:18px;bottom:18px;padding:11px 15px;border:1px solid #b7955f;background:#fffaf0eF;color:#67212d;letter-spacing:.12em;font-size:10px;display:none">♫ MUSIC OFF</button>
 <main>
- <header class="hero"><div><div class="kicker">Together with our families</div><div class="ornament"></div><p class="eyebrow">Request the pleasure of your company</p><h1>Issu <span class="amp">&amp;</span><br>Poomol</h1><div class="hero-date">12 · 12 · 2027</div><div class="ornament"></div><p class="eyebrow">The Sacred Garden</p><div class="countdown" id="countdown"><div><strong>--</strong><span>Days</span></div><div><strong>--</strong><span>Hours</span></div><div><strong>--</strong><span>Minutes</span></div><div><strong>--</strong><span>Seconds</span></div></div></div></header>
+ <header class="hero"><div><div class="kicker">Together with our families</div><div class="ornament"></div><p class="eyebrow">Request the pleasure of your company</p><h1>Issu <span class="amp">&amp;</span><br>Poomol</h1><div class="hero-date" id="revealedDate" hidden>12 · 12 · 2027</div><div class="ornament"></div><p class="eyebrow">The Sacred Garden</p><div class="countdown" id="countdown" style="display:none"><div><strong>--</strong><span>Days</span></div><div><strong>--</strong><span>Hours</span></div><div><strong>--</strong><span>Minutes</span></div><div><strong>--</strong><span>Seconds</span></div></div><div class="scratch-reveal" id="scratchReveal"><p class="scratch-hint">A little surprise awaits</p><div class="scratch-heart-wrap"><span class="scratch-heart" aria-hidden="true">♥</span><canvas id="scratchCanvas" width="280" height="160" aria-label="Scratch the golden heart to reveal the wedding date"></canvas></div><p class="scratch-instruction">Scratch the golden heart to reveal our special day</p></div><div class="revealed-note" id="revealedNote" hidden>Our forever begins on <strong>12 December 2027</strong><br><span>We cannot wait to celebrate with you</span></div></div></header>
  <section class="story"><div class="inner"><div class="eyebrow">A little beginning</div><h2 class="section-title">Two Souls, One Destiny</h2><div class="ornament"></div><p class="body-copy">A lifetime written by Allah. With grateful hearts and the blessings of our families, we invite you to share in the joy of our wedding celebration. Your presence and duas will make our special day even more meaningful.</p></div></section>
  <section class="events"><div class="inner"><div class="eyebrow">Save the moments</div><h2 class="section-title">Schedule of Events</h2><p class="body-copy">Please join us as we celebrate the beginning of our forever.</p><div class="event-grid"><article class="event"><div class="eyebrow">Celebration</div><h3>Haldi &amp; Mehndi</h3><p>Time and venue to be announced</p></article><article class="event"><div class="eyebrow">The main day</div><h3>Wedding Ceremony</h3><p>12 December 2027 · 4:00 PM</p><p>Udaipur, Rajasthan</p></article><article class="event"><div class="eyebrow">After the vows</div><h3>Reception</h3><p>Time and venue to be announced</p></article></div></div></section>
  <section class="gallery"><div class="inner"><div class="eyebrow">Moments to remember</div><h2 class="section-title">Our Gallery</h2><p class="body-copy">A few pages from our story. Photos can be added here when ready.</p><div class="gallery-grid"><div class="gallery-tile">A moment</div><div class="gallery-tile">A memory</div><div class="gallery-tile">Together</div><div class="gallery-tile">Always</div><div class="gallery-tile">Forever</div><div class="gallery-tile">With love</div></div></div></section>
  <section class="location"><div class="inner"><div class="eyebrow">Join our celebration</div><h2 class="section-title">Location</h2><p class="body-copy">Udaipur, Rajasthan</p><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Udaipur%2C%20Rajasthan" target="_blank" rel="noopener">Open Google Maps ↗</a></div></section>
- <section class="gift"><div class="inner"><div class="eyebrow">A thoughtful note</div><h2 class="section-title">Gift Preference</h2><div class="gift-card">Your presence, prayers and duas are the greatest gifts we could receive. Kindly celebrate this beautiful beginning with us.</div></div></section>\n <section class="dress"><div class="inner"><div class="eyebrow">A note on attire</div><h2 class="section-title">Dress Code</h2><p class="body-copy">Elegant festive attire. We would love to see you in soft, garden-inspired colours.</p><div class="palette"><i class="swatch" style="background:#d9c6a4"></i><i class="swatch" style="background:#a8aa8b"></i><i class="swatch" style="background:#b77c79"></i><i class="swatch" style="background:#e9dfce"></i><i class="swatch" style="background:#6d7a65"></i></div></div></section>
+ <section class="gift"><div class="inner"><div class="eyebrow">A thoughtful note</div><h2 class="section-title">Gift Preference</h2><div class="gift-card">Your presence, prayers and duas are the greatest gifts we could receive. Kindly celebrate this beautiful beginning with us.</div></div></section>
+ <section class="dress"><div class="inner"><div class="eyebrow">A note on attire</div><h2 class="section-title">Dress Code</h2><p class="body-copy">Elegant festive attire. We would love to see you in soft, garden-inspired colours.</p><div class="palette"><i class="swatch" style="background:#d9c6a4"></i><i class="swatch" style="background:#a8aa8b"></i><i class="swatch" style="background:#b77c79"></i><i class="swatch" style="background:#e9dfce"></i><i class="swatch" style="background:#6d7a65"></i></div></div></section>
  <section class="rsvp"><div class="inner"><div class="eyebrow">We hope you can join us</div><h2 class="section-title">Confirm Your Attendance</h2><p class="body-copy">To help us prepare for a joyful celebration, kindly confirm your attendance.</p><form class="rsvp-form" id="rsvpForm"><input name="guest" placeholder="Your name" required><select name="attendance" required><option value="">Will you attend?</option><option>Joyfully accepts</option><option>Regretfully declines</option></select><input name="guests" type="number" min="1" max="10" value="1" aria-label="Number of guests"><textarea name="message" rows="3" placeholder="A note for the couple (optional)"></textarea><button type="submit">Prepare RSVP</button><p class="form-note">This is a visual preview only. Your RSVP is not sent or stored yet.</p></form></div></section>
  <footer class="footer">Hope to see you there · Issu &amp; Poomol</footer>
 </main>
@@ -188,7 +212,44 @@ document.getElementById('openInvite').addEventListener('click',openInvite);
 document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&!cover.classList.contains('opened')){e.preventDefault();openInvite()}});
 const target=new Date('2027-12-12T16:00:00+05:30');
 function tick(){let diff=Math.max(0,target-Date.now());let vals=[Math.floor(diff/86400000),Math.floor(diff/3600000)%24,Math.floor(diff/60000)%60,Math.floor(diff/1000)%60];document.querySelectorAll('#countdown strong').forEach((el,i)=>el.textContent=String(vals[i]).padStart(2,'0'))}
-tick();setInterval(tick,1000);
+let countdownTimer=null;
+function startCountdown(){if(countdownTimer)return;tick();countdownTimer=setInterval(tick,1000);}
+function startPetalShower(){
+ const layer=document.createElement('div');layer.className='petal-layer';document.body.appendChild(layer);
+ const symbols=['✿','❀','✽','❋'];
+ for(let i=0;i<34;i++){
+  const petal=document.createElement('span');petal.className='falling-petal';petal.textContent=symbols[i%symbols.length];
+  petal.style.left=(Math.random()*100)+'%';petal.style.fontSize=(12+Math.random()*18)+'px';
+  petal.style.setProperty('--drift',((Math.random()-.5)*180)+'px');
+  petal.style.animationDuration=(5+Math.random()*5)+'s';petal.style.animationDelay=(Math.random()*2.2)+'s';
+  layer.appendChild(petal);
+ }
+ setTimeout(()=>layer.remove(),12500);
+}
+function revealHeartScratch(){
+ const canvas=document.getElementById('scratchCanvas');const reveal=document.getElementById('scratchReveal');
+ if(!canvas||!reveal)return;
+ const ctx=canvas.getContext('2d',{willReadFrequently:true});
+ const grad=ctx.createLinearGradient(0,0,280,160);grad.addColorStop(0,'#e6cf9c');grad.addColorStop(.5,'#b88d50');grad.addColorStop(1,'#f2dfb8');
+ ctx.fillStyle=grad;ctx.fillRect(0,0,280,160);
+ ctx.strokeStyle='#fff1cc';ctx.lineWidth=2;ctx.strokeRect(8,8,264,144);
+ ctx.fillStyle='#fff7e8';ctx.font='italic 18px Georgia';ctx.textAlign='center';ctx.fillText('SCRATCH TO REVEAL',140,85);
+ let scratching=false,revealed=false,lastCheck=0;
+ function erase(e){
+  if(!scratching||revealed)return;
+  const r=canvas.getBoundingClientRect();const x=(e.clientX-r.left)*canvas.width/r.width;const y=(e.clientY-r.top)*canvas.height/r.height;
+  ctx.globalCompositeOperation='destination-out';ctx.beginPath();ctx.arc(x,y,19,0,Math.PI*2);ctx.fill();
+  const now=Date.now();if(now-lastCheck>250){lastCheck=now;const pixels=ctx.getImageData(0,0,canvas.width,canvas.height).data;let clear=0;for(let i=3;i<pixels.length;i+=16)if(pixels[i]<30)clear++;if(clear/(pixels.length/16)>.38)finish();}
+ }
+ function finish(){
+  if(revealed)return;revealed=true;canvas.style.transition='opacity .8s ease';canvas.style.opacity='0';
+  setTimeout(()=>{reveal.hidden=true;document.getElementById('revealedDate').hidden=false;document.getElementById('countdown').style.display='flex';document.getElementById('revealedNote').hidden=false;startCountdown();startPetalShower();},650);
+ }
+ canvas.addEventListener('pointerdown',e=>{scratching=true;canvas.setPointerCapture(e.pointerId);erase(e)});
+ canvas.addEventListener('pointermove',erase);
+ ['pointerup','pointercancel','lostpointercapture'].forEach(ev=>canvas.addEventListener(ev,()=>{scratching=false}));
+}
+revealHeartScratch();
 document.getElementById('rsvpForm').addEventListener('submit',e=>{e.preventDefault();const d=new FormData(e.currentTarget);alert('Thank you, '+d.get('guest')+'! This is a preview only; your RSVP has not been sent.')});
 </script>
 </body>
