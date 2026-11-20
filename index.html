@@ -657,4 +657,45 @@ document.getElementById('rsvpForm').addEventListener('submit',e=>{e.preventDefau
 }
 .garden-date{display:none!important}
 @media(max-height:700px){.garden-bismillah{font-size:clamp(22px,5.5vw,31px);margin-bottom:10px}.garden-cta{margin-top:20px}}
+
+/* Nov 20 refinement: stronger legibility, visible locked countdown, cinematic garden cover */
+.garden-backdrop{
+ background:
+  linear-gradient(180deg,rgba(3,22,17,.35),rgba(3,22,17,.58)),
+  url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2200&q=90") center 48%/cover no-repeat,
+  radial-gradient(ellipse at 50% 48%,#315b3e,#061d18 100%) !important;
+}
+.garden-backdrop:before{
+ background:
+  radial-gradient(ellipse at 50% 48%,rgba(236,205,137,.16),transparent 48%),
+  linear-gradient(90deg,rgba(2,17,13,.48),transparent 28%,transparent 72%,rgba(2,17,13,.48)),
+  linear-gradient(0deg,rgba(2,17,13,.5),transparent 42%,rgba(2,17,13,.2)) !important;
+}
+.garden-vignette{background:linear-gradient(90deg,#031b1670,transparent 22%,transparent 78%,#031b1670),linear-gradient(0deg,#031b1690,transparent 35%,#031b1640)!important}
+.garden-glow{background:radial-gradient(circle,rgba(244,218,160,.32),rgba(244,218,160,.08) 42%,transparent 70%)!important;filter:blur(34px)!important}
+.garden-arch{border-color:rgba(237,211,157,.78)!important;box-shadow:0 0 30px rgba(230,209,155,.2),inset 0 0 35px rgba(230,209,155,.1)}
+.garden-content{ text-shadow:0 2px 16px rgba(0,0,0,.72)}
+.garden-bismillah{color:#fff8e8!important;text-shadow:0 2px 18px #00150f,0 0 26px #f5dfa866!important}
+.garden-names{color:#fff0ce!important;text-shadow:0 4px 24px #00150f!important}
+.garden-cta{background:rgba(4,32,24,.82)!important;border-color:#e5ca91!important;box-shadow:0 0 24px rgba(225,198,137,.16)}
+/* Make every text element on emerald panels readable */
+.events,.location,.dress{color:#fff4dc!important}
+.events :is(p,span,small,li,label),.location :is(p,span,small,li,label),.dress :is(p,span,small,li,label){color:#f0eadb!important}
+.events .event{color:#234332!important}
+.events .event :is(h3,p,.eyebrow){color:#234332!important}
+.events .event p{color:#48594b!important}
+.events .event .eyebrow{color:#8a6a35!important}
+.events .section-title,.location .section-title,.dress .section-title{color:#f4dfae!important}
+.events .body-copy,.location .body-copy,.dress .body-copy{color:#f2ecde!important}
+/* Countdown stays visible before scratching; it unlocks and starts only after scratch */
+#countdown{display:flex!important;flex-wrap:wrap;align-items:stretch;justify-content:center;gap:10px;margin:28px auto 36px;max-width:520px;padding:0 4px 26px}
+#countdown>div{min-width:68px;padding:12px 10px 10px;border:1px solid rgba(190,157,94,.82);border-radius:10px;background:linear-gradient(145deg,rgba(255,250,239,.96),rgba(236,224,199,.94));box-shadow:0 8px 22px rgba(0,0,0,.12)}
+#countdown strong{color:#174b37!important;font-size:clamp(29px,6vw,42px)!important}
+#countdown span{display:block;color:#536354!important;font-size:9px;letter-spacing:.13em}
+#countdown.is-locked{opacity:1!important;filter:none!important;pointer-events:none}
+#countdown.is-locked>div{background:linear-gradient(145deg,#f1eadb,#ded2bb);border-style:dashed}
+#countdown.is-locked strong{color:#77766f!important}
+#countdown.is-locked:after{content:"🔒  SCRATCH THE GOLDEN HEART TO UNLOCK" !important;top:calc(100% + 5px);color:#f2dfb2!important;font-size:9px!important;text-align:center;white-space:nowrap}
+@media(max-width:390px){#countdown{gap:7px}#countdown>div{min-width:61px;padding:10px 7px}}
+
 </style>
