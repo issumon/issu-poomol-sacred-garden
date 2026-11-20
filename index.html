@@ -107,20 +107,72 @@ main{opacity:0;transform:translateY(22px);transition:opacity 1.8s ease,transform
 [hidden]{display:none!important}
 @media(max-width:650px){.scratch-heart-wrap{height:145px}.scratch-heart{font-size:100px}.scratch-reveal{margin-top:12px}}
 
+
+/* Royal Floral Garden — new opening, replacing the former envelope experience */
+:root{--forest:#092c22;--forest2:#174b37;--champagne:#d9bd83}
+#cover{background:#092c22;perspective:none;isolation:isolate}
+#cover.opening{animation:gardenFade .95s ease 3.7s forwards}
+#cover.opened{opacity:0;visibility:hidden;pointer-events:none}
+.garden-backdrop{position:absolute;inset:-3%;background:
+ radial-gradient(ellipse at 50% 48%,#f5e8c5 0%,#d3c49a 13%,#315b3e 35%,#123b2d 67%,#061d18 100%);
+ transform:scale(1.04);animation:gardenBreath 12s ease-in-out infinite alternate}
+.garden-backdrop:before{content:"";position:absolute;inset:0;background:
+ radial-gradient(ellipse at 8% 12%,#b6bd7a66,transparent 29%),
+ radial-gradient(ellipse at 92% 16%,#c4ad6b55,transparent 30%),
+ radial-gradient(ellipse at 4% 88%,#81985b66,transparent 30%),
+ radial-gradient(ellipse at 96% 90%,#8b9c5b66,transparent 28%),
+ repeating-linear-gradient(115deg,transparent 0 55px,#e4d19b0b 56px 58px,transparent 59px 110px)}
+.garden-vignette{position:absolute;inset:0;background:linear-gradient(90deg,#031b16a8,transparent 25%,transparent 75%,#031b16a8),linear-gradient(0deg,#031b16a8,transparent 28%,#031b1655)}
+.garden-arch{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border:1px solid #dfc58c99;border-bottom:0;border-radius:50% 50% 0 0;pointer-events:none}
+.arch-outer{width:min(91vw,590px);height:min(88vh,850px);box-shadow:0 0 35px #e6d19b22,inset 0 0 35px #e6d19b0c}
+.arch-inner{width:min(81vw,520px);height:min(79vh,760px);border-color:#f0dfb577}
+.garden-vines{position:absolute;top:7%;height:86%;width:18%;color:#e8d4a0;font:clamp(25px,5vw,48px) Georgia,serif;writing-mode:vertical-rl;letter-spacing:.35em;opacity:.72;text-shadow:0 0 18px #e4d19b55;animation:vineSway 6s ease-in-out infinite alternate}
+.vine-left{left:2%;transform:rotate(8deg)}.vine-right{right:2%;transform:rotate(172deg);animation-delay:-2s}
+.garden-glow{position:absolute;left:50%;top:45%;width:min(72vw,460px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:#f3dca522;filter:blur(55px);animation:glowPulse 4s ease-in-out infinite alternate}
+.garden-content{position:absolute;z-index:3;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px 24px;color:#fff7e8;pointer-events:none}
+.garden-kicker{font-size:9px;letter-spacing:.34em;color:#e4d2a7;animation:riseIn 1.1s .15s both}
+.garden-flourish{font:clamp(24px,5vw,36px) Georgia,serif;color:#e5ca8e;letter-spacing:.24em;margin:clamp(18px,4vh,36px) 0 15px;animation:riseIn 1.2s .35s both}
+.garden-title{font:italic clamp(17px,4vw,25px) "Cormorant Garamond",serif;line-height:1.35;color:#f2e8d2;letter-spacing:.05em;animation:riseIn 1.2s .55s both}
+.garden-names{font:500 clamp(54px,12vw,94px)/.95 "Cormorant Garamond",serif;letter-spacing:-.045em;color:#f5e6c7;text-shadow:0 4px 25px #061d18a8;margin:18px 0 14px;animation:riseIn 1.3s .75s both}
+.garden-names i{font-weight:400;color:#d8b979}
+.garden-rule{width:112px;height:1px;background:linear-gradient(90deg,transparent,#e3c98d,transparent);margin:14px auto;position:relative}
+.garden-rule span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:0 10px;background:#1a4935;color:#e3c98d;font-size:12px}
+.garden-subtitle{font-size:10px;letter-spacing:.38em;color:#e8d4a4;margin-top:14px;animation:riseIn 1.2s 1s both}
+.garden-date{font:500 17px "Cormorant Garamond",serif;letter-spacing:.22em;color:#fff1d4;margin-top:13px;animation:riseIn 1.2s 1.15s both}
+.garden-cta{margin-top:clamp(35px,7vh,66px);padding:13px 22px;border:1px solid #ddc58e88;background:#092c2277;color:#f1dfb8;font-size:9px;letter-spacing:.22em;animation:riseIn 1.2s 1.45s both,ctaGlow 2.5s 2.5s infinite}
+.garden-cta span{margin-left:12px;font-size:15px}
+.garden-bottom-flora{position:absolute;z-index:2;bottom:3%;left:0;right:0;text-align:center;color:#dfc58d;font:clamp(19px,4vw,30px) Georgia,serif;letter-spacing:.28em;opacity:.8}
+#openInvite{position:absolute;z-index:10;inset:0;border:0;background:transparent;cursor:pointer}
+#openInvite:focus-visible{outline:2px solid #e4ca91;outline-offset:-12px}
+@keyframes gardenBreath{to{transform:scale(1.09)}}@keyframes glowPulse{to{opacity:.65;transform:translate(-50%,-50%) scale(1.2)}}
+@keyframes vineSway{to{translate:0 12px;opacity:.95}}@keyframes riseIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes ctaGlow{50%{box-shadow:0 0 22px #e5ca8e35}}
+@keyframes gardenFade{to{opacity:0;visibility:hidden}}
+@media(max-width:650px){.garden-kicker{font-size:8px;letter-spacing:.24em}.garden-vines{width:12%;opacity:.52}.garden-names{font-size:clamp(51px,13vw,78px)}.arch-outer{width:94vw;height:82vh}.arch-inner{width:84vw;height:75vh}}
+@media(prefers-reduced-motion:reduce){.garden-backdrop,.garden-glow,.garden-vines,.garden-content>*{animation:none!important}}
+
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-<div id="cover" aria-label="A luxury floral wedding invitation envelope">
- <div class="env-scene">
-  <div class="env-back"></div>
-  <div class="invite-card"><span>THE SACRED GARDEN</span><strong>Issu <i>&amp;</i> Poomol</strong><small>12 · 12 · 2027</small></div>
-  <div class="env-left"></div><div class="env-right"></div><div class="env-bottom"></div>
-  <div class="env-flap"></div>
-  <div class="seal-override">I <span style="font-size:.62em">&amp;</span> P</div>
-  <div class="tap-label"><span class="tap-arrow">⌃</span>TAP TO OPEN</div>
+<div id="cover" aria-label="Royal Floral Garden wedding invitation opening">
+ <div class="garden-backdrop"></div>
+ <div class="garden-vignette"></div>
+ <div class="garden-arch arch-outer"></div><div class="garden-arch arch-inner"></div>
+ <div class="garden-vines vine-left">❧ ❀ ✿</div><div class="garden-vines vine-right">✿ ❀ ❧</div>
+ <div class="garden-glow"></div>
+ <div class="garden-content">
+  <div class="garden-kicker">TOGETHER WITH THEIR FAMILIES</div>
+  <div class="garden-flourish">✧ ❀ ✧</div>
+  <div class="garden-title">You are invited<br>to celebrate</div>
+  <div class="garden-names">Issu <i>&amp;</i> Poomol</div>
+  <div class="garden-rule"><span>✦</span></div>
+  <div class="garden-subtitle">THE SACRED GARDEN</div>
+  <div class="garden-date">12 · 12 · 2027</div>
+  <div class="garden-cta">ENTER THE GARDEN <span>↓</span></div>
  </div>
- <button id="openInvite" aria-label="Tap to open the wedding invitation"></button>
+ <div class="garden-bottom-flora">✿　❀　✧　❀　✿</div>
+ <button id="openInvite" aria-label="Enter the wedding invitation"></button>
 </div>
 <audio id="guestMusic" loop preload="auto"></audio><button id="musicToggle" type="button" aria-label="Toggle background music" style="position:fixed;z-index:30;right:18px;bottom:18px;padding:11px 15px;border:1px solid #b7955f;background:#fffaf0eF;color:#67212d;letter-spacing:.12em;font-size:10px;display:none">♫ MUSIC OFF</button>
 <main>
@@ -207,7 +259,7 @@ async function loadGuestGallery(){
 
 loadGuestGallery();
 let isOpening=false;
-function openInvite(){if(isOpening)return;isOpening=true;startGuestMusic();cover.classList.add('opening');setTimeout(()=>cover.classList.add('opened'),6900)}
+function openInvite(){if(isOpening)return;isOpening=true;startGuestMusic();cover.classList.add('opening');setTimeout(()=>cover.classList.add('opened'),4700)}
 document.getElementById('openInvite').addEventListener('click',openInvite);
 document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&!cover.classList.contains('opened')){e.preventDefault();openInvite()}});
 const target=new Date('2027-12-12T16:00:00+05:30');
