@@ -94,10 +94,15 @@ main{opacity:0;transform:translateY(22px);transition:opacity 1.8s ease,transform
 .hero{background:radial-gradient(ellipse at 50% 25%,#fffaf2 0%,#f0e5d4 62%,#e4d5c1 100%)}
 .scratch-reveal{margin:20px auto 0;max-width:340px}
 .scratch-hint{font:italic 20px "Cormorant Garamond",serif;color:var(--wine);margin:0 0 9px}
-.scratch-heart-wrap{position:relative;width:min(280px,82vw);height:160px;margin:auto;display:grid;place-items:center;overflow:hidden;border:1px solid #c7a56f;background:linear-gradient(145deg,#fffaf2,#f1e4d0);box-shadow:0 12px 30px #6c4b2818}
-.scratch-heart{font:112px/1 Georgia,serif;color:#b88d50;text-shadow:0 4px 12px #9c703b44;user-select:none}
-#scratchCanvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
-.scratch-instruction{font-size:10px;letter-spacing:.12em;color:var(--muted);margin:10px 0 0}
+.scratch-heart-wrap{position:relative;width:min(270px,78vw);height:auto;aspect-ratio:280/250;margin:auto;display:grid;place-items:center;overflow:visible;background:transparent;filter:drop-shadow(0 12px 18px #6c4b2830)}
+.scratch-underlay{position:absolute;inset:0;display:grid;place-items:center;padding:0 22%;text-align:center;clip-path:polygon(50% 95%,42% 88%,25% 73%,10% 57%,3% 43%,2% 32%,7% 19%,17% 12%,29% 12%,40% 19%,50% 30%,60% 19%,71% 12%,83% 12%,93% 19%,98% 32%,97% 43%,90% 57%,75% 73%,58% 88%);background:radial-gradient(circle at 50% 34%,#fffaf0,#f0e2ca 72%,#ddc69e);color:#73552c;font:600 clamp(17px,5vw,22px) "Cormorant Garamond",serif;line-height:1.3}
+#scratchCanvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair;clip-path:polygon(50% 95%,42% 88%,25% 73%,10% 57%,3% 43%,2% 32%,7% 19%,17% 12%,29% 12%,40% 19%,50% 30%,60% 19%,71% 12%,83% 12%,93% 19%,98% 32%,97% 43%,90% 57%,75% 73%,58% 88%)}
+.scratch-progress{margin:9px auto 0;color:#9a7a47;font:12px "Cormorant Garamond",serif;letter-spacing:.08em}
+.scratch-instruction{font-size:10px;letter-spacing:.12em;color:var(--muted);margin:5px 0 0}
+.countdown.is-locked{opacity:.48;filter:grayscale(1);pointer-events:none}
+.countdown.is-locked strong{color:#8c8982}
+.countdown.is-locked:after{content:"🔒  LOCKED — SCRATCH THE HEART";display:block;position:absolute;left:0;right:0;top:calc(100% + 7px);font:9px "DM Sans",sans-serif;letter-spacing:.13em;color:#89857d}
+.countdown{position:relative;padding-bottom:22px}
 .revealed-note{margin:20px auto 0;padding:18px 16px;max-width:360px;border-top:1px solid var(--gold);border-bottom:1px solid var(--gold);font:italic 21px "Cormorant Garamond",serif;color:var(--wine);line-height:1.5}
 .revealed-note strong{font-weight:600}
 .revealed-note span{font:11px "DM Sans",sans-serif;letter-spacing:.1em;color:var(--muted)}
@@ -105,7 +110,7 @@ main{opacity:0;transform:translateY(22px);transition:opacity 1.8s ease,transform
 .falling-petal{position:absolute;top:-35px;color:#b77c79;text-shadow:0 2px 5px #fff8;animation:petalFall linear forwards;will-change:transform,opacity}
 @keyframes petalFall{0%{transform:translate3d(0,-5vh,0) rotate(0deg);opacity:0}10%{opacity:.9}50%{transform:translate3d(var(--drift),55vh,0) rotate(260deg)}100%{transform:translate3d(calc(var(--drift)*-1),110vh,0) rotate(620deg);opacity:0}}
 [hidden]{display:none!important}
-@media(max-width:650px){.scratch-heart-wrap{height:145px}.scratch-heart{font-size:100px}.scratch-reveal{margin-top:12px}}
+@media(max-width:650px){.scratch-heart-wrap{width:min(250px,78vw)}.scratch-reveal{margin-top:12px}}
 
 
 /* Royal Floral Garden — new opening, replacing the former envelope experience */
@@ -318,7 +323,7 @@ main{opacity:0;transform:translateY(22px);transition:opacity 1.8s ease,transform
 </div>
 <audio id="guestMusic" loop preload="auto"></audio><button id="musicToggle" type="button" aria-label="Toggle background music" style="position:fixed;z-index:30;right:18px;bottom:18px;padding:11px 15px;border:1px solid #b7955f;background:#fffaf0eF;color:#67212d;letter-spacing:.12em;font-size:10px;display:none">♫ MUSIC OFF</button>
 <main>
- <header class="hero"><div><div class="kicker">Together with our families</div><div class="ornament"></div><p class="eyebrow">Request the pleasure of your company</p><h1>Issu <span class="amp">&amp;</span><br>Poomol</h1><div class="hero-date" id="revealedDate" hidden>12 · 12 · 2027</div><div class="ornament"></div><p class="eyebrow">The Sacred Garden</p><div class="countdown" id="countdown" style="display:none"><div><strong>--</strong><span>Days</span></div><div><strong>--</strong><span>Hours</span></div><div><strong>--</strong><span>Minutes</span></div><div><strong>--</strong><span>Seconds</span></div></div><div class="scratch-reveal" id="scratchReveal"><p class="scratch-hint">A little surprise awaits</p><div class="scratch-heart-wrap"><span class="scratch-heart" aria-hidden="true">♥</span><canvas id="scratchCanvas" width="280" height="160" aria-label="Scratch the golden heart to reveal the wedding date"></canvas></div><p class="scratch-instruction">Scratch the golden heart to reveal our special day</p></div><div class="revealed-note" id="revealedNote" hidden>Our forever begins on <strong>12 December 2027</strong><br><span>We cannot wait to celebrate with you</span></div></div></header>
+ <header class="hero"><div><div class="kicker">Together with our families</div><div class="ornament"></div><p class="eyebrow">Request the pleasure of your company</p><h1>Issu <span class="amp">&amp;</span><br>Poomol</h1><div class="hero-date" id="revealedDate" hidden>12 · 12 · 2027</div><div class="ornament"></div><p class="eyebrow">The Sacred Garden</p><div class="countdown is-locked" id="countdown" aria-label="Countdown locked until the heart is scratched"><div><strong>--</strong><span>Days</span></div><div><strong>--</strong><span>Hours</span></div><div><strong>--</strong><span>Minutes</span></div><div><strong>--</strong><span>Seconds</span></div></div><div class="scratch-reveal" id="scratchReveal"><p class="scratch-hint">A little surprise awaits</p><div class="scratch-heart-wrap"><div class="scratch-underlay" aria-hidden="true">12 December<br>2027</div><canvas id="scratchCanvas" width="280" height="250" aria-label="Scratch the golden heart to reveal the wedding date"></canvas></div><p class="scratch-progress" id="scratchProgress" aria-live="polite">0% revealed</p><p class="scratch-instruction">Scratch the golden heart to reveal our special day</p></div><div class="revealed-note" id="revealedNote" hidden>Our forever begins on <strong>12 December 2027</strong><br><span>We cannot wait to celebrate with you</span></div></div></header>
  <section class="story"><div class="inner"><div class="eyebrow">A little beginning</div><h2 class="section-title">Two Souls, One Destiny</h2><div class="ornament"></div><p class="body-copy">A lifetime written by Allah. With grateful hearts and the blessings of our families, we invite you to share in the joy of our wedding celebration. Your presence and duas will make our special day even more meaningful.</p></div></section>
  <section class="events"><div class="inner"><div class="eyebrow">Save the moments</div><h2 class="section-title">Schedule of Events</h2><p class="body-copy">Please join us as we celebrate the beginning of our forever.</p><div class="event-grid"><article class="event"><div class="eyebrow">Celebration</div><h3>Haldi &amp; Mehndi</h3><p>Time and venue to be announced</p></article><article class="event"><div class="eyebrow">The main day</div><h3>Wedding Ceremony</h3><p>12 December 2027 · 4:00 PM</p><p>Udaipur, Rajasthan</p></article><article class="event"><div class="eyebrow">After the vows</div><h3>Reception</h3><p>Time and venue to be announced</p></article></div></div></section>
  <section class="gallery"><div class="inner"><div class="eyebrow">Moments to remember</div><h2 class="section-title">Our Gallery</h2><p class="body-copy">A few pages from our story. Photos can be added here when ready.</p><div class="gallery-grid"><div class="gallery-tile">A moment</div><div class="gallery-tile">A memory</div><div class="gallery-tile">Together</div><div class="gallery-tile">Always</div><div class="gallery-tile">Forever</div><div class="gallery-tile">With love</div></div></div></section>
@@ -422,22 +427,42 @@ function startPetalShower(){
 }
 function revealHeartScratch(){
  const canvas=document.getElementById('scratchCanvas');const reveal=document.getElementById('scratchReveal');
+ const progressLabel=document.getElementById('scratchProgress');
  if(!canvas||!reveal)return;
  const ctx=canvas.getContext('2d',{willReadFrequently:true});
- const grad=ctx.createLinearGradient(0,0,280,160);grad.addColorStop(0,'#e6cf9c');grad.addColorStop(.5,'#b88d50');grad.addColorStop(1,'#f2dfb8');
- ctx.fillStyle=grad;ctx.fillRect(0,0,280,160);
- ctx.strokeStyle='#fff1cc';ctx.lineWidth=2;ctx.strokeRect(8,8,264,144);
- ctx.fillStyle='#fff7e8';ctx.font='italic 18px Georgia';ctx.textAlign='center';ctx.fillText('SCRATCH TO REVEAL',140,85);
+ const w=canvas.width,h=canvas.height;
+ // Draw and clip the coating to a real heart silhouette, so the scratch surface is heart-shaped too.
+ ctx.beginPath();ctx.moveTo(w/2,h*.94);
+ ctx.bezierCurveTo(w*.42,h*.84,w*.04,h*.59,w*.04,h*.32);
+ ctx.bezierCurveTo(w*.04,h*.10,w*.30,h*.02,w*.50,h*.27);
+ ctx.bezierCurveTo(w*.70,h*.02,w*.96,h*.10,w*.96,h*.32);
+ ctx.bezierCurveTo(w*.96,h*.59,w*.58,h*.84,w/2,h*.94);ctx.closePath();ctx.clip();
+ const grad=ctx.createLinearGradient(12,8,w-12,h-8);grad.addColorStop(0,'#f8e8bb');grad.addColorStop(.28,'#c2a15a');grad.addColorStop(.58,'#9f7839');grad.addColorStop(.82,'#e8d09a');grad.addColorStop(1,'#b88d50');
+ ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+ ctx.strokeStyle='#fff1cc';ctx.lineWidth=3;ctx.stroke();
+ ctx.fillStyle='#fff8e9';ctx.textAlign='center';ctx.font='600 17px Georgia';ctx.fillText('SCRATCH TO REVEAL',w/2,h*.53);
+ ctx.font='12px Georgia';ctx.fillText('✦  ✧  ✦',w/2,h*.60);
+ const initial=ctx.getImageData(0,0,w,h).data;let total=0;
+ for(let i=3;i<initial.length;i+=16)if(initial[i]>30)total++;
  let scratching=false,revealed=false,lastCheck=0;
  function erase(e){
   if(!scratching||revealed)return;
-  const r=canvas.getBoundingClientRect();const x=(e.clientX-r.left)*canvas.width/r.width;const y=(e.clientY-r.top)*canvas.height/r.height;
-  ctx.globalCompositeOperation='destination-out';ctx.beginPath();ctx.arc(x,y,19,0,Math.PI*2);ctx.fill();
-  const now=Date.now();if(now-lastCheck>250){lastCheck=now;const pixels=ctx.getImageData(0,0,canvas.width,canvas.height).data;let clear=0;for(let i=3;i<pixels.length;i+=16)if(pixels[i]<30)clear++;if(clear/(pixels.length/16)>.38)finish();}
+  const r=canvas.getBoundingClientRect();const x=(e.clientX-r.left)*w/r.width;const y=(e.clientY-r.top)*h/r.height;
+  ctx.globalCompositeOperation='destination-out';ctx.beginPath();ctx.arc(x,y,20,0,Math.PI*2);ctx.fill();
+  const now=Date.now();
+  if(now-lastCheck>180){
+   lastCheck=now;const pixels=ctx.getImageData(0,0,w,h).data;let clear=0;
+   for(let i=3;i<pixels.length;i+=16)if(initial[i]>30&&pixels[i]<30)clear++;
+   const pct=Math.min(100,Math.round(clear/Math.max(1,total)*100));
+   if(progressLabel)progressLabel.textContent=pct+'% revealed';
+   if(pct>=30)finish();
+  }
  }
  function finish(){
-  if(revealed)return;revealed=true;canvas.style.transition='opacity .8s ease';canvas.style.opacity='0';
-  setTimeout(()=>{reveal.hidden=true;document.getElementById('revealedDate').hidden=false;document.getElementById('countdown').style.display='flex';document.getElementById('revealedNote').hidden=false;startCountdown();startPetalShower();},650);
+  if(revealed)return;revealed=true;
+  if(progressLabel)progressLabel.textContent='30% revealed · Unlocked';
+  canvas.style.transition='opacity .8s ease';canvas.style.opacity='0';
+  setTimeout(()=>{reveal.hidden=true;document.getElementById('revealedDate').hidden=false;const cd=document.getElementById('countdown');cd.classList.remove('is-locked');cd.style.display='flex';document.getElementById('revealedNote').hidden=false;startCountdown();startPetalShower();},650);
  }
  canvas.addEventListener('pointerdown',e=>{scratching=true;canvas.setPointerCapture(e.pointerId);erase(e)});
  canvas.addEventListener('pointermove',erase);
