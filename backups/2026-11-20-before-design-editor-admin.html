@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#102d25"><title>Sacred Garden · Admin</title>
+<style>
+:root{--green:#102d25;--green2:#1c493a;--gold:#c8a66a;--paper:#fbf7ef;--ink:#29271f;--muted:#756e61;--line:#e5dac7}
+*{box-sizing:border-box}body{margin:0;background:#f1eadf;color:var(--ink);font:15px system-ui,-apple-system,Segoe UI,sans-serif}.shell{max-width:900px;margin:auto;padding:26px 16px 60px}.top{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;padding:28px;border-radius:18px;margin-bottom:20px}.eyebrow{color:var(--gold);letter-spacing:.22em;text-transform:uppercase;font-size:10px}.top h1{font:500 34px Georgia,serif;margin:9px 0}.top p{color:#e6dfd2;margin:0}.panel{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:22px;margin:16px 0;box-shadow:0 8px 28px #45351c0b}.panel h2{font:500 25px Georgia,serif;color:var(--green);margin:0 0 16px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:grid;gap:6px;margin-bottom:13px}.field.full{grid-column:1/-1}label{font-size:12px;color:var(--muted)}input,textarea{width:100%;padding:12px;border:1px solid #d8cbb6;border-radius:9px;background:#fff;font:inherit;color:var(--ink)}textarea{min-height:90px;resize:vertical}button{border:0;border-radius:9px;padding:12px 18px;background:var(--green2);color:#fff;font:600 14px system-ui;cursor:pointer}button.secondary{background:#e8ddc9;color:var(--green)}button:disabled{opacity:.5;cursor:wait}.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.hint,.status{font-size:12px;color:var(--muted);line-height:1.6}.status{margin-top:12px;min-height:18px}.hidden{display:none!important}.preview{width:100%;max-height:220px;object-fit:contain;background:#eee5d7;border-radius:10px;margin-top:12px}.logout{float:right;background:#fff;color:var(--green)}@media(max-width:600px){.grid{grid-template-columns:1fr}.field.full{grid-column:auto}.top{padding:22px}.top h1{font-size:29px}}
+.guest-link{display:inline-flex;align-items:center;gap:7px;padding:11px 15px;border:1px solid #c8a66a;border-radius:9px;color:#f6e8cb;text-decoration:none;font-size:13px;font-weight:600;background:#ffffff12}.guest-link:hover{background:#ffffff22}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body><div class="shell">
+<header class="top"><div class="actions" style="justify-content:flex-end;margin-bottom:12px"><a href="https://issu-poomol-sacred-garden.vercel.app" target="_blank" rel="noopener" class="guest-link">↗ View Guest Website</a><button id="logout" class="logout hidden">Sign out</button></div><div class="eyebrow">Private control panel</div><h1>Issu &amp; Poomol</h1><p>The Sacred Garden · Wedding invitation admin</p></header>
+<section id="loginPanel" class="panel"><h2>Admin Login</h2><div class="field"><label>Email</label><input id="email" type="email" autocomplete="username" placeholder="Admin email"></div><div class="field"><label>Password</label><input id="password" type="password" autocomplete="current-password" placeholder="Supabase account password"></div><button id="loginBtn">Sign in</button><p class="hint">Use the existing Supabase Auth account that was added as a Sacred Garden admin.</p><div id="loginStatus" class="status" role="status"></div></section>
+<div id="dashboard" class="hidden">\n<section class="panel" id="studioProjects">
+<h2>Wedding Design Studio · Client Projects</h2>
+<p class="hint">Create a separate invitation project for each client. New projects start as drafts; publishing will be enabled after the project-specific guest invitation renderer is ready.</p>
+<div class="grid">
+<div class="field"><label>Client name</label><input id="studioClientName" placeholder="Client / family name"></div>
+<div class="field"><label>Couple names</label><input id="studioCoupleNames" placeholder="Bride & Groom"></div>
+</div>
+<button id="createStudioProject">＋ Create wedding project</button>
+<div id="studioProjectStatus" class="status" role="status"></div>
+<div id="studioProjectList" class="hint" style="margin-top:16px">Loading projects…</div>
+</section>
+
+<section class="panel"><h2>Wedding details</h2><div class="grid">
+<div class="field"><label>Couple names</label><input id="couple_names"></div>
+<div class="field"><label>Wedding date</label><input id="wedding_date" type="date"></div>
+<div class="field"><label>Wedding time</label><input id="wedding_time"></div>
+<div class="field"><label>Venue</label><input id="venue"></div>
+<div class="field"><label>WhatsApp number (with country code)</label><input id="whatsapp_number" placeholder="91XXXXXXXXXX"></div>
+<div class="field full"><label>Welcome message</label><textarea id="welcome_message"></textarea></div>
+</div><button id="saveSettings">Save wedding details</button><div id="settingsStatus" class="status" role="status"></div></section>
+<section class="panel"><h2>Background music</h2><div class="field"><label>Direct audio URL (MP3 / supported audio file)</label><input id="music_url" type="url" placeholder="https://.../song.mp3"></div><div class="actions"><button id="saveMusicUrl" class="secondary">Save song URL</button><label style="display:inline-flex;align-items:center;gap:8px"><input id="musicFile" type="file" accept="audio/*" style="max-width:230px;padding:7px"></label><button id="uploadMusic">Upload music</button></div><audio id="musicPreview" class="preview" controls></audio><p class="hint">Music playback in the guest invitation should begin only after a visitor taps the invitation, because mobile browsers restrict autoplay. Use only audio you have permission to use commercially.</p><div id="musicStatus" class="status" role="status"></div></section>
+<section class="panel"><h2>Photo &amp; video gallery</h2><div class="field"><label>Select photos or videos</label><input id="mediaFiles" type="file" accept="image/*,video/mp4,video/webm,video/quicktime" multiple></div><button id="uploadMedia">Upload selected media</button><p class="hint">Supported: JPG, PNG, WebP, AVIF, MP4, WebM and MOV. Keep each file under 100 MB.</p><div id="mediaStatus" class="status" role="status"></div><div id="mediaList" class="hint"></div></section>
+</div></div>
+<script>
+const SUPABASE_URL='https://fuwhzkktivbzggiywgnr.supabase.co';
+const SUPABASE_ANON_KEY='sb_publishable_iHaj7KFDgVaHq8BtTY2qUA_3-FFwH6P';
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+const $=id=>document.getElementById(id);
+const say=(id,msg)=>$(id).textContent=msg;
+let currentUser=null;
+async function requireAdmin(user){
+ const {data,error}=await db.from('sacred_garden_admins').select('user_id').eq('user_id',user.id).maybeSingle();
+ if(error) throw error;
+ if(!data) throw new Error('This account is not authorised for the Sacred Garden admin dashboard.');
+}
+async function loadSettings(){
+ const {data,error}=await db.from('sacred_garden_settings').select('*').eq('id',true).single();
+ if(error) throw error;
+ ['couple_names','wedding_date','wedding_time','venue','whatsapp_number','welcome_message','music_url'].forEach(k=>$(k).value=data[k]||'');
+ $('musicPreview').src=data.music_url||'';
+}
+async function loadMedia(){
+ const {data,error}=await db.from('sacred_garden_media').select('id,media_type,caption,created_at').order('created_at',{ascending:false}).limit(30);
+ if(error) throw error;
+ $('mediaList').textContent=data.length?data.map(x=>x.media_type+' · '+new Date(x.created_at).toLocaleString()).join('\n'):'No gallery files uploaded yet.';
+}
+async function loadStudioProjects(){
+ const {data,error}=await db.from('sacred_garden_projects')
+  .select('id,slug,client_name,couple_names,status,created_at')
+  .order('created_at',{ascending:false});
+ if(error){
+  $('studioProjectList').textContent='Project Manager database is not active yet. Run supabase-multi-client-studio.sql in the existing Supabase SQL Editor, then refresh this page. Details: '+error.message;
+  return;
+ }
+ if(!data.length){$('studioProjectList').textContent='No client projects yet. Create the first project above.';return;}
+ $('studioProjectList').innerHTML=data.map(p=>'<div style="padding:13px 0;border-top:1px solid var(--line)"><strong>'+escapeStudio(p.couple_names||p.client_name)+'</strong><div class="hint">'+escapeStudio(p.client_name)+' · /'+escapeStudio(p.slug)+' · '+escapeStudio(p.status)+'</div></div>').join('');
+}
+function escapeStudio(value){
+ return String(value||'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+$('createStudioProject').addEventListener('click',async()=>{
+ const client=$('studioClientName').value.trim(), couple=$('studioCoupleNames').value.trim();
+ if(!client||!couple){say('studioProjectStatus','Enter both the client name and couple names.');return;}
+ $('createStudioProject').disabled=true;say('studioProjectStatus','Creating project…');
+ try{
+  const slugBase=(couple||client).normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,42)||'wedding';
+  const slug=slugBase+'-'+crypto.randomUUID().slice(0,6);
+  const {data,error}=await db.from('sacred_garden_projects').insert({
+   slug,client_name:client,couple_names:couple,status:'draft',created_by:currentUser.id
+  }).select('id').single();
+  if(error)throw error;
+  const {error:settingsError}=await db.from('sacred_garden_project_settings').insert({
+   project_id:data.id,
+   config:{cover_template:'cover-01',page_template:'page-01',language:'en',translations:{en:{},ml:{},ar:{}},theme:{primary:'#103b2f',accent:'#c8a66a'}}
+  });
+  if(settingsError)throw settingsError;
+  $('studioClientName').value='';$('studioCoupleNames').value='';
+  say('studioProjectStatus','Project created as draft. Design editor is the next build step.');
+  await loadStudioProjects();
+ }catch(e){say('studioProjectStatus',e.message||'Could not create project.');}
+ finally{$('createStudioProject').disabled=false;}
+});
+async function showDashboard(user){
+ currentUser=user; await requireAdmin(user);
+ $('loginPanel').classList.add('hidden');$('dashboard').classList.remove('hidden');$('logout').classList.remove('hidden');
+ await loadSettings();await loadMedia();await loadStudioProjects();
+}
+$('loginBtn').addEventListener('click',async()=>{
+ $('loginBtn').disabled=true;say('loginStatus','Signing in…');
+ try{const {data,error}=await db.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(error)throw error;await showDashboard(data.user);say('loginStatus','Signed in.');}
+ catch(e){say('loginStatus',e.message||'Login failed.');}
+ finally{$('loginBtn').disabled=false;}
+});
+$('logout').addEventListener('click',async()=>{await db.auth.signOut();location.reload()});
+$('saveSettings').addEventListener('click',async()=>{
+ say('settingsStatus','Saving…');
+ const payload={id:true,couple_names:$('couple_names').value.trim(),wedding_date:$('wedding_date').value,wedding_time:$('wedding_time').value.trim(),venue:$('venue').value.trim(),whatsapp_number:$('whatsapp_number').value.trim(),welcome_message:$('welcome_message').value.trim(),updated_at:new Date().toISOString()};
+ const {error}=await db.from('sacred_garden_settings').upsert(payload,{onConflict:'id'});say('settingsStatus',error?error.message:'Wedding details saved.');
+});
+$('saveMusicUrl').addEventListener('click',async()=>{
+ const url=$('music_url').value.trim();say('musicStatus','Saving song URL…');
+ const {error}=await db.from('sacred_garden_settings').update({music_url:url,updated_at:new Date().toISOString()}).eq('id',true);
+ if(!error)$('musicPreview').src=url;say('musicStatus',error?error.message:'Song URL saved.');
+});
+$('uploadMusic').addEventListener('click',async()=>{
+ const file=$('musicFile').files[0];if(!file){say('musicStatus','Choose an audio file first.');return;}
+ say('musicStatus','Uploading audio…');
+ const path='music/'+crypto.randomUUID()+'-'+file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+ const {error:upErr}=await db.storage.from('sacred-garden-media').upload(path,file,{upsert:false,contentType:file.type||'audio/mpeg'});
+ if(upErr){say('musicStatus',upErr.message);return;}
+ const {data}=db.storage.from('sacred-garden-media').getPublicUrl(path);const url=data.publicUrl;
+ const {error}=await db.from('sacred_garden_settings').update({music_url:url,updated_at:new Date().toISOString()}).eq('id',true);
+ if(error){say('musicStatus','File uploaded, but saving the music URL failed: '+error.message);return;}
+ $('music_url').value=url;$('musicPreview').src=url;say('musicStatus','Music uploaded and saved.');
+});
+$('uploadMedia').addEventListener('click',async()=>{
+ const files=[...$('mediaFiles').files];if(!files.length){say('mediaStatus','Select one or more files first.');return;}
+ say('mediaStatus','Uploading '+files.length+' file(s)…');
+ for(const file of files){
+  const isVideo=file.type.startsWith('video/');const path=(isVideo?'videos/':'photos/')+crypto.randomUUID()+'-'+file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+  const {error:upErr}=await db.storage.from('sacred-garden-media').upload(path,file,{upsert:false,contentType:file.type});
+  if(upErr){say('mediaStatus','Upload stopped: '+upErr.message);return;}
+  const {error:rowErr}=await db.from('sacred_garden_media').insert({media_type:isVideo?'video':'photo',storage_path:path,caption:file.name});
+  if(rowErr){say('mediaStatus','File uploaded but media record failed: '+rowErr.message);return;}
+ }
+ $('mediaFiles').value='';await loadMedia();say('mediaStatus','All selected files uploaded.');
+});
+(async()=>{const {data:{session}}=await db.auth.getSession();if(session){try{await showDashboard(session.user)}catch(e){say('loginStatus',e.message);await db.auth.signOut()}}})();
+</script></body></html>
