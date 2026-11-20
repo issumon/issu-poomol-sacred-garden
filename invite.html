@@ -98,7 +98,7 @@ h2{font:500 clamp(39px,7vw,66px)/1 "Cormorant Garamond",serif;color:var(--green)
 </head>
 <body>
 <div id="state" class="loading"><span>Preparing your invitation…</span></div>
-<div id="invitation" hidden>
+<div id="invitation" hidden><audio id="backgroundMusic" loop preload="none"></audio>
 <section id="cover" class="cover"><div class="cover-art"></div><div class="cover-content"><p id="bismillah" class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p><div class="eyebrow" id="coverEyebrow">A sacred beginning</div><h1 id="coverNames">Bride <i class="amp">&amp;</i> Groom</h1><div class="rule"></div><p id="coverWelcome" class="welcome"></p><button id="openInvitation" class="open-btn">Open invitation ✧</button></div></section>
 <main id="mainInvitation">
 <section class="intro"><div class="kicker" id="introKicker">With the blessings of Allah</div><h2 id="introNames">Bride & Groom</h2><p class="copy" id="introWelcome"></p><div id="countdown" class="countdown"><div><strong>--</strong><span>Days</span></div><div><strong>--</strong><span>Hours</span></div><div><strong>--</strong><span>Minutes</span></div><div><strong>--</strong><span>Seconds</span></div></div></section>
@@ -141,7 +141,8 @@ async function loadInvitation(){
  setText('coverNames',names);setText('introNames',names);setText('coverEyebrow',t.eyebrow);setText('introKicker',t.intro);
  setText('eventKicker',t.celebrate);setText('eventTitle',t.event);setText('eventCouple',t.ceremony);setText('familyTitle',t.family);setText('familyMessage',t.familyMessage);
  setText('galleryTitle',t.gallery);setText('locationTitle',t.venue);$('openInvitation').textContent=t.open;
- const welcome=config.welcome_message||'With the blessings of Allah, our families warmly invite you to celebrate this beautiful beginning with us.';
+ const musicUrl=safeUrl(config.music_url||'');if(musicUrl){$('backgroundMusic').src=musicUrl;$('backgroundMusic').load();}
+  const welcome=config.welcome_message||'With the blessings of Allah, our families warmly invite you to celebrate this beautiful beginning with us.';
  setText('coverWelcome',welcome);setText('introWelcome',welcome);
  const date=formatDate(config.wedding_date,lang);setText('eventDate',date);setText('eventTime',config.wedding_time);setText('eventVenue',config.venue);setText('eventLocation',config.location);setText('locationCopy',[config.venue,config.location].filter(Boolean).join(' · '));
  if(config.location||config.venue){const query=encodeURIComponent([config.venue,config.location].filter(Boolean).join(', '));$('mapLink').href='https://www.google.com/maps/search/?api=1&query='+query;$('mapLink').hidden=false}
@@ -162,7 +163,7 @@ async function loadInvitation(){
  }
  if(!grid.children.length){const p=document.createElement('p');p.className='copy';p.textContent='Beautiful moments will appear here.';grid.appendChild(p)}
  $('state').hidden=true;$('invitation').hidden=false;
- $('openInvitation').addEventListener('click',()=>{$('cover').style.transition='opacity 1s ease';$('cover').style.opacity='0';setTimeout(()=>{$('cover').style.display='none';$('mainInvitation').style.display='block';$('mainInvitation').style.animation='fadein 1s ease'},850)});
+ $('openInvitation').addEventListener('click',()=>{if($('backgroundMusic').src){$('backgroundMusic').play().catch(()=>{});}$('cover').style.transition='opacity 1s ease';$('cover').style.opacity='0';setTimeout(()=>{$('cover').style.display='none';$('mainInvitation').style.display='block';$('mainInvitation').style.animation='fadein 1s ease'},850)});
  setupScratchReveal(config,lang);
  const labels=[t.days,t.hours,t.minutes,t.seconds];$('countdown').querySelectorAll('span').forEach((el,i)=>el.textContent=labels[i]);
  if(lang==='ar')$('bismillah').textContent='بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ';
