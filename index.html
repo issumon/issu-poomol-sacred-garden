@@ -7,7 +7,7 @@
 <title>Issu &amp; Poomol — The Sacred Garden</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--ivory:#f4eee4;--paper:#fffaf2;--wine:#67212d;--gold:#b7955f;--ink:#302820;--muted:#756b60;--sage:#78836e}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--ivory);color:var(--ink);font-family:"DM Sans",sans-serif}button{font:inherit}
@@ -304,13 +304,13 @@ main{opacity:0;transform:translateY(22px);transition:opacity 1.8s ease,transform
  <div class="garden-vines vine-left">❧ ❀ ✿</div><div class="garden-vines vine-right">✿ ❀ ❧</div>
  <div class="garden-glow"></div>
  <div class="garden-content">
+  <div class="garden-bismillah" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
   <div class="garden-kicker">TOGETHER WITH THEIR FAMILIES</div>
   <div class="garden-flourish">✧ ❀ ✧</div>
   <div class="garden-title">You are invited<br>to celebrate</div>
   <div class="garden-names">Issu <i>&amp;</i> Poomol</div>
   <div class="garden-rule"><span>✦</span></div>
   <div class="garden-subtitle">THE SACRED GARDEN</div>
-  <div class="garden-date">12 · 12 · 2027</div>
   <div class="garden-cta">ENTER THE GARDEN <span>↓</span></div>
  </div>
  <div class="garden-bottom-flora">✿　❀　✧　❀　✿</div>
@@ -448,3 +448,18 @@ document.getElementById('rsvpForm').addEventListener('submit',e=>{e.preventDefau
 </script>
 </body>
 </html>
+<style>
+/* Arabic calligraphy on the opening; wedding date stays in the scratch reveal */
+.garden-bismillah{
+  font-family:'Amiri',serif;
+  font-size:clamp(25px,6.4vw,39px);
+  line-height:1.7;
+  color:#fff7e9;
+  text-shadow:0 2px 16px rgba(2,18,15,.9),0 0 24px rgba(255,245,222,.22);
+  margin:0 0 clamp(15px,3vh,27px);
+  letter-spacing:0;
+  animation:riseIn 1.2s .05s both;
+}
+.garden-date{display:none!important}
+@media(max-height:700px){.garden-bismillah{font-size:clamp(22px,5.5vw,31px);margin-bottom:10px}.garden-cta{margin-top:20px}}
+</style>
