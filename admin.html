@@ -9,6 +9,7 @@
 .guest-link{display:inline-flex;align-items:center;gap:7px;padding:11px 15px;border:1px solid #c8a66a;border-radius:9px;color:#f6e8cb;text-decoration:none;font-size:13px;font-weight:600;background:#ffffff12}.guest-link:hover{background:#ffffff22}
 
 .editor-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}.editor-head h2{margin-bottom:5px}.editor-tabs{display:flex;gap:7px;overflow:auto;padding:8px 0 16px}.editor-tab{white-space:nowrap;background:#e8ddc9;color:var(--green);padding:10px 13px}.editor-tab.active{background:var(--green2);color:#fff}.template-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.template-card{border:1px solid var(--line);border-radius:12px;background:#fffaf2;padding:10px;text-align:left;color:var(--ink);min-width:0}.template-card.selected{outline:2px solid var(--gold);background:#f4ead6}.template-art{height:125px;border-radius:8px;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;color:#f9edcf;font:italic 20px Georgia,serif;letter-spacing:.04em;position:relative;overflow:hidden;border:1px solid #c8a66a}.template-art:before{content:"";position:absolute;inset:8px;border:1px solid #d9bd83;pointer-events:none}.template-art span{position:relative;text-shadow:0 2px 7px #0008}.template-card small{display:block;color:var(--muted);margin-top:8px}.editor-pane{padding:10px 0}.editor-preview{margin:18px 0;padding:15px;background:#e9dfd1;border-radius:12px}.preview-label{font-size:10px;letter-spacing:.16em;color:var(--muted);text-transform:uppercase;margin-bottom:9px}.preview-card{min-height:180px;border-radius:10px;background:linear-gradient(145deg,#103b2f,#071f19);color:#f4e6c4;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:24px;border:5px double #c8a66a}.preview-card span{font-size:9px;letter-spacing:.24em}.preview-card strong{font:italic 38px Georgia,serif;margin:16px 0}.preview-card i{font:13px Georgia,serif}.project-edit{margin-top:9px;padding:8px 12px;font-size:12px}@media(max-width:600px){.template-grid{grid-template-columns:1fr}.template-art{height:145px}}
+.template-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.template-card{padding:11px;border-radius:15px;transition:transform .18s ease,box-shadow .18s ease}.template-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px #33251418}.template-card.selected{outline:2px solid var(--gold);box-shadow:0 8px 24px #b9955230}.template-art{height:190px;border:0;padding:0;display:block;isolation:isolate;background:#102d25}.template-art:before{content:none}.art-scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:17px;text-align:center}.art-frame{position:absolute;inset:10px;border:1px solid currentColor;opacity:.7}.art-frame.double{inset:15px}.art-copy{position:relative;z-index:3;max-width:90%;display:flex;flex-direction:column;align-items:center;gap:7px}.art-kicker{font:600 8px system-ui;letter-spacing:.25em}.art-names{font:italic 28px Georgia,serif;line-height:1.05}.art-sub{font:10px Georgia,serif;letter-spacing:.12em}.art-rule{width:48px;height:1px;background:currentColor}.art-mark{font-size:23px}.art-orbit{position:absolute;width:145px;height:145px;border:1px solid currentColor;border-radius:50%;opacity:.28}.art-orbit:before,.art-orbit:after{content:"";position:absolute;inset:12px;border:1px solid currentColor;border-radius:50%}.art-orbit:after{inset:27px}.art-leaf{position:absolute;font-size:58px;opacity:.28}.art-leaf.left{left:5px;top:3px;transform:rotate(-35deg)}.art-leaf.right{right:5px;bottom:2px;transform:rotate(145deg)}.art-spark{position:absolute;font-size:15px;opacity:.65}.art-spark.a{left:18%;top:23%}.art-spark.b{right:18%;top:28%}.art-spark.c{right:23%;bottom:20%}.art-panel{position:absolute;inset:23px 30px;border:1px solid currentColor;opacity:.45}.art-glow{position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,currentColor 0,transparent 68%);opacity:.12}.art-watermark{position:absolute;bottom:18px;font:9px Georgia,serif;letter-spacing:.2em;opacity:.6}.template-card strong{display:block;margin-top:10px;font-size:13px}.template-card small{font-size:11px;line-height:1.45}.preview-card{position:relative;overflow:hidden;isolation:isolate}.preview-card:before{content:"";position:absolute;inset:10px;border:1px solid var(--preview-accent,#c8a66a);opacity:.8;pointer-events:none}.preview-card:after{content:"✦";position:absolute;top:14px;right:20px;color:var(--preview-accent,#c8a66a);font-size:18px}.preview-card>*{position:relative;z-index:1}.preview-card .preview-kicker{font-size:9px;letter-spacing:.25em}@media(max-width:600px){.template-grid{grid-template-columns:1fr}.template-art{height:205px}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -43,8 +44,8 @@
 </div>
 </div>
 <div class="editor-pane hidden" data-pane="music"><div class="grid"><div class="field full"><label>Background song URL (direct MP3 / M4A / supported audio link)</label><input id="edMusicUrl" type="url" placeholder="https://example.com/wedding-song.mp3"></div></div><audio id="edMusicPreview" class="preview" controls preload="none"></audio><p class="hint">This music belongs only to this couple's invitation. On mobile, playback starts after the guest taps “Open invitation”. Use a direct audio-file link.</p><div class="actions"><button type="button" class="secondary" id="previewProjectMusic">Preview song</button><button type="button" class="secondary" id="clearProjectMusic">Remove song</button></div></div>
-<div class="editor-pane hidden" data-pane="covers"><p class="hint">Choose an invitation-style opening cover. These are selectable design presets; visual artwork and live guest rendering are the next implementation stage.</p><div class="template-grid" id="coverChoices"></div></div>
-<div class="editor-pane hidden" data-pane="pages"><p class="hint">Choose the layout for the invitation's inner pages.</p><div class="template-grid" id="pageChoices"></div></div>
+<div class="editor-pane hidden" data-pane="covers"><p class="hint">20 distinct wedding-design concepts, presented like a professional design studio. Every card has its own artwork, typography and decorative layout.</p><div class="template-grid" id="coverChoices"></div></div>
+<div class="editor-pane hidden" data-pane="pages"><p class="hint">Choose a matching inner-page direction: editorial, floral, classic, cinematic, geometric and more.</p><div class="template-grid" id="pageChoices"></div></div>
 <div class="editor-pane hidden" data-pane="style">
 <div class="grid">
 <div class="field"><label>Primary language</label><select id="edLanguage"><option value="en">English</option><option value="ml">Malayalam</option><option value="ar">Arabic</option></select></div>
@@ -127,20 +128,48 @@ $('createStudioProject').addEventListener('click',async()=>{
  finally{$('createStudioProject').disabled=false;}
 });
 
-const coverNames=['Emerald Royal Arch','Ivory Floral Frame','Moonlit Garden','Royal Gold Geometry','Lantern Courtyard','Sacred Botanical','Pearl Minimal Luxe','Arabic Heritage','Blossom Pavilion','Celestial Night'];
-const pageNames=['Classic Story Scroll','Royal Editorial','Floral Chapters','Modern Minimal','Emerald Panels','Gold Line Suite','Garden Gallery','Arabic Calligraphy','Timeline Elegance','Luxury Magazine'];
-const artBgs=['linear-gradient(135deg,#0b3328,#1d6047)','linear-gradient(135deg,#e8d8bd,#8d6d4a)','linear-gradient(135deg,#081e30,#355d70)','linear-gradient(135deg,#4a351c,#c4a05d)','linear-gradient(135deg,#263b2e,#8d7044)','linear-gradient(135deg,#173c30,#71835c)','linear-gradient(135deg,#fff9ed,#bca77f)','linear-gradient(135deg,#092d29,#416a57)','linear-gradient(135deg,#6c3c43,#d3a67f)','linear-gradient(135deg,#101a31,#554b75)'];
+const coverNames=['Emerald Royal Arch','Ivory Classic','Blush Floral Garden','VFX Starlight','Royal Geometric','Arabesque Heritage','Botanical Greenhouse','Pearl Editorial','Moonlit Lanterns','Celestial Gold'];
+const pageNames=['Royal Editorial','Classic Storybook','Floral Chapters','Cinematic VFX','Modern Geometry','Arabic Heritage','Botanical Gallery','Luxury Magazine','Lantern Timeline','Celestial Minimal'];
+const templateLooks=[
+{bg:'linear-gradient(145deg,#09271f,#1b5a43 58%,#071b17)',fg:'#f4dfad',kind:'royal',orn:'♛',kicker:'A ROYAL CELEBRATION',sub:'THE SACRED GARDEN'},
+{bg:'linear-gradient(145deg,#fff8e9,#e7d6b8)',fg:'#765c3d',kind:'classic',orn:'❦',kicker:'TOGETHER WITH LOVE',sub:'A TIMELESS INVITATION'},
+{bg:'linear-gradient(145deg,#f7e4df,#c58d8b)',fg:'#6c343d',kind:'floral',orn:'❀',kicker:'A GARDEN OF LOVE',sub:'BLOSSOMS & BLESSINGS'},
+{bg:'radial-gradient(circle at 50% 42%,#365c8d,#111a39 55%,#070d20)',fg:'#f6e5b8',kind:'vfx',orn:'✧',kicker:'A NIGHT TO REMEMBER',sub:'AN EXTRAORDINARY MOMENT'},
+{bg:'linear-gradient(135deg,#3a2916,#a77c39 50%,#1b332b)',fg:'#f8e6b5',kind:'geometry',orn:'◇',kicker:'THE ART OF FOREVER',sub:'A GOLDEN BEGINNING'},
+{bg:'linear-gradient(145deg,#123d38,#071e20)',fg:'#e5d4a4',kind:'arabesque',orn:'۞',kicker:'WITH ALLAH’S BLESSINGS',sub:'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ'},
+{bg:'linear-gradient(145deg,#dce4d2,#829b78)',fg:'#233c2c',kind:'botanical',orn:'❧',kicker:'GROWING IN LOVE',sub:'A BEAUTIFUL NEW CHAPTER'},
+{bg:'linear-gradient(145deg,#fdf9f0,#d7c6a8)',fg:'#4a4035',kind:'editorial',orn:'✦',kicker:'THE WEDDING EDITION',sub:'ISSUE NO. 01 · FOREVER'},
+{bg:'linear-gradient(145deg,#352d29,#80614b)',fg:'#f4dfb5',kind:'lantern',orn:'♢',kicker:'UNDER A THOUSAND STARS',sub:'A LIGHT OF LOVE'},
+{bg:'linear-gradient(145deg,#101b31,#343d65 55%,#090f20)',fg:'#e9d9ae',kind:'celestial',orn:'☾',kicker:'WRITTEN IN THE STARS',sub:'A DESTINY TOGETHER'}
+];
 let activeProject=null, editorConfig={};
+function artworkMarkup(index,type){
+ const t=templateLooks[index],isPage=type==='page';
+ let deco='';
+ if(t.kind==='floral'||t.kind==='botanical')deco='<span class="art-leaf left">❧</span><span class="art-leaf right">❧</span>';
+ else if(t.kind==='vfx'||t.kind==='celestial')deco='<span class="art-spark a">✦</span><span class="art-spark b">✧</span><span class="art-spark c">✦</span><span class="art-glow"></span>';
+ else if(t.kind==='geometry')deco='<span class="art-orbit"></span><span class="art-panel"></span>';
+ else if(t.kind==='royal'||t.kind==='arabesque')deco='<span class="art-orbit"></span><span class="art-frame double"></span>';
+ else if(t.kind==='lantern')deco='<span class="art-spark a">☼</span><span class="art-spark b">☼</span><span class="art-orbit"></span>';
+ else deco='<span class="art-panel"></span>';
+ const frame=t.kind==='classic'||t.kind==='editorial'?'double':'';
+ return '<div class="art-scene '+(isPage?'page-':'cover-')+t.kind+'" style="background:'+t.bg+';color:'+t.fg+'">'+deco+'<span class="art-frame '+frame+'"></span><div class="art-copy"><span class="art-kicker">'+t.kicker+'</span><span class="art-mark">'+t.orn+'</span><span class="art-names">Ajmal &amp; Ponnu</span><span class="art-rule"></span><span class="art-sub">'+t.sub+'</span></div><span class="art-watermark">'+(isPage?'THE INVITATION · 2027':'SAVE THE DATE · 2027')+'</span></div>';
+}
 function renderTemplateChoices(type,selected){
- const names=type==='cover'?coverNames:pageNames, host=$(type==='cover'?'coverChoices':'pageChoices');
- host.innerHTML=names.map((name,i)=>'<button type="button" class="template-card '+(selected===type+'-'+String(i+1).padStart(2,'0')?'selected':'')+'" data-template-type="'+type+'" data-template-id="'+type+'-'+String(i+1).padStart(2,'0')+'"><div class="template-art" style="background:'+artBgs[i]+'"><span>✧<br>'+escapeStudio(name)+'<br>✧</span></div><strong>'+String(i+1).padStart(2,'0')+'. '+escapeStudio(name)+'</strong><small>'+ (type==='cover'?'Opening cover concept':'Invitation page layout')+'</small></button>').join('');
+ const names=type==='cover'?coverNames:pageNames,host=$(type==='cover'?'coverChoices':'pageChoices');
+ const descriptions=['Royal luxury · ornate arch & gold detailing','Classic ivory · timeless serif & fine borders','Floral romance · layered botanical ornaments','VFX cinematic · glowing light & star particles','Graphic geometry · bold symmetry & gold lines','Islamic heritage · arabesque-inspired ornament','Botanical elegance · natural garden composition','Editorial luxury · magazine-inspired typography','Lantern mood · warm light & evening atmosphere','Celestial style · moonlight & subtle sparkle'];
+ host.innerHTML=names.map((name,i)=>{const id=type+'-'+String(i+1).padStart(2,'0');return '<button type="button" class="template-card '+(selected===id?'selected':'')+'" data-template-type="'+type+'" data-template-id="'+id+'"><div class="template-art">'+artworkMarkup(i,type)+'</div><strong>'+String(i+1).padStart(2,'0')+'. '+escapeStudio(name)+'</strong><small>'+descriptions[i]+'</small></button>';}).join('');
 }
 function refreshEditorPreview(){
- const primary=$('edPrimary').value||'#103b2f',accent=$('edAccent').value||'#c8a66a';
- $('editorPreview').style.background='linear-gradient(145deg,'+primary+',#071f19)';
- $('editorPreview').style.borderColor=accent;
+ const card=$('editorPreview'),id=editorConfig.cover_template||'cover-01',idx=Math.max(0,Math.min(9,parseInt(id.split('-')[1],10)-1)),look=templateLooks[idx];
+ card.style.background=look.bg;card.style.color=look.fg;card.style.borderColor=look.fg;
+ card.style.borderStyle=(look.kind==='classic'||look.kind==='editorial')?'double':'solid';
+ card.style.borderWidth=(look.kind==='royal'||look.kind==='arabesque')?'7px':'4px';
+ card.style.setProperty('--preview-accent',$('edAccent').value||'#c8a66a');
  $('previewNames').textContent=$('edCouple').value||'Bride & Groom';
  $('previewVenue').textContent=[$('edVenue').value,$('edDate').value].filter(Boolean).join(' · ')||'Your venue · Your date';
+ $('editorPreview').querySelector('span').textContent=look.kicker;
+ $('editorPreview').querySelector('i').textContent=look.sub+' · '+($('edDate').value||'2027');
 }
 async function openDesignEditor(projectId){
  say('editorStatus','Loading project settings…');
