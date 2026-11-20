@@ -53,7 +53,7 @@
 <p class="hint">Language text fields and translation editing will be expanded in the next editor update.</p>
 </div>
 <div class="editor-preview"><div class="preview-label">Live style preview</div><div id="editorPreview" class="preview-card"><span>THE WEDDING INVITATION</span><strong id="previewNames">Bride & Groom</strong><i id="previewVenue">Your venue · Your date</i></div></div>
-<div class="actions"><button id="saveDesign">Save project design</button><button class="secondary" id="cancelDesign">Cancel</button><span class="status" id="editorStatus" role="status"></span></div>
+<div class="actions"><button id="saveDesign">Save project design</button><button id="publishProject" type="button">Publish invitation</button><button class="secondary" id="cancelDesign">Cancel</button><span class="status" id="editorStatus" role="status"></span></div><div id="publishedLinkPanel" class="hint hidden" style="margin-top:12px;padding:12px;border:1px solid var(--gold);border-radius:10px"><strong>Guest invitation link</strong><p><a id="publishedGuestLink" href="#" target="_blank" rel="noopener"></a></p><button type="button" class="secondary" id="copyGuestLink">Copy guest link</button></div>
 </section>
 <section class="panel"><h2>Wedding details</h2><div class="grid">
 <div class="field"><label>Couple names</label><input id="couple_names"></div>
@@ -195,10 +195,44 @@ $('saveDesign').addEventListener('click',async()=>{
   if(configErr)throw configErr;
   editorConfig=config;activeProject.couple_names=$('edCouple').value.trim();activeProject.client_name=$('edClient').value.trim();
   $('editorHeading').textContent=activeProject.couple_names||activeProject.client_name;
-  say('editorStatus','Saved! Project design settings are stored. Guest-page design publishing is a later step.');
+  say('editorStatus','Saved! Your guest invitation will use these design settings.');
   await loadStudioProjects();
  }catch(err){say('editorStatus',err.message||'Could not save project design.');}
  finally{$('saveDesign').disabled=false;}
+});
+
+
+function guestUrl(project){return new URL('invite.html?slug='+encodeURIComponent(project.slug),location.origin).href;}
+function showPublishedLink(project){
+ const url=guestUrl(project);
+ $('publishedGuestLink').href=url;$('publishedGuestLink').textContent=url;
+ $('publishedLinkPanel').classList.remove('hidden');
+}
+$('publishProject').addEventListener('click',async()=>{
+ if(!activeProject)return;
+ $('publishProject').disabled=true;say('editorStatus','Publishing invitation…');
+ try{
+  // Save the latest editor values before changing the project status.
+  const config={...editorConfig,location:$('edLocation').value.trim(),wedding_date:$('edDate').value,wedding_time:$('edTime').value.trim(),venue:$('edVenue').value.trim(),welcome_message:$('edWelcome').value.trim(),language:$('edLanguage').value,theme:{primary:$('edPrimary').value,accent:$('edAccent').value},translations:editorConfig.translations||{en:{},ml:{},ar:{}}};
+  const {error:projectSaveError}=await db.from('sacred_garden_projects').update({client_name:$('edClient').value.trim(),couple_names:$('edCouple').value.trim(),updated_at:new Date().toISOString()}).eq('id',activeProject.id);
+  if(projectSaveError)throw projectSaveError;
+  const {error:configSaveError}=await db.from('sacred_garden_project_settings').upsert({project_id:activeProject.id,config,updated_at:new Date().toISOString()},{onConflict:'project_id'});
+  if(configSaveError)throw configSaveError;
+  const {data:published,error:publishError}=await db.from('sacred_garden_projects').update({status:'published',updated_at:new Date().toISOString()}).eq('id',activeProject.id).select('id,slug,client_name,couple_names,status').single();
+  if(publishError)throw publishError;
+  activeProject=published;editorConfig=config;
+  $('editorSlug').textContent='Project link: /'+published.slug+' · PUBLISHED';
+  $('editorHeading').textContent=published.couple_names||published.client_name;
+  showPublishedLink(published);
+  say('editorStatus','Published successfully. Your client guest link is ready.');
+  await loadStudioProjects();
+ }catch(err){say('editorStatus','Publish failed: '+(err.message||'Please try again.'));}
+ finally{$('publishProject').disabled=false;}
+});
+$('copyGuestLink').addEventListener('click',async()=>{
+ const url=$('publishedGuestLink').href;
+ try{await navigator.clipboard.writeText(url);say('editorStatus','Guest link copied.');}
+ catch(e){say('editorStatus','Select and copy the guest link shown above.');}
 });
 
 async function showDashboard(user){
