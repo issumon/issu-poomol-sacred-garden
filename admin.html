@@ -151,6 +151,7 @@ async function openDesignEditor(projectId){
  $('studioProjects').classList.add('hidden');$('designEditor').classList.remove('hidden');
  $('editorHeading').textContent=project.couple_names||project.client_name;
  $('editorSlug').textContent='Project link: /'+project.slug+' · '+project.status.toUpperCase();
+ if(project.status==='published')showPublishedLink(project);else $('publishedLinkPanel').classList.add('hidden');
  $('edCouple').value=project.couple_names||'';
  $('edClient').value=project.client_name||'';
  $('edLocation').value=editorConfig.location||'';
