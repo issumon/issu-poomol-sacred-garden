@@ -224,6 +224,75 @@ main{opacity:0;transform:translateY(22px);transition:opacity 1.8s ease,transform
 }
 @media(prefers-reduced-motion:reduce){.garden-backdrop,.garden-glow{animation:none!important}}
 
+
+/* Real garden artwork: image-led opening, not CSS-drawn garden ornaments */
+#cover{min-height:100svh;min-height:100dvh;background:#071d19;overflow:hidden}
+.garden-backdrop{
+  inset:0;
+  background-image:
+    linear-gradient(180deg,rgba(3,20,19,.20) 0%,rgba(4,24,20,.30) 40%,rgba(3,20,17,.55) 100%),
+    url("https://img.pikbest.com/backgrounds/20250408/flower-garden-with-night-sky-_11651072.jpg%21sw800");
+  background-size:cover;
+  background-position:center 48%;
+  transform:scale(1.015);
+  animation:gardenPhotoDrift 24s ease-in-out infinite alternate;
+}
+.garden-backdrop:before{display:none}
+.garden-vignette{
+  background:
+    linear-gradient(90deg,rgba(2,17,15,.24),transparent 24%,transparent 76%,rgba(2,17,15,.24)),
+    linear-gradient(0deg,rgba(2,17,15,.45),transparent 30%,rgba(2,17,15,.18));
+}
+.garden-arch,.garden-vines,.garden-glow,.garden-bottom-flora{display:none}
+.garden-content{
+  justify-content:center;
+  padding:clamp(28px,6vh,60px) 22px;
+  isolation:isolate;
+}
+.garden-content:before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  width:min(92vw,560px);
+  height:min(58vh,500px);
+  border-radius:50%;
+  background:radial-gradient(ellipse,rgba(4,29,24,.56) 0%,rgba(4,29,24,.34) 48%,transparent 76%);
+  filter:blur(13px);
+}
+.garden-kicker{color:#f2eee4;text-shadow:0 2px 12px #061b17;letter-spacing:.24em}
+.garden-flourish{color:#f3dfe1;text-shadow:0 2px 14px #071d19;margin:clamp(12px,2.5vh,24px) 0 8px}
+.garden-title{color:#fffaf4;text-shadow:0 2px 14px #061b17}
+.garden-names{
+  color:#fffaf3;
+  text-shadow:0 3px 24px #031712,0 1px 3px #031712;
+  margin:clamp(12px,2.5vh,22px) 0 10px;
+}
+.garden-names i{color:#efcbd1}
+.garden-rule{background:linear-gradient(90deg,transparent,#e8d9c9,transparent)}
+.garden-rule span{background:transparent;color:#f2d9df;text-shadow:0 2px 12px #061b17}
+.garden-subtitle{color:#f4e6e4;text-shadow:0 2px 12px #061b17}
+.garden-date{color:#fff8ef;text-shadow:0 2px 12px #061b17}
+.garden-cta{
+  pointer-events:none;
+  border:1px solid rgba(245,231,214,.72);
+  border-radius:3px;
+  background:rgba(5,35,28,.54);
+  color:#fff8ee;
+  box-shadow:0 8px 28px rgba(0,0,0,.22);
+  backdrop-filter:blur(5px);
+}
+.garden-cta span{color:#f1d9de}
+#openInvite{cursor:pointer}
+@keyframes gardenPhotoDrift{from{transform:scale(1.015)}to{transform:scale(1.075) translateY(-.6%)}}
+@media(max-width:650px){
+  #cover{height:100svh;height:100dvh}
+  .garden-backdrop{background-position:center 48%}
+  .garden-content{padding:24px 18px}
+  .garden-names{font-size:clamp(52px,13vw,78px)}
+  .garden-cta{margin-top:clamp(26px,5vh,42px)}
+}
+@media(prefers-reduced-motion:reduce){.garden-backdrop{animation:none!important}}
+
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
