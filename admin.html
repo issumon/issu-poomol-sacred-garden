@@ -30,7 +30,7 @@
 
 <section class="panel hidden" id="designEditor">
 <div class="editor-head"><div><div class="eyebrow">Client workspace</div><h2 id="editorHeading">Wedding Design Editor</h2><p class="hint" id="editorSlug"></p></div><button class="secondary" id="closeEditor">← Back to projects</button></div>
-<div class="editor-tabs"><button type="button" class="editor-tab active" data-tab="details">Wedding details</button><button type="button" class="editor-tab" data-tab="covers">10 cover designs</button><button type="button" class="editor-tab" data-tab="pages">10 invitation pages</button><button type="button" class="editor-tab" data-tab="style">Language & style</button></div>
+<div class="editor-tabs"><button type="button" class="editor-tab active" data-tab="details">Wedding details</button><button type="button" class="editor-tab" data-tab="music">Background music</button><button type="button" class="editor-tab" data-tab="covers">10 cover designs</button><button type="button" class="editor-tab" data-tab="pages">10 invitation pages</button><button type="button" class="editor-tab" data-tab="style">Language & style</button></div>
 <div class="editor-pane" data-pane="details">
 <div class="grid">
 <div class="field"><label>Couple names</label><input id="edCouple" placeholder="Bride & Groom"></div>
@@ -42,6 +42,7 @@
 <div class="field full"><label>Welcome / invitation message</label><textarea id="edWelcome" placeholder="With the blessings of Allah, we invite you..."></textarea></div>
 </div>
 </div>
+<div class="editor-pane hidden" data-pane="music"><div class="grid"><div class="field full"><label>Background song URL (direct MP3 / M4A / supported audio link)</label><input id="edMusicUrl" type="url" placeholder="https://example.com/wedding-song.mp3"></div></div><audio id="edMusicPreview" class="preview" controls preload="none"></audio><p class="hint">This music belongs only to this couple's invitation. On mobile, playback starts after the guest taps “Open invitation”. Use a direct audio-file link.</p><div class="actions"><button type="button" class="secondary" id="previewProjectMusic">Preview song</button><button type="button" class="secondary" id="clearProjectMusic">Remove song</button></div></div>
 <div class="editor-pane hidden" data-pane="covers"><p class="hint">Choose an invitation-style opening cover. These are selectable design presets; visual artwork and live guest rendering are the next implementation stage.</p><div class="template-grid" id="coverChoices"></div></div>
 <div class="editor-pane hidden" data-pane="pages"><p class="hint">Choose the layout for the invitation's inner pages.</p><div class="template-grid" id="pageChoices"></div></div>
 <div class="editor-pane hidden" data-pane="style">
@@ -159,6 +160,7 @@ async function openDesignEditor(projectId){
  $('edTime').value=editorConfig.wedding_time||'';
  $('edVenue').value=editorConfig.venue||'';
  $('edWelcome').value=editorConfig.welcome_message||'';
+ $('edMusicUrl').value=editorConfig.music_url||'';$('edMusicPreview').src=editorConfig.music_url||'';
  $('edLanguage').value=editorConfig.language||'en';
  $('edPrimary').value=editorConfig.theme?.primary||'#103b2f';
  $('edAccent').value=editorConfig.theme?.accent||'#c8a66a';
@@ -185,11 +187,14 @@ document.addEventListener('click',e=>{
  editorConfig[type==='cover'?'cover_template':'page_template']=b.dataset.templateId;
 });
 ['edCouple','edVenue','edDate','edPrimary','edAccent'].forEach(id=>$(id).addEventListener('input',refreshEditorPreview));
+$('edMusicUrl').addEventListener('input',()=>{$('edMusicPreview').src=$('edMusicUrl').value.trim();});
+$('previewProjectMusic').addEventListener('click',()=>{const u=$('edMusicUrl').value.trim();if(!u){say('editorStatus','Add a direct song URL first.');return;}$('edMusicPreview').src=u;$('edMusicPreview').play().catch(()=>say('editorStatus','Could not play this URL. Check that it is a direct audio-file link.'));});
+$('clearProjectMusic').addEventListener('click',()=>{$('edMusicUrl').value='';$('edMusicPreview').pause();$('edMusicPreview').removeAttribute('src');$('edMusicPreview').load();});
 $('saveDesign').addEventListener('click',async()=>{
  if(!activeProject)return;
  $('saveDesign').disabled=true;say('editorStatus','Saving project design…');
  try{
-  const config={...editorConfig,location:$('edLocation').value.trim(),wedding_date:$('edDate').value,wedding_time:$('edTime').value.trim(),venue:$('edVenue').value.trim(),welcome_message:$('edWelcome').value.trim(),language:$('edLanguage').value,theme:{primary:$('edPrimary').value,accent:$('edAccent').value},translations:editorConfig.translations||{en:{},ml:{},ar:{}}};
+  const config={...editorConfig,location:$('edLocation').value.trim(),wedding_date:$('edDate').value,wedding_time:$('edTime').value.trim(),venue:$('edVenue').value.trim(),welcome_message:$('edWelcome').value.trim(),music_url:$('edMusicUrl').value.trim(),language:$('edLanguage').value,theme:{primary:$('edPrimary').value,accent:$('edAccent').value},translations:editorConfig.translations||{en:{},ml:{},ar:{}}};
   const {error:projectErr}=await db.from('sacred_garden_projects').update({client_name:$('edClient').value.trim(),couple_names:$('edCouple').value.trim(),updated_at:new Date().toISOString()}).eq('id',activeProject.id);
   if(projectErr)throw projectErr;
   const {error:configErr}=await db.from('sacred_garden_project_settings').upsert({project_id:activeProject.id,config,updated_at:new Date().toISOString()},{onConflict:'project_id'});
@@ -214,7 +219,7 @@ $('publishProject').addEventListener('click',async()=>{
  $('publishProject').disabled=true;say('editorStatus','Publishing invitation…');
  try{
   // Save the latest editor values before changing the project status.
-  const config={...editorConfig,location:$('edLocation').value.trim(),wedding_date:$('edDate').value,wedding_time:$('edTime').value.trim(),venue:$('edVenue').value.trim(),welcome_message:$('edWelcome').value.trim(),language:$('edLanguage').value,theme:{primary:$('edPrimary').value,accent:$('edAccent').value},translations:editorConfig.translations||{en:{},ml:{},ar:{}}};
+  const config={...editorConfig,location:$('edLocation').value.trim(),wedding_date:$('edDate').value,wedding_time:$('edTime').value.trim(),venue:$('edVenue').value.trim(),welcome_message:$('edWelcome').value.trim(),music_url:$('edMusicUrl').value.trim(),language:$('edLanguage').value,theme:{primary:$('edPrimary').value,accent:$('edAccent').value},translations:editorConfig.translations||{en:{},ml:{},ar:{}}};
   const {error:projectSaveError}=await db.from('sacred_garden_projects').update({client_name:$('edClient').value.trim(),couple_names:$('edCouple').value.trim(),updated_at:new Date().toISOString()}).eq('id',activeProject.id);
   if(projectSaveError)throw projectSaveError;
   const {error:configSaveError}=await db.from('sacred_garden_project_settings').upsert({project_id:activeProject.id,config,updated_at:new Date().toISOString()},{onConflict:'project_id'});
