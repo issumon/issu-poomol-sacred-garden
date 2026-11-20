@@ -85,7 +85,7 @@ async function loadInvitation(){
  if(theme.primary&&/^#[0-9a-f]{6}$/i.test(theme.primary))document.documentElement.style.setProperty('--green',theme.primary);
  if(theme.accent&&/^#[0-9a-f]{6}$/i.test(theme.accent))document.documentElement.style.setProperty('--gold',theme.accent);
  $('cover').classList.add(config.cover_template||'cover-01');
- $('mainInvitation').classList.add(config.page_template||'page-01');
+ $('mainInvitation').classList.add('layout-'+(config.page_template||'page-01'));
  const names=project.couple_names||project.client_name||'Wedding Celebration';
  setText('coverNames',names);setText('introNames',names);setText('coverEyebrow',t.eyebrow);setText('introKicker',t.intro);
  setText('eventKicker',t.celebrate);setText('eventTitle',t.event);setText('eventCouple',t.ceremony);setText('familyTitle',t.family);setText('familyMessage',t.familyMessage);
@@ -112,7 +112,7 @@ async function loadInvitation(){
  if(!grid.children.length){const p=document.createElement('p');p.className='copy';p.textContent='Beautiful moments will appear here.';grid.appendChild(p)}
  $('state').hidden=true;$('invitation').hidden=false;
  $('openInvitation').addEventListener('click',()=>{$('cover').style.transition='opacity 1s ease';$('cover').style.opacity='0';setTimeout(()=>{$('cover').style.display='none';$('mainInvitation').style.display='block';$('mainInvitation').style.animation='fadein 1s ease'},850)});
- const target=config.wedding_date?new Date(config.wedding_date+'T'+(config.wedding_time?to24(config.wedding_time):'12:00:00')+':00+05:30'):null;
+ const target=config.wedding_date?new Date(config.wedding_date+'T'+(config.wedding_time?to24(config.wedding_time):'12:00')+':00+05:30'):null;
  function tick(){if(!target||isNaN(target.getTime()))return;let ms=Math.max(0,target-Date.now()),v=[Math.floor(ms/86400000),Math.floor(ms/3600000)%24,Math.floor(ms/60000)%60,Math.floor(ms/1000)%60];$('countdown').querySelectorAll('strong').forEach((el,i)=>el.textContent=String(v[i]).padStart(2,'0'))}
  tick();setInterval(tick,1000);
  const labels=[t.days,t.hours,t.minutes,t.seconds];$('countdown').querySelectorAll('span').forEach((el,i)=>el.textContent=labels[i]);
