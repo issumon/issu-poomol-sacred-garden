@@ -37,6 +37,19 @@ main{display:none}.intro{padding:86px 20px 60px;text-align:center;background:lin
 .kicker{color:var(--gold);font-size:10px;letter-spacing:.3em;text-transform:uppercase}
 h2{font:500 clamp(39px,7vw,66px)/1 "Cormorant Garamond",serif;color:var(--green);margin:16px 0 20px}
 .copy{max-width:680px;margin:0 auto;color:var(--muted);font:17px/1.9 "Cormorant Garamond",serif}
+
+.scratch-wrap{padding:36px 18px 46px;text-align:center;background:linear-gradient(160deg,#f8f0e2,#eee1cb);position:relative;overflow:hidden}
+.scratch-wrap h3{font:30px "Cormorant Garamond",serif;color:var(--green);margin:8px 0}
+.scratch-wrap .hint{font-size:12px;color:var(--muted);letter-spacing:.06em}
+.heart-stage{position:relative;width:min(270px,82vw);height:220px;margin:14px auto 4px;touch-action:none}
+.heart-under{position:absolute;inset:0;display:grid;place-items:center;font-size:178px;line-height:1;color:#b88a3d;text-shadow:0 4px 0 #8d6426,0 9px 22px #6d4a1b44}
+#scratchCanvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.scratch-reveal{max-width:560px;margin:12px auto 0;padding:16px;border:1px solid var(--gold);background:#fffaf2;color:var(--green);display:none}
+.scratch-reveal.show{display:block;animation:fadein .8s ease}
+.scratch-reveal strong{display:block;font:26px "Cormorant Garamond",serif}
+.petal{position:fixed;top:-30px;z-index:20;pointer-events:none;font-size:20px;animation:petalFall 4.5s linear forwards}
+@keyframes petalFall{to{transform:translate3d(var(--drift),110vh,0) rotate(560deg);opacity:0}}
+
 .countdown{display:flex;justify-content:center;gap:22px;margin:34px auto 0}.countdown div{min-width:58px}.countdown strong{display:block;font:38px "Cormorant Garamond",serif;color:var(--green)}.countdown span{font-size:9px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase}
 .section{padding:76px 20px;text-align:center}.section:nth-of-type(even){background:#f1e9dc}.section-inner{max-width:940px;margin:auto}
 .event-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin-top:30px}.event{padding:28px 18px;border:1px solid color-mix(in srgb,var(--gold) 65%,white);background:#fffaf2;box-shadow:0 12px 35px #392b160d}.event h3{font:30px "Cormorant Garamond",serif;color:var(--green);margin:8px}.event p{font-size:13px;line-height:1.8;color:var(--muted);margin:4px}
@@ -55,6 +68,11 @@ h2{font:500 clamp(39px,7vw,66px)/1 "Cormorant Garamond",serif;color:var(--green)
 <section id="cover" class="cover"><div class="cover-art"></div><div class="cover-content"><p id="bismillah" class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p><div class="eyebrow" id="coverEyebrow">A sacred beginning</div><h1 id="coverNames">Bride <i class="amp">&amp;</i> Groom</h1><div class="rule"></div><p id="coverWelcome" class="welcome"></p><button id="openInvitation" class="open-btn">Open invitation ✧</button></div></section>
 <main id="mainInvitation">
 <section class="intro"><div class="kicker" id="introKicker">With the blessings of Allah</div><h2 id="introNames">Bride & Groom</h2><p class="copy" id="introWelcome"></p><div id="countdown" class="countdown"><div><strong>--</strong><span>Days</span></div><div><strong>--</strong><span>Hours</span></div><div><strong>--</strong><span>Minutes</span></div><div><strong>--</strong><span>Seconds</span></div></div></section>
+<section class="scratch-wrap" id="scratchSection">
+<div class="kicker">A little surprise</div><h3>Scratch the golden heart</h3><p class="hint">Gently rub the heart to reveal the wedding details</p>
+<div class="heart-stage" id="heartStage"><div class="heart-under" aria-hidden="true">♥</div><canvas id="scratchCanvas" width="540" height="440" aria-label="Scratch the gold heart to reveal the invitation"></canvas></div>
+<div class="scratch-reveal" id="scratchReveal"><strong id="scratchDate">Our special day</strong><span id="scratchVenue"></span><p>With love, we can't wait to celebrate with you.</p></div>
+</section>
 <section class="section"><div class="section-inner"><div class="kicker" id="eventKicker">Celebrate with us</div><h2 id="eventTitle">Wedding Celebration</h2><div class="event-grid"><article class="event"><div class="kicker">The occasion</div><h3 id="eventCouple">Wedding Ceremony</h3><p id="eventDate"></p><p id="eventTime"></p><p id="eventVenue"></p><p id="eventLocation"></p></article><article class="event"><div class="kicker">With love</div><h3 id="familyTitle">Our Families</h3><p id="familyMessage">Your presence and duas will make our day special.</p></article></div></div></section>
 <section class="section"><div class="section-inner"><div class="kicker">Moments to remember</div><h2 id="galleryTitle">Our Gallery</h2><div id="projectGallery" class="gallery-grid"><p class="copy">Beautiful moments will appear here.</p></div></div></section>
 <section class="section"><div class="section-inner"><div class="kicker">Join our celebration</div><h2 id="locationTitle">The Venue</h2><p class="copy" id="locationCopy"></p><a id="mapLink" class="map-link" target="_blank" rel="noopener" hidden>Open map ↗</a></div></section>
@@ -112,12 +130,48 @@ async function loadInvitation(){
  if(!grid.children.length){const p=document.createElement('p');p.className='copy';p.textContent='Beautiful moments will appear here.';grid.appendChild(p)}
  $('state').hidden=true;$('invitation').hidden=false;
  $('openInvitation').addEventListener('click',()=>{$('cover').style.transition='opacity 1s ease';$('cover').style.opacity='0';setTimeout(()=>{$('cover').style.display='none';$('mainInvitation').style.display='block';$('mainInvitation').style.animation='fadein 1s ease'},850)});
- const target=config.wedding_date?new Date(config.wedding_date+'T'+(config.wedding_time?to24(config.wedding_time):'12:00')+':00+05:30'):null;
- function tick(){if(!target||isNaN(target.getTime()))return;let ms=Math.max(0,target-Date.now()),v=[Math.floor(ms/86400000),Math.floor(ms/3600000)%24,Math.floor(ms/60000)%60,Math.floor(ms/1000)%60];$('countdown').querySelectorAll('strong').forEach((el,i)=>el.textContent=String(v[i]).padStart(2,'0'))}
- tick();setInterval(tick,1000);
+ setupScratchReveal(config,lang);
  const labels=[t.days,t.hours,t.minutes,t.seconds];$('countdown').querySelectorAll('span').forEach((el,i)=>el.textContent=labels[i]);
  if(lang==='ar')$('bismillah').textContent='بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ';
 }
+
+function startPetals(){
+ const symbols=['✿','❀','✧','❁'];
+ for(let i=0;i<24;i++){
+  const p=document.createElement('span');p.className='petal';p.textContent=symbols[i%symbols.length];
+  p.style.left=(Math.random()*100)+'vw';p.style.setProperty('--drift',((Math.random()-.5)*180)+'px');
+  p.style.animationDelay=(Math.random()*1.8)+'s';p.style.color=i%2?'#c8a66a':'#d78b9a';
+  document.body.appendChild(p);setTimeout(()=>p.remove(),6800);
+ }
+}
+function setupScratchReveal(config,lang){
+ const canvas=$('scratchCanvas'),ctx=canvas?.getContext('2d');if(!canvas||!ctx)return;
+ const g=ctx.createLinearGradient(0,0,540,440);g.addColorStop(0,'#f7e4a7');g.addColorStop(.45,'#bd9145');g.addColorStop(1,'#f2d58b');
+ ctx.fillStyle=g;ctx.fillRect(0,0,540,440);
+ ctx.fillStyle='#76551f';ctx.font='bold 34px Georgia';ctx.textAlign='center';ctx.fillText('SCRATCH HERE',270,224);
+ ctx.font='22px Georgia';ctx.fillText('✧  ✧  ✧',270,270);
+ ctx.globalCompositeOperation='destination-out';
+ let drawing=false,travel=0,revealed=false,last=null;
+ const reveal=()=>{
+  if(revealed)return;revealed=true;canvas.style.transition='opacity .8s';canvas.style.opacity='0';
+  setTimeout(()=>canvas.style.display='none',850);
+  $('scratchReveal').classList.add('show');
+  const d=config.wedding_date?formatDate(config.wedding_date,lang):'Our special day';
+  setText('scratchDate',d);setText('scratchVenue',[config.wedding_time,config.venue,config.location].filter(Boolean).join(' · ')||'Wedding celebration');
+  startPetals();startCountdown(config);
+ };
+ const point=e=>{const r=canvas.getBoundingClientRect();return {x:(e.clientX-r.left)/r.width*540,y:(e.clientY-r.top)/r.height*440}};
+ canvas.addEventListener('pointerdown',e=>{drawing=true;last=point(e);canvas.setPointerCapture(e.pointerId);e.preventDefault()});
+ canvas.addEventListener('pointermove',e=>{if(!drawing||revealed)return;const p=point(e);ctx.beginPath();ctx.arc(p.x,p.y,29,0,Math.PI*2);ctx.fill();if(last){travel+=Math.hypot(p.x-last.x,p.y-last.y)}last=p;if(travel>760)reveal();e.preventDefault()});
+ canvas.addEventListener('pointerup',()=>{drawing=false;last=null;if(travel>520)reveal()});
+ canvas.addEventListener('pointercancel',()=>{drawing=false;last=null});
+}
+function startCountdown(config){
+ const target=config.wedding_date?new Date(config.wedding_date+'T'+(config.wedding_time?to24(config.wedding_time):'12:00')+':00+05:30'):null;
+ const tick=()=>{if(!target||isNaN(target.getTime()))return;let ms=Math.max(0,target-Date.now()),v=[Math.floor(ms/86400000),Math.floor(ms/3600000)%24,Math.floor(ms/60000)%60,Math.floor(ms/1000)%60];$('countdown').querySelectorAll('strong').forEach((el,i)=>el.textContent=String(v[i]).padStart(2,'0'))};
+ tick();if(window.sacredCountdownTimer)clearInterval(window.sacredCountdownTimer);window.sacredCountdownTimer=setInterval(tick,1000);
+}
+
 function to24(value){const m=value.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);if(!m)return '12:00';let h=Number(m[1])%12;if(m[3].toUpperCase()==='PM')h+=12;return String(h).padStart(2,'0')+':'+m[2]}
 loadInvitation().catch(error=>{$('state').className='not-found';$('state').innerHTML='';const box=document.createElement('div');const title=document.createElement('h2');title.textContent='Invitation unavailable';const msg=document.createElement('p');msg.textContent=error.message||'Please check the invitation link.';box.append(title,msg);$('state').appendChild(box)});
 </script>
