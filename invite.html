@@ -160,6 +160,25 @@ h2{font:500 clamp(39px,7vw,66px)/1 "Cormorant Garamond",serif;color:var(--green)
 :root[data-palette="silver"]{--green:#64717e;--gold:#a9aeb7;--paper:#f7f8fa;--ink:#303740;--muted:#6e7884}
 :root[data-palette="navy"]{--green:#182c4e;--gold:#d5b56f;--paper:#f7f5ef;--ink:#222b3a;--muted:#6d7180}
 :root[data-palette="ivory"]{--green:#78613f;--gold:#b18b50;--paper:#fffaf0;--ink:#393226;--muted:#766d5d}
+
+/* THEME-SPECIFIC BOTANICAL PALETTES */
+:root{--flower:#e8c6b6;--flower-edge:#bd8876;--leaf:#829b72;--leaf-deep:#526f4e}
+:root[data-palette="emerald"]{--flower:#f1d8c0;--flower-edge:#d0a46c;--leaf:#8eaa7d;--leaf-deep:#526f4e}
+:root[data-palette="burgundy"]{--flower:#f2d5d5;--flower-edge:#c98f9b;--leaf:#8d9a78;--leaf-deep:#5c6550}
+:root[data-palette="pink"]{--flower:#f8d9e2;--flower-edge:#d58ca2;--leaf:#a4b58b;--leaf-deep:#71835d}
+:root[data-palette="silver"]{--flower:#f5f1f0;--flower-edge:#b9bfc8;--leaf:#a5b1ad;--leaf-deep:#74847f}
+:root[data-palette="navy"]{--flower:#e9d8e8;--flower-edge:#b9a1c7;--leaf:#8298a5;--leaf-deep:#536a7b}
+:root[data-palette="ivory"]{--flower:#f3e4c8;--flower-edge:#c8a66a;--leaf:#a8a17c;--leaf-deep:#77704e}
+.garden-branch path.stem{stroke:var(--leaf-deep)}
+.garden-branch path.leaf{fill:var(--leaf);stroke:var(--leaf-deep)}
+.garden-branch .bloom-petal{fill:var(--flower);stroke:var(--flower-edge)}
+.garden-branch .center{fill:var(--gold)}
+/* Keep the living garden elegant and unobtrusive on small screens. */
+.garden-branch{width:clamp(105px,22vw,190px);opacity:.9}
+.garden-branch.left{left:-18px;top:7vh}
+.garden-branch.right{right:-18px;bottom:3vh}
+.flying-duo{filter:drop-shadow(0 2px 2px #0002)}
+@media(max-width:650px){.garden-branch{width:clamp(92px,25vw,135px);opacity:.72}.flying-duo{width:88px;height:48px}}
 </style>
 </head>
 <body>
