@@ -301,6 +301,58 @@ main.garden-page{position:relative;overflow:hidden;background:#f8f4e9}
 .tradition-interfaith .intro{background:linear-gradient(120deg,#f4eee5,#e8e9df,#f3e6e3);border-bottom:1px solid #bba77d}
 .tradition-interfaith .event{border-radius:16px;border:1px solid #c9b99c;background:#fffdf8}
 
+/* DISTINCT WEDDING DESIGN STYLES — paired with any culture and colour palette */
+.style-royal.cover{background:radial-gradient(ellipse at 50% 42%,#315c48 0%,#102d23 58%,#071711 100%)}
+.style-royal.cover:before{inset:6%;border:3px double var(--gold);border-radius:46% 46% 8px 8px}
+.style-royal .intro{border-top:5px double var(--gold);border-bottom:5px double var(--gold)}
+.style-royal .event{box-shadow:0 18px 42px #30241418;border:1px solid var(--gold);border-radius:42% 42% 8px 8px / 16% 16% 8px 8px}
+
+.style-classic.cover{background:linear-gradient(145deg,#fffdf7,#e8dcc7 58%,#d6c4a5);color:#4b4032}
+.style-classic.cover h1{color:#4b4032;text-shadow:none}
+.style-classic.cover .welcome{color:#6e6252}
+.style-classic.cover:before{inset:5%;border:7px double var(--gold);border-radius:3px}
+.style-classic .intro{background:#fffdf8;border-top:1px solid var(--gold);border-bottom:1px solid var(--gold)}
+.style-classic .event{background:#fffdf9;border:1px solid #cfc1a7;border-radius:2px;box-shadow:none}
+
+.style-western.cover{background:linear-gradient(180deg,#fff,#f1e8e0 70%,#e4d8cc);color:#4b403b}
+.style-western.cover h1{color:#463a35;font-family:Georgia,serif;font-weight:400;letter-spacing:.02em;text-shadow:none}
+.style-western.cover .welcome{color:#6f625c}
+.style-western.cover:before{inset:8% 12%;border:1px solid #a99a8d}
+.style-western.cover:after{inset:10% 14%;border:1px solid #c9b9a9}
+.style-western .intro{background:#fff;border:0}
+.style-western .intro h2,.style-western .section h2{font-family:Georgia,serif;font-weight:400;letter-spacing:.02em}
+.style-western .event{background:#fff;border:1px solid #ded5cc;border-radius:0;box-shadow:none}
+
+.style-floral.cover{background:radial-gradient(ellipse at 50% 40%,#f8e9e7,#d8b5b1 70%,#a77c7d);color:#553c43}
+.style-floral.cover h1{color:#553c43;text-shadow:none}
+.style-floral.cover .welcome{color:#765d62}
+.style-floral.cover:before{inset:8%;border:1px solid #a66e7c;border-radius:48%}
+.style-floral .intro{background:linear-gradient(160deg,#fff9f6,#f1dedb);border-radius:0 0 48% 48% / 0 0 5% 5%}
+.style-floral .intro:after{content:"❀  ❁  ❀";display:block;color:#b77e88;font-size:30px;letter-spacing:14px;margin-top:20px}
+.style-floral .event{background:#fff9f7;border:1px solid #d8aeb0;border-radius:48% 48% 10px 10px / 16% 16% 8px 8px}
+
+.style-modern.cover{background:linear-gradient(135deg,#17212b,#354653 52%,#10171e);text-align:left}
+.style-modern.cover .cover-content{margin-left:clamp(0px,8vw,90px);text-align:left}
+.style-modern.cover .rule{margin-left:0}
+.style-modern.cover:before{inset:7%;border:1px solid var(--gold)}
+.style-modern .intro{text-align:left;padding-left:max(8vw,24px);background:#f4f2ed;border:0}
+.style-modern .intro .countdown{justify-content:flex-start;margin-left:0}
+.style-modern .section{text-align:left}
+.style-modern .section-inner{max-width:900px}
+.style-modern .event{border:0;border-left:4px solid var(--gold);border-radius:0;background:#fff;box-shadow:none}
+
+.style-vfx.cover{background:radial-gradient(circle at 50% 42%,#4a5684 0%,#18213f 42%,#080d20 100%)}
+.style-vfx.cover:before{inset:9% 22%;border:1px solid #e6d49d;border-radius:50%}
+.style-vfx.cover:after{inset:13% 26%;border:1px dashed #e6d49d;border-radius:50%}
+.style-vfx.cover .cover-content{padding:34px 22px;background:#111a35a8;border:1px solid #cdb67d;backdrop-filter:blur(5px)}
+.style-vfx .intro{background:radial-gradient(ellipse at 50% 0%,#26365e,#10182d 80%);color:#f4e8c9}
+.style-vfx .intro h2,.style-vfx .intro .copy{color:#f4e8c9}
+.style-vfx .section{background:#10182d;color:#f4e8c9}
+.style-vfx .section h2,.style-vfx .section .copy{color:#f4e8c9}
+.style-vfx .event{background:#ffffff0a;border:1px solid var(--gold);box-shadow:0 0 28px #c8a66a18}
+@media(max-width:650px){.style-modern.cover .cover-content{margin:0}.style-modern.cover{text-align:center}.style-modern.cover .rule{margin:25px auto}.style-modern .intro,.style-modern .section{text-align:center}.style-modern .intro .countdown{justify-content:center;margin-left:auto}}
+
+
 </style>
 </head>
 <body>
@@ -348,8 +400,8 @@ async function loadInvitation(){
  document.documentElement.dataset.palette=theme.palette||'emerald';
  if(theme.primary&&/^#[0-9a-f]{6}$/i.test(theme.primary))document.documentElement.style.setProperty('--green',theme.primary);
  if(theme.accent&&/^#[0-9a-f]{6}$/i.test(theme.accent))document.documentElement.style.setProperty('--gold',theme.accent);
- $('cover').classList.add(config.cover_template||'cover-01','garden-cover');
- $('mainInvitation').classList.add('layout-'+(config.page_template||'page-01'),'garden-page','tradition-'+(config.tradition||'universal'));
+ $('cover').classList.add(config.cover_template||'cover-01','garden-cover','style-'+(config.style||'royal'));
+ $('mainInvitation').classList.add('layout-'+(config.page_template||'page-01'),'garden-page','tradition-'+(config.tradition||'universal'),'style-'+(config.style||'royal'));
  const names=project.couple_names||project.client_name||'Wedding Celebration';
  setText('coverNames',names);setText('introNames',names);setText('coverEyebrow',t.eyebrow);setText('introKicker',t.intro);
  setText('eventKicker',t.celebrate);setText('eventTitle',t.event);setText('eventCouple',t.ceremony);setText('familyTitle',t.family);setText('familyMessage',t.familyMessage);
