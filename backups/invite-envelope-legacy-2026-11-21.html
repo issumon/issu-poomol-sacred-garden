@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#103b2f"><title>Wedding Invitation · The Sacred Garden</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--green:#103b2f;--gold:#c8a66a;--paper:#fbf7ef;--ink:#2b2b25;--muted:#756e61}
+*{box-sizing:border-box}[hidden]{display:none!important}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:"DM Sans",sans-serif}button{font:inherit}
+.loading,.not-found{min-height:100svh;display:grid;place-items:center;text-align:center;padding:28px;color:var(--green)}
+.loading span{font:italic 26px Georgia,serif}
+.cover{min-height:100svh;position:relative;display:grid;place-items:center;overflow:hidden;padding:34px 20px;color:#f8efd9;text-align:center;background:radial-gradient(ellipse at 50% 42%,color-mix(in srgb,var(--green) 80%,#fff 4%),#071d17 78%);isolation:isolate}
+.cover:before,.cover:after{content:"";position:absolute;inset:18px;border:1px solid var(--gold);pointer-events:none;opacity:.75}
+.cover:after{inset:27px;border:1px solid color-mix(in srgb,var(--gold) 45%,transparent)}
+.cover-art{position:absolute;inset:0;z-index:-1;opacity:.5;background:radial-gradient(circle at 18% 22%,#d8bd7b55 0 1px,transparent 3px),radial-gradient(circle at 82% 70%,#d8bd7b55 0 1px,transparent 3px),radial-gradient(ellipse at 50% 100%,#b9954a33,transparent 55%)}
+.cover-content{max-width:720px;position:relative;z-index:1}
+.bismillah{font:30px Amiri,serif;color:#f4dfb2;margin:0 0 24px}
+.eyebrow{font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold)}
+.cover h1{font:500 clamp(50px,11vw,100px)/.9 "Cormorant Garamond",serif;margin:26px 0;color:#fff6e4}
+.cover .amp{font-style:italic;color:var(--gold);font-size:.65em}
+.cover .rule{width:90px;height:1px;background:var(--gold);margin:25px auto}
+.cover .welcome{font:italic 19px/1.8 "Cormorant Garamond",serif;color:#eadfc9;max-width:580px;margin:0 auto}
+.open-btn{margin-top:32px;border:1px solid var(--gold);background:#ffffff0d;color:#f9edcf;padding:13px 25px;letter-spacing:.18em;text-transform:uppercase;font-size:10px;cursor:pointer}
+.cover.cover-02,.cover.cover-07{background:radial-gradient(ellipse,#fffaf0,#d8c7a9);color:#473b2b}.cover.cover-02 h1,.cover.cover-07 h1{color:#493b2b}.cover.cover-02 .welcome,.cover.cover-07 .welcome{color:#6b5b45}
+.cover.cover-03,.cover.cover-10{background:radial-gradient(ellipse at 50% 45%,#244e61,#071c2c 80%)}
+.cover.cover-04{background:repeating-linear-gradient(45deg,#49351c,#49351c 18px,#594425 19px,#49351c 20px)}
+.cover.cover-05{background:radial-gradient(ellipse,#4b6044,#132b20 78%)}
+.cover.cover-06,.cover.cover-09{background:radial-gradient(ellipse,#42604b,#102b22 78%)}
+.cover.cover-08{background:radial-gradient(ellipse,#28564b,#08241f 78%)}
+.cover.cover-02:before,.cover.cover-07:before{border:3px double #a88a56}
+.cover.cover-04:before,.cover.cover-08:before{inset:30px;border:3px double var(--gold)}
+.cover.cover-09:before{border-radius:48% 48% 0 0;inset:24px 12% 18px}
+.cover.cover-10:after{border-radius:50%;inset:8% 20%}
+.cover.cover-01{background:radial-gradient(ellipse at 50% 38%,#24634a 0,#103b2f 42%,#061b15 100%)}
+.cover.cover-01:before{inset:7%;border-radius:48% 48% 8px 8px;border-width:2px}
+.cover.cover-01 .cover-art{background:radial-gradient(ellipse at 50% 10%,#e7c77a44,transparent 35%),radial-gradient(circle at 18% 80%,#d6b76b55 0 2px,transparent 3px),radial-gradient(circle at 82% 80%,#d6b76b55 0 2px,transparent 3px)}
+.cover.cover-02{background:linear-gradient(145deg,#f7efdf,#dfcba8 58%,#fff9ed);color:#493b2b}
+.cover.cover-02:before{inset:5%;border:7px double #b18a4e;border-radius:4px}.cover.cover-02:after{inset:8%;border:1px solid #b18a4e}
+.cover.cover-02 .cover-art{opacity:.75;background:radial-gradient(ellipse at 8% 12%,#a67e4a44,transparent 28%),radial-gradient(ellipse at 92% 88%,#a67e4a44,transparent 28%)}
+.cover.cover-03{background:radial-gradient(ellipse at 50% 35%,#224a65,#071a2a 78%)}
+.cover.cover-03:before{inset:9% 17%;border-radius:50%;border:2px solid #c6a96d}.cover.cover-03:after{inset:12% 20%;border-radius:50%;border-style:dashed}
+.cover.cover-03 .cover-art{opacity:.9;background:radial-gradient(circle at 50% 15%,#fff4d866 0 2px,transparent 3px),radial-gradient(circle at 20% 50%,#fff4d844 0 1px,transparent 3px),radial-gradient(circle at 80% 60%,#fff4d844 0 1px,transparent 3px)}
+.cover.cover-04{background:repeating-linear-gradient(45deg,#352313 0 16px,#49351c 17px 34px,#5d4727 35px 36px)}
+.cover.cover-04:before{inset:7%;border:5px double #dfbd76}.cover.cover-04:after{inset:13%;border:1px solid #dfbd76;transform:rotate(45deg)}
+.cover.cover-05{background:radial-gradient(ellipse at 50% 75%,#6b6a42,#233d2c 48%,#0b2119 100%)}
+.cover.cover-05:before{inset:10% 15% 7%;border-radius:48% 48% 0 0;border-width:3px}.cover.cover-05:after{inset:13% 19% 10%;border-radius:48% 48% 0 0;border-style:dashed}
+.cover.cover-05 .cover-art{background:radial-gradient(ellipse at 10% 100%,#c6ad6a55,transparent 35%),radial-gradient(ellipse at 90% 100%,#c6ad6a55,transparent 35%)}
+.cover.cover-06{background:linear-gradient(135deg,#102d23,#3f644b 52%,#10271f)}
+.cover.cover-06:before{inset:6%;border:1px solid #d8c18b;border-radius:50% 50% 8px 8px}.cover.cover-06:after{inset:10%;border:1px solid #d8c18b;border-radius:50% 50% 8px 8px}
+.cover.cover-06 .cover-content{padding:34px 22px;border:1px solid #d8c18b;background:#102d2388;backdrop-filter:blur(2px)}
+.cover.cover-07{background:linear-gradient(160deg,#fffdf7,#e9dcc5 70%,#d4c09c)}
+.cover.cover-07:before{inset:8%;border-radius:180px 180px 8px 8px;border:2px solid #b18a4e}.cover.cover-07:after{inset:11%;border-radius:160px 160px 4px 4px;border:1px dashed #b18a4e}
+.cover.cover-07 .cover-content{padding:36px 18px}
+.cover.cover-08{background:radial-gradient(ellipse at 50% 50%,#31695b,#08241f 78%)}
+.cover.cover-08:before{inset:6%;border:5px double #d8b66c;border-radius:8px}.cover.cover-08:after{inset:12%;border:1px solid #d8b66c;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.cover.cover-08 .bismillah{font-size:40px}
+.cover.cover-09{background:linear-gradient(180deg,#301f2b,#704653 60%,#271b2b)}
+.cover.cover-09:before{inset:5% 12% 8%;border-radius:48% 48% 4px 4px;border:3px solid #e0bd8c}.cover.cover-09:after{inset:9% 17% 12%;border-radius:48% 48% 4px 4px;border:1px solid #e0bd8c}
+.cover.cover-09 .cover-art{background:radial-gradient(ellipse at 15% 20%,#e8bd9b55,transparent 28%),radial-gradient(ellipse at 85% 80%,#e8bd9b55,transparent 28%)}
+.cover.cover-10{background:radial-gradient(ellipse at 50% 42%,#3d3a68,#11152c 75%)}
+.cover.cover-10:before{inset:9% 22%;border:2px solid #d9c18a;border-radius:50%}.cover.cover-10:after{inset:13% 26%;border:1px dashed #d9c18a;border-radius:50%}
+.cover.cover-10 .cover-content{padding:38px 20px;border-radius:50%;background:#10162d66}
+main{display:none}.intro{padding:86px 20px 60px;text-align:center;background:linear-gradient(145deg,#fffaf1,#efe4d2)}
+.kicker{color:var(--gold);font-size:10px;letter-spacing:.3em;text-transform:uppercase}
+h2{font:500 clamp(39px,7vw,66px)/1 "Cormorant Garamond",serif;color:var(--green);margin:16px 0 20px}
+.copy{max-width:680px;margin:0 auto;color:var(--muted);font:17px/1.9 "Cormorant Garamond",serif}
+
+.scratch-wrap{padding:36px 18px 58px;text-align:center;background:linear-gradient(160deg,#f8f0e2,#eee1cb);position:relative;overflow:visible}
+.scratch-wrap h3{font:30px "Cormorant Garamond",serif;color:var(--green);margin:8px 0}
+.scratch-wrap .hint{font-size:12px;color:var(--muted);letter-spacing:.06em}
+.heart-stage{position:relative;width:min(330px,88vw);aspect-ratio:540/440;height:auto;margin:18px auto 20px;touch-action:none;filter:drop-shadow(0 15px 20px #6c4b2730);overflow:visible}
+.heart-under{position:absolute;inset:0;display:grid;place-items:center;font-size:205px;line-height:1;color:#b88a3d;text-shadow:0 4px 0 #8d6426,0 9px 22px #6d4a1b44;transition:opacity .35s}
+#scratchCanvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.scratch-reveal{border-radius:0;box-shadow:none}
+.countdown{padding:18px 12px;border-top:1px solid #c8a66a66;border-bottom:1px solid #c8a66a66;max-width:520px}
+.countdown div{padding:0 9px}.countdown strong{font-variant-numeric:tabular-nums}
+.countdown span{display:block;margin-top:5px}
+.countdown-note{font-size:12px;letter-spacing:0;text-transform:none;color:var(--muted);margin:9px auto 0}
+.scratch-reveal{position:absolute;inset:0;margin:0;padding:28px 28px 24px;display:none;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;color:#8c682c;background:radial-gradient(ellipse at 48% 34%,#fffdf6 0%,#f5ead3 64%,#e7d4ad 100%);clip-path:polygon(50% 94%,44% 87%,31% 77%,18% 66%,8% 53%,3% 41%,3% 31%,7% 20%,15% 12%,25% 8%,36% 9%,45% 15%,50% 23%,55% 15%,64% 9%,75% 8%,85% 12%,93% 20%,97% 31%,97% 41%,92% 53%,82% 66%,69% 77%,56% 87%);z-index:3;isolation:isolate;filter:drop-shadow(0 0 2px #d9b65d) drop-shadow(0 0 5px #b58a3c)}
+.scratch-reveal.show{display:flex;animation:fadein .8s ease}.scratch-reveal::before{content:'';position:absolute;inset:0;z-index:0;background:linear-gradient(112deg,transparent 30%,#fff7d966 46%,#fff 50%,#fff7d944 54%,transparent 70%);transform:translateX(-130%);animation:heartGloss 3.8s ease-in-out infinite;pointer-events:none}.scratch-reveal strong{position:relative;z-index:1}@keyframes heartGloss{0%,18%{transform:translateX(-130%)}65%,100%{transform:translateX(130%)}}.heart-stage.revealed .heart-under{opacity:0}.save-label{font:600 13px Georgia,serif;letter-spacing:.22em;color:#e8c77c;text-shadow:0 1px 5px #0005}.scratch-reveal strong{display:block;font: bold 43px/1.08 "Cormorant Garamond",Georgia,serif;color:#9a702d;text-shadow:0 1px 1px #fff8;max-width:245px}.scratch-reveal #scratchVenue{font:600 16px Georgia,serif;letter-spacing:.08em;color:#e8c77c}.save-flourish{font-size:20px;color:#e8c77c;letter-spacing:.3em;margin-top:3px}
+.scratch-reveal strong{display:block;font: bold 43px/1.08 "Cormorant Garamond",Georgia,serif}
+.petal{position:fixed;top:-30px;z-index:20;pointer-events:none;font-size:20px;animation:petalFall 4.5s linear forwards}
+@keyframes petalFall{to{transform:translate3d(var(--drift),110vh,0) rotate(560deg);opacity:0}}
+
+.countdown{display:flex;justify-content:center;gap:22px;margin:34px auto 0}.countdown div{min-width:58px}.countdown strong{display:block;font:38px "Cormorant Garamond",serif;color:var(--green)}.countdown span{font-size:9px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase}
+.section{padding:76px 20px;text-align:center}.section:nth-of-type(even){background:#f1e9dc}.section-inner{max-width:940px;margin:auto}
+.event-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin-top:30px}.event{padding:28px 18px;border:1px solid color-mix(in srgb,var(--gold) 65%,white);background:#fffaf2;box-shadow:0 12px 35px #392b160d}.event h3{font:30px "Cormorant Garamond",serif;color:var(--green);margin:8px}.event p{font-size:13px;line-height:1.8;color:var(--muted);margin:4px}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:30px}.gallery-grid figure{margin:0;background:#e6ddce;border:1px solid #d2c2a5}.gallery-grid img,.gallery-grid video{display:block;width:100%;height:230px;object-fit:cover}.gallery-grid figcaption{padding:9px;font-size:12px;color:var(--muted)}
+.map-link{display:inline-block;margin-top:22px;padding:12px 20px;border:1px solid var(--gold);color:var(--green);text-decoration:none;font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.footer{padding:34px 20px;text-align:center;background:var(--green);color:#f1e5cc;font:italic 23px "Cormorant Garamond",serif}
+.layout-page-02 .intro,.layout-page-10 .intro{background:var(--green);color:#f5ead2}.layout-page-02 .intro h2,.layout-page-10 .intro h2{color:#f5ead2}
+.layout-page-03 .event{border-radius:45% 45% 8px 8px;padding-top:40px}.layout-page-04 .section{background:#fff}.layout-page-05 .event{background:var(--green);color:#fff}.layout-page-05 .event h3,.layout-page-05 .event p{color:#f4e9d3}
+.layout-page-06 .event{border:0;border-top:2px solid var(--gold);background:transparent;box-shadow:none}.layout-page-07 .gallery-grid figure{border-radius:100px 100px 4px 4px;overflow:hidden}.layout-page-08 .section-inner{direction:rtl}.layout-page-09 .event-grid{grid-template-columns:1fr;max-width:620px;margin-left:auto;margin-right:auto}
+
+/* DISTINCT GUEST-PAGE ART DIRECTIONS */
+.layout-page-01 .intro{background:linear-gradient(160deg,#fdf8ed,#e8dcc5);border-bottom:8px double #c8a66a}
+.layout-page-01 .section{background:#fbf7ef}
+.layout-page-02 .intro{background:linear-gradient(135deg,#fffdf6,#eadfc9);border-bottom:1px solid #b99a69}
+.layout-page-02 .section:nth-of-type(even){background:#fffdf8}
+.layout-page-03 .intro{background:radial-gradient(ellipse at 50% 0%,#fff8f2,#f1d9d4 72%);border-bottom:1px solid #d9a5a0}
+.layout-page-03 .intro:after{content:'❀  ❧  ❀';display:block;color:#bd7d83;font-size:30px;letter-spacing:18px;margin-top:20px}
+.layout-page-03 .section{background:linear-gradient(180deg,#fffaf7,#f7e8e4)}
+.layout-page-04 .intro{background:radial-gradient(ellipse at 50% 40%,#263c68,#10182f);color:#f8e8c4}
+.layout-page-04 .intro h2,.layout-page-04 .intro .copy{color:#f8e8c4}
+.layout-page-04 .section{background:linear-gradient(145deg,#10182f,#263653);color:#f8e8c4}
+.layout-page-04 .section h2,.layout-page-04 .section .copy{color:#f8e8c4}
+.layout-page-04 .event{background:#ffffff0b;border:1px solid #c8a66a;color:#f8e8c4}
+.layout-page-04 .event h3,.layout-page-04 .event p{color:#f8e8c4}
+.layout-page-05 .intro{background:linear-gradient(135deg,#1c352b,#50664c);color:#f5ead2}
+.layout-page-05 .intro h2,.layout-page-05 .intro .copy{color:#f5ead2}
+.layout-page-05 .section{background:#e8e0d0}
+.layout-page-06 .intro{background:repeating-linear-gradient(45deg,#f5eddd 0 14px,#f0e4ce 14px 28px)}
+.layout-page-06 .intro h2{font-family:Amiri,serif}
+.layout-page-06 .section-inner{max-width:820px}
+.layout-page-06 .event{border:3px double #b89557;background:#faf4e7;box-shadow:none}
+.layout-page-07 .intro{background:linear-gradient(150deg,#e6eddf,#b8c8ad);border-radius:0 0 48% 48% / 0 0 7% 7%}
+.layout-page-07 .section{background:#edf0e7}
+.layout-page-07 .event{border-radius:48% 48% 8px 8px;background:#f8fbf3}
+.layout-page-08 .intro{background:#fdfbf5;border-top:10px solid #29251f;border-bottom:1px solid #29251f;text-align:left;padding-left:max(7vw,24px)}
+.layout-page-08 .intro .countdown{justify-content:flex-start;margin-left:0}
+.layout-page-08 .section{text-align:left}
+.layout-page-08 .section-inner{margin-left:max(7vw,24px);margin-right:max(7vw,24px)}
+.layout-page-09 .intro{background:linear-gradient(180deg,#342b28,#765947);color:#f7e8cb}
+.layout-page-09 .intro h2,.layout-page-09 .intro .copy{color:#f7e8cb}
+.layout-page-09 .section{background:#f2e7d7}
+.layout-page-09 .event{border-radius:2px 28px 2px 28px;border-left:4px solid #c8a66a}
+.layout-page-10 .intro{background:radial-gradient(ellipse at 50% 35%,#303b67,#10182c 72%);color:#f3e7c8}
+.layout-page-10 .intro h2,.layout-page-10 .intro .copy{color:#f3e7c8}
+.layout-page-10 .section{background:#121b32;color:#f3e7c8}
+.layout-page-10 .section h2,.layout-page-10 .section .copy{color:#f3e7c8}
+.layout-page-10 .event{background:#ffffff08;border:1px solid #c8a66a}
+.layout-page-10 .event h3,.layout-page-10 .event p{color:#f3e7c8}
+
+/* LIVING GARDEN: softly swaying botanical branches and a pair of flying birds */
+.garden-life{position:fixed;inset:0;z-index:4;pointer-events:none;overflow:hidden}
+.garden-branch{position:absolute;width:min(31vw,210px);height:auto;opacity:.82;filter:drop-shadow(0 4px 8px #344a2522);transform-origin:bottom center;animation:branchSway 6s ease-in-out infinite}
+.garden-branch.left{left:-22px;top:9vh}
+.garden-branch.right{right:-22px;bottom:5vh;transform:scaleX(-1);animation-delay:-2.4s}
+.garden-branch path.stem{fill:none;stroke:#66865b;stroke-width:4;stroke-linecap:round}
+.garden-branch path.leaf{fill:#8da879;stroke:#5f8057;stroke-width:1}
+.garden-branch .bloom-petal{fill:#f3d8d2;stroke:#c88f86;stroke-width:1.2}
+.garden-branch .center{fill:#d5ae62}
+.flying-duo{position:absolute;top:18vh;left:-150px;width:120px;height:70px;animation:birdsAcross 19s ease-in-out infinite alternate}
+.flying-duo.second{top:29vh;animation-duration:24s;animation-delay:-9s;transform:scale(.72)}
+.flying-duo .bird{fill:#4a5947;transform-box:fill-box;transform-origin:50% 60%;animation:wingBeat .7s ease-in-out infinite alternate}
+.flying-duo .bird.b{animation-delay:-.35s}
+@keyframes branchSway{0%,100%{rotate:-2deg}50%{rotate:3deg}}
+@keyframes birdsAcross{0%{translate:0 0}25%{translate:28vw -13px}50%{translate:56vw 7px}75%{translate:84vw -12px}100%{translate:calc(100vw + 170px) 0}}
+@keyframes wingBeat{from{scale:1 .65}to{scale:1 1.12}}
+@media(prefers-reduced-motion:reduce){.garden-branch,.flying-duo,.flying-duo .bird{animation:none!important}}
+
+@media(max-width:650px){.event-grid{grid-template-columns:1fr}.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gallery-grid img,.gallery-grid video{height:160px}.countdown{gap:12px}.countdown strong{font-size:31px}.cover:before{inset:12px}.cover:after{inset:20px}}
+
+/* LUXURY PALETTES — coordinated invitation colours */
+:root[data-palette="emerald"]{--green:#103b2f;--gold:#c8a66a;--paper:#fbf7ef;--ink:#2b2b25;--muted:#756e61}
+:root[data-palette="burgundy"]{--green:#63263a;--gold:#d6b16f;--paper:#fff7f4;--ink:#3c2630;--muted:#806b72}
+:root[data-palette="pink"]{--green:#b86f82;--gold:#c58b70;--paper:#fff7f8;--ink:#4c303b;--muted:#876b76}
+:root[data-palette="silver"]{--green:#64717e;--gold:#a9aeb7;--paper:#f7f8fa;--ink:#303740;--muted:#6e7884}
+:root[data-palette="navy"]{--green:#182c4e;--gold:#d5b56f;--paper:#f7f5ef;--ink:#222b3a;--muted:#6d7180}
+:root[data-palette="ivory"]{--green:#78613f;--gold:#b18b50;--paper:#fffaf0;--ink:#393226;--muted:#766d5d}
+
+/* THEME-SPECIFIC BOTANICAL PALETTES */
+:root{--flower:#e8c6b6;--flower-edge:#bd8876;--leaf:#829b72;--leaf-deep:#526f4e}
+:root[data-palette="emerald"]{--flower:#f1d8c0;--flower-edge:#d0a46c;--leaf:#8eaa7d;--leaf-deep:#526f4e}
+:root[data-palette="burgundy"]{--flower:#f2d5d5;--flower-edge:#c98f9b;--leaf:#8d9a78;--leaf-deep:#5c6550}
+:root[data-palette="pink"]{--flower:#f8d9e2;--flower-edge:#d58ca2;--leaf:#a4b58b;--leaf-deep:#71835d}
+:root[data-palette="silver"]{--flower:#f5f1f0;--flower-edge:#b9bfc8;--leaf:#a5b1ad;--leaf-deep:#74847f}
+:root[data-palette="navy"]{--flower:#e9d8e8;--flower-edge:#b9a1c7;--leaf:#8298a5;--leaf-deep:#536a7b}
+:root[data-palette="ivory"]{--flower:#f3e4c8;--flower-edge:#c8a66a;--leaf:#a8a17c;--leaf-deep:#77704e}
+.garden-branch path.stem{stroke:var(--leaf-deep)}
+.garden-branch path.leaf{fill:var(--leaf);stroke:var(--leaf-deep)}
+.garden-branch .bloom-petal{fill:var(--flower);stroke:var(--flower-edge)}
+.garden-branch .center{fill:var(--gold)}
+/* Keep the living garden elegant and unobtrusive on small screens. */
+.garden-branch{width:clamp(105px,22vw,190px);opacity:.9}
+.garden-branch.left{left:-18px;top:7vh}
+.garden-branch.right{right:-18px;bottom:3vh}
+.flying-duo{filter:drop-shadow(0 2px 2px #0002)}
+@media(max-width:650px){.garden-branch{width:clamp(92px,25vw,135px);opacity:.72}.flying-duo{width:88px;height:48px}}
+</style>
+</head>
+<body>
+<div id="state" class="loading"><span>Preparing your invitation…</span></div>
+<div id="invitation" hidden><audio id="backgroundMusic" loop preload="none"></audio>
+<section id="cover" class="cover"><div class="cover-art"></div><div class="cover-content"><p id="bismillah" class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p><div class="eyebrow" id="coverEyebrow">A sacred beginning</div><h1 id="coverNames">Bride <i class="amp">&amp;</i> Groom</h1><div class="rule"></div><p id="coverWelcome" class="welcome"></p><button id="openInvitation" class="open-btn">Open invitation ✧</button></div></section>
+<main id="mainInvitation">
+<div class="garden-life" aria-hidden="true">
+<svg class="garden-branch left" viewBox="0 0 180 310"><path class="stem" d="M12 300 Q55 230 72 170 T150 20"/><path class="leaf" d="M48 238 Q5 210 8 174 Q50 182 48 238Z"/><path class="leaf" d="M69 190 Q112 190 125 154 Q83 151 69 190Z"/><path class="leaf" d="M94 127 Q48 118 44 82 Q88 88 94 127Z"/><path class="leaf" d="M119 78 Q155 91 169 60 Q133 48 119 78Z"/><g transform="translate(78 167)"><ellipse class="bloom-petal" cy="-12" rx="8" ry="13"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(72)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(144)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(216)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(288)"/><circle class="center" r="5"/></g><g transform="translate(142 75) scale(.72)"><ellipse class="bloom-petal" cy="-12" rx="8" ry="13"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(72)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(144)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(216)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(288)"/><circle class="center" r="5"/></g></svg>
+<svg class="garden-branch right" viewBox="0 0 180 310"><path class="stem" d="M12 300 Q55 230 72 170 T150 20"/><path class="leaf" d="M48 238 Q5 210 8 174 Q50 182 48 238Z"/><path class="leaf" d="M69 190 Q112 190 125 154 Q83 151 69 190Z"/><path class="leaf" d="M94 127 Q48 118 44 82 Q88 88 94 127Z"/><path class="leaf" d="M119 78 Q155 91 169 60 Q133 48 119 78Z"/><g transform="translate(78 167)"><ellipse class="bloom-petal" cy="-12" rx="8" ry="13"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(72)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(144)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(216)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(288)"/><circle class="center" r="5"/></g><g transform="translate(142 75) scale(.72)"><ellipse class="bloom-petal" cy="-12" rx="8" ry="13"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(72)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(144)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(216)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(288)"/><circle class="center" r="5"/></g></svg>
+<svg class="flying-duo" viewBox="0 0 140 75"><path class="bird" d="M8 36 Q27 7 48 34 Q62 11 81 28 Q61 24 49 45 Q30 24 8 36Z"/><path class="bird b" d="M59 49 Q78 22 98 45 Q113 23 132 39 Q111 35 99 58 Q80 37 59 49Z"/></svg>
+</div>
+<section class="intro"><div class="kicker" id="introKicker">With the blessings of Allah</div><h2 id="introNames">Bride & Groom</h2><p class="copy" id="introWelcome"></p><div id="countdown" class="countdown"><div><strong>--</strong><span>Days</span></div><div><strong>--</strong><span>Hours</span></div><div><strong>--</strong><span>Minutes</span></div><div><strong>--</strong><span>Seconds</span></div></div></section>
+<section class="scratch-wrap" id="scratchSection">
+<div class="kicker">A little surprise</div><h3 id="scratchSectionHeading">Scratch the golden heart</h3><p class="hint">Gently rub the heart to reveal the wedding details</p>
+<div class="heart-stage" id="heartStage"><div class="heart-under" aria-hidden="true">♥</div><canvas id="scratchCanvas" width="540" height="440" aria-label="Scratch the gold heart to reveal the invitation"></canvas><div class="scratch-reveal" id="scratchReveal"><strong id="scratchDate">12 December 2027</strong></div></div>
+</section>
+<section class="section"><div class="section-inner"><div class="kicker" id="eventKicker">Celebrate with us</div><h2 id="eventTitle">Wedding Celebration</h2><div class="event-grid"><article class="event"><div class="kicker">The occasion</div><h3 id="eventCouple">Wedding Ceremony</h3><p id="eventDate"></p><p id="eventTime"></p><p id="eventVenue"></p><p id="eventLocation"></p></article><article class="event"><div class="kicker">With love</div><h3 id="familyTitle">Our Families</h3><p id="familyMessage">Your presence and duas will make our day special.</p></article></div></div></section>
+<section class="section"><div class="section-inner"><div class="kicker">Moments to remember</div><h2 id="galleryTitle">Our Gallery</h2><div id="projectGallery" class="gallery-grid"><p class="copy">Beautiful moments will appear here.</p></div></div></section>
+<section class="section"><div class="section-inner"><div class="kicker">Join our celebration</div><h2 id="locationTitle">The Venue</h2><p class="copy" id="locationCopy"></p><a id="mapLink" class="map-link" target="_blank" rel="noopener" hidden>Open map ↗</a></div></section>
+<footer id="footer" class="footer">Made with love · The Sacred Garden</footer>
+</main></div>
+<script>
+const SUPABASE_URL='https://fuwhzkktivbzggiywgnr.supabase.co';
+const SUPABASE_ANON_KEY='sb_publishable_iHaj7KFDgVaHq8BtTY2qUA_3-FFwH6P';
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+const $=id=>document.getElementById(id);
+const slug=new URLSearchParams(location.search).get('slug');
+const words={
+ en:{eyebrow:'A sacred beginning',intro:'With the blessings of Allah',celebrate:'Celebrate with us',event:'Wedding Celebration',ceremony:'Wedding Ceremony',family:'Our Families',familyMessage:'Your presence and duas will make our day special.',gallery:'Our Gallery',venue:'The Venue',map:'Open map ↗',open:'Open invitation ✧',days:'Days',hours:'Hours',minutes:'Minutes',seconds:'Seconds'},
+ ml:{eyebrow:'പവിത്രമായൊരു തുടക്കം',intro:'അല്ലാഹുവിന്റെ അനുഗ്രഹത്തോടെ',celebrate:'ഞങ്ങളോടൊപ്പം ആഘോഷിക്കൂ',event:'വിവാഹാഘോഷം',ceremony:'വിവാഹ ചടങ്ങ്',family:'കുടുംബങ്ങൾ',familyMessage:'നിങ്ങളുടെ സാന്നിധ്യവും പ്രാർത്ഥനയും ഞങ്ങളുടെ ദിനത്തെ മനോഹരമാക്കും.',gallery:'ഞങ്ങളുടെ ഓർമ്മകൾ',venue:'വേദി',map:'മാപ്പ് തുറക്കുക ↗',open:'ക്ഷണക്കത്ത് തുറക്കുക ✧',days:'ദിവസം',hours:'മണിക്കൂർ',minutes:'മിനിറ്റ്',seconds:'സെക്കൻഡ്'},
+ ar:{eyebrow:'بداية مباركة',intro:'ببركة الله تعالى',celebrate:'احتفلوا معنا',event:'احتفال الزواج',ceremony:'مراسم الزواج',family:'عائلتانا',familyMessage:'حضوركم ودعاؤكم يجعل يومنا أجمل.',gallery:'ذكرياتنا',venue:'المكان',map:'افتح الخريطة ↗',open:'افتح الدعوة ✧',days:'أيام',hours:'ساعات',minutes:'دقائق',seconds:'ثوانٍ'}
+};
+function setText(id,value){$(id).textContent=value||''}
+function formatDate(value,lang){if(!value)return '';const d=new Date(value+'T12:00:00');try{return new Intl.DateTimeFormat(lang==='ml'?'ml-IN':lang==='ar'?'ar':'en-IN',{day:'numeric',month:'long',year:'numeric'}).format(d)}catch(e){return value}}
+function safeUrl(value){try{const u=new URL(value);return ['https:','http:'].includes(u.protocol)?u.href:''}catch(e){return ''}}
+async function loadInvitation(){
+ if(!slug){throw new Error('Invitation link is incomplete. Please ask the host for the correct link.')}
+ const {data:project,error}=await db.from('sacred_garden_projects').select('id,slug,client_name,couple_names,status').eq('slug',slug).eq('status','published').maybeSingle();
+ if(error)throw error;if(!project)throw new Error('This invitation is not published yet or the link is incorrect.');
+ const {data:settings,error:settingsError}=await db.from('sacred_garden_project_settings').select('config').eq('project_id',project.id).maybeSingle();
+ if(settingsError)throw settingsError;
+ const config={...(settings?.config||{})};if(slug==='ajmal-ponnu-686924'){config.wedding_date=config.wedding_date||'2027-12-12';config.wedding_time=config.wedding_time||'10:00 AM';}const lang=['en','ml','ar'].includes(config.language)?config.language:'en',t=words[lang],theme=config.theme||{};
+ document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';
+ document.documentElement.dataset.palette=theme.palette||'emerald';
+ if(theme.primary&&/^#[0-9a-f]{6}$/i.test(theme.primary))document.documentElement.style.setProperty('--green',theme.primary);
+ if(theme.accent&&/^#[0-9a-f]{6}$/i.test(theme.accent))document.documentElement.style.setProperty('--gold',theme.accent);
+ $('cover').classList.add(config.cover_template||'cover-01');
+ $('mainInvitation').classList.add('layout-'+(config.page_template||'page-01'));
+ const names=project.couple_names||project.client_name||'Wedding Celebration';
+ setText('coverNames',names);setText('introNames',names);setText('coverEyebrow',t.eyebrow);setText('introKicker',t.intro);
+ setText('eventKicker',t.celebrate);setText('eventTitle',t.event);setText('eventCouple',t.ceremony);setText('familyTitle',t.family);setText('familyMessage',t.familyMessage);
+ setText('galleryTitle',t.gallery);setText('locationTitle',t.venue);$('openInvitation').textContent=t.open;
+ const musicUrl=safeUrl(config.music_url||'');if(musicUrl){$('backgroundMusic').src=musicUrl;$('backgroundMusic').load();}
+  const welcome=config.welcome_message||'With the blessings of Allah, our families warmly invite you to celebrate this beautiful beginning with us.';
+ setText('coverWelcome',welcome);setText('introWelcome',welcome);
+ const date=formatDate(config.wedding_date,lang);setText('eventDate',date);setText('eventTime',config.wedding_time);setText('eventVenue',config.venue);setText('eventLocation',config.location);setText('locationCopy',[config.venue,config.location].filter(Boolean).join(' · '));
+ if(config.location||config.venue){const query=encodeURIComponent([config.venue,config.location].filter(Boolean).join(', '));$('mapLink').href='https://www.google.com/maps/search/?api=1&query='+query;$('mapLink').hidden=false}
+ document.title=names+' · Wedding Invitation';
+ const {data:media,error:mediaError}=await db.from('sacred_garden_project_media').select('id,media_type,storage_path,caption,sort_order').eq('project_id',project.id).order('sort_order',{ascending:true}).order('created_at',{ascending:true});
+ if(mediaError)console.warn('Project media unavailable',mediaError);
+ const grid=$('projectGallery');grid.replaceChildren();
+ for(const item of media||[]){
+  if(!item.storage_path)continue;
+  const {data:publicData}=db.storage.from('sacred-garden-media').getPublicUrl(item.storage_path);
+  const src=safeUrl(publicData?.publicUrl);if(!src)continue;
+  if(item.media_type==='audio')continue;
+  const figure=document.createElement('figure');let el;
+  if(item.media_type==='video'){el=document.createElement('video');el.controls=true;el.playsInline=true;el.preload='metadata'}else{el=document.createElement('img');el.loading='lazy';el.alt=item.caption||'Wedding memory'}
+  el.src=src;figure.appendChild(el);
+  if(item.caption){const cap=document.createElement('figcaption');cap.textContent=item.caption;figure.appendChild(cap)}
+  grid.appendChild(figure);
+ }
+ if(!grid.children.length){const p=document.createElement('p');p.className='copy';p.textContent='Beautiful moments will appear here.';grid.appendChild(p)}
+ $('state').hidden=true;$('invitation').hidden=false;
+ $('openInvitation').addEventListener('click',()=>{if($('backgroundMusic').src){$('backgroundMusic').play().catch(()=>{});}$('cover').style.transition='opacity 1s ease';$('cover').style.opacity='0';setTimeout(()=>{$('cover').style.display='none';$('mainInvitation').style.display='block';$('mainInvitation').style.animation='fadein 1s ease'},850)});
+ setupScratchReveal(config,lang);
+ const labels=[t.days,t.hours,t.minutes,t.seconds];$('countdown').querySelectorAll('span').forEach((el,i)=>el.textContent=labels[i]);
+ if(lang==='ar')$('bismillah').textContent='بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ';
+}
+
+function startPetals(){
+ const symbols=['✿','❀','✧','❁'];
+ for(let i=0;i<24;i++){
+  const p=document.createElement('span');p.className='petal';p.textContent=symbols[i%symbols.length];
+  p.style.left=(Math.random()*100)+'vw';p.style.setProperty('--drift',((Math.random()-.5)*180)+'px');
+  p.style.animationDelay=(Math.random()*1.8)+'s';p.style.color=i%2?'#c8a66a':'#d78b9a';
+  document.body.appendChild(p);setTimeout(()=>p.remove(),6800);
+ }
+}
+function setupScratchReveal(config,lang){
+ const canvas=$('scratchCanvas'),ctx=canvas?.getContext('2d');if(!canvas||!ctx)return;
+ const heart=new Path2D();
+ heart.moveTo(270,390);heart.bezierCurveTo(225,350,42,235,42,135);heart.bezierCurveTo(42,45,160,24,270,122);heart.bezierCurveTo(380,24,498,45,498,135);heart.bezierCurveTo(498,235,315,350,270,390);heart.closePath();
+ ctx.save();ctx.clip(heart);
+ const g=ctx.createLinearGradient(45,35,480,390);g.addColorStop(0,'#fff0b8');g.addColorStop(.3,'#c99b47');g.addColorStop(.62,'#a9792f');g.addColorStop(1,'#f6d98e');
+ ctx.fillStyle=g;ctx.fillRect(0,0,540,440);ctx.strokeStyle='#ffe9ad';ctx.lineWidth=5;ctx.stroke(heart);
+ ctx.fillStyle='#65491d';ctx.textAlign='center';ctx.font='bold 27px Georgia';ctx.fillText('SCRATCH HERE',270,220);ctx.font='22px Georgia';ctx.fillText('✧  ❦  ✧',270,260);ctx.restore();
+ ctx.globalCompositeOperation='destination-out';
+ let drawing=false,travel=0,revealed=false,last=null;
+ const reveal=()=>{if(revealed)return;revealed=true;setText('scratchSectionHeading','Save the date');canvas.style.transition='opacity .75s';canvas.style.opacity='0';setTimeout(()=>canvas.style.display='none',800);$('heartStage').classList.add('revealed');$('scratchReveal').classList.add('show');startCountdown(config);setText('scratchDate',config.wedding_date?formatDate(config.wedding_date,lang):'Wedding date will be announced');startPetals();};
+ const point=e=>{const r=canvas.getBoundingClientRect();return{x:(e.clientX-r.left)/r.width*540,y:(e.clientY-r.top)/r.height*440}};
+ canvas.addEventListener('pointerdown',e=>{drawing=true;last=point(e);canvas.setPointerCapture(e.pointerId);e.preventDefault()});
+ canvas.addEventListener('pointermove',e=>{if(!drawing||revealed)return;const p=point(e);ctx.save();ctx.clip(heart);ctx.beginPath();ctx.arc(p.x,p.y,34,0,Math.PI*2);ctx.fill();ctx.restore();if(last)travel+=Math.hypot(p.x-last.x,p.y-last.y);last=p;if(travel>520)reveal();e.preventDefault()});
+ canvas.addEventListener('pointerup',()=>{drawing=false;last=null;if(travel>360)reveal()});
+ canvas.addEventListener('pointercancel',()=>{drawing=false;last=null});
+}
+function startCountdown(config){
+ const host=$('countdown');if(!host)return;
+ const target=config.wedding_date?new Date(config.wedding_date+'T'+(config.wedding_time?to24(config.wedding_time):'12:00')+':00+05:30'):null;
+ let note=document.querySelector('.countdown-note');if(!note){note=document.createElement('p');note.className='countdown-note';host.after(note)}
+ if(!target||isNaN(target.getTime())){host.querySelectorAll('strong').forEach(el=>el.textContent='—');note.textContent='Add the wedding date in Admin to activate the countdown.';return}
+ note.textContent='Counting down to the celebration';
+ const tick=()=>{let ms=Math.max(0,target-Date.now()),v=[Math.floor(ms/86400000),Math.floor(ms/3600000)%24,Math.floor(ms/60000)%60,Math.floor(ms/1000)%60];host.querySelectorAll('strong').forEach((el,i)=>el.textContent=String(v[i]).padStart(2,'0'))};
+ tick();if(window.sacredCountdownTimer)clearInterval(window.sacredCountdownTimer);window.sacredCountdownTimer=setInterval(tick,1000);
+}
+
+function to24(value){const m=value.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);if(!m)return '12:00';let h=Number(m[1])%12;if(m[3].toUpperCase()==='PM')h+=12;return String(h).padStart(2,'0')+':'+m[2]}
+loadInvitation().catch(error=>{$('state').className='not-found';$('state').innerHTML='';const box=document.createElement('div');const title=document.createElement('h2');title.textContent='Invitation unavailable';const msg=document.createElement('p');msg.textContent=error.message||'Please check the invitation link.';box.append(title,msg);$('state').appendChild(box)});
+</script>
+<style>@keyframes fadein{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}</style>
+</body></html>
