@@ -179,18 +179,112 @@ h2{font:500 clamp(39px,7vw,66px)/1 "Cormorant Garamond",serif;color:var(--green)
 .garden-branch.right{right:-18px;bottom:3vh}
 .flying-duo{filter:drop-shadow(0 2px 2px #0002)}
 @media(max-width:650px){.garden-branch{width:clamp(92px,25vw,135px);opacity:.72}.flying-duo{width:88px;height:48px}}
+
+/* THE SACRED GARDEN — new living-garden guest experience */
+.cover.garden-cover{
+ min-height:100svh;padding:42px 22px;
+ background:
+  radial-gradient(ellipse at 50% 43%,#315f46 0%,#173e30 43%,#08251c 100%);
+ color:#fff8e9;
+}
+.cover.garden-cover:before{
+ inset:clamp(14px,4vw,42px);border:1px solid #d7bd80;
+ border-radius:48% 48% 12px 12px / 24% 24% 12px 12px;
+ box-shadow:inset 0 0 0 7px #d7bd8017,inset 0 0 45px #e6d19b18;
+}
+.cover.garden-cover:after{
+ inset:clamp(22px,5.5vw,58px);border:1px solid #e8d7aa77;
+ border-radius:46% 46% 8px 8px / 22% 22% 8px 8px;
+}
+.cover.garden-cover .cover-art{
+ opacity:1;
+ background:
+  radial-gradient(ellipse at 50% 0%,#d9c18b38,transparent 42%),
+  radial-gradient(ellipse at 0% 100%,#71916b44,transparent 42%),
+  radial-gradient(ellipse at 100% 100%,#71916b44,transparent 42%),
+  radial-gradient(circle at 16% 22%,#f5e7c477 0 1px,transparent 2px),
+  radial-gradient(circle at 84% 30%,#f5e7c477 0 1px,transparent 2px);
+}
+.cover.garden-cover .cover-content{max-width:760px;padding:clamp(24px,5vw,54px) 18px}
+.cover.garden-cover .bismillah{font-size:clamp(28px,5vw,42px);color:#f4dfb2;margin-bottom:22px}
+.cover.garden-cover .eyebrow{color:#e8d3a1;letter-spacing:.27em}
+.cover.garden-cover h1{font-size:clamp(54px,12vw,108px);line-height:.88;text-shadow:0 8px 30px #061a13aa}
+.cover.garden-cover .amp{color:#e3c27e}
+.cover.garden-cover .rule{width:116px;background:linear-gradient(90deg,transparent,#e3c27e,transparent)}
+.cover.garden-cover .welcome{font-size:clamp(18px,2.6vw,23px);color:#f2ead8}
+.cover.garden-cover .open-btn{
+ border-radius:999px;padding:15px 30px;border:1px solid #e2c783;
+ background:linear-gradient(135deg,#f0dfb5,#c49b55);color:#183b2d;
+ box-shadow:0 9px 28px #020e0a55;letter-spacing:.12em;font-weight:600;
+}
+.garden-life{z-index:7}
+.garden-branch{width:clamp(118px,23vw,225px);opacity:.96;filter:drop-shadow(0 5px 12px #071c1255)}
+.garden-branch.left{left:-18px;top:5vh}
+.garden-branch.right{right:-18px;bottom:3vh}
+.flying-duo{width:clamp(92px,12vw,132px);height:auto;top:16vh;filter:drop-shadow(0 2px 4px #071c1266)}
+.flying-duo .bird{fill:#d9c99f}
+.flying-duo.second .bird{fill:#f0e5c9}
+main.garden-page{position:relative;overflow:hidden;background:#f8f4e9}
+.garden-page .intro{
+ position:relative;overflow:hidden;
+ padding:92px 22px 66px;
+ background:radial-gradient(ellipse at 50% 0%,#fffdf5 0%,#e9eddf 48%,#d8e3d2 100%);
+ border-bottom:1px solid #c4a66c;
+}
+.garden-page .intro:before,.garden-page .intro:after{
+ content:"";position:absolute;width:190px;height:190px;border:1px solid #9aab87;
+ border-radius:65% 0 65% 0;opacity:.25;transform:rotate(35deg);pointer-events:none
+}
+.garden-page .intro:before{left:-105px;top:12px}
+.garden-page .intro:after{right:-105px;bottom:4px;transform:rotate(215deg)}
+.garden-page .intro h2{color:#244d38}
+.garden-page .intro .kicker{color:#a17d43}
+.garden-page .copy{color:#665f50}
+.garden-page .countdown{border-color:#c8a66a99}
+.garden-page .countdown strong{color:#244d38}
+.garden-page .scratch-wrap{
+ background:linear-gradient(160deg,#f8f1df,#e8e0cc);
+ border-top:1px solid #fff9e9; border-bottom:1px solid #d6c39d;
+}
+.garden-page .scratch-wrap:before,.garden-page .scratch-wrap:after{
+ content:"❀";position:absolute;color:#a7b596;opacity:.32;font-size:76px;top:40px;pointer-events:none
+}
+.garden-page .scratch-wrap:before{left:4vw;transform:rotate(-22deg)}
+.garden-page .scratch-wrap:after{right:4vw;transform:rotate(22deg)}
+.garden-page .scratch-wrap h3{color:#244d38}
+.garden-page .section{position:relative;background:#f8f6ee}
+.garden-page .section:nth-of-type(even){background:#edf1e7}
+.garden-page .section h2{color:#244d38}
+.garden-page .event{
+ border:1px solid #c9b27f;background:linear-gradient(145deg,#fffdf7,#f1eadb);
+ border-radius:46% 46% 10px 10px / 18% 18% 10px 10px;
+ box-shadow:0 14px 35px #31452b12;padding-top:38px
+}
+.garden-page .event h3{color:#31553e}
+.garden-page .gallery-grid figure{border:1px solid #c9b27f;background:#fdfaf1;border-radius:100px 100px 8px 8px;overflow:hidden}
+.garden-page .map-link{border-radius:999px;color:#244d38;border-color:#b99a60}
+.garden-page .footer{background:linear-gradient(120deg,#0d3023,#28533b);color:#f1e4c6}
+.garden-page .petal{z-index:30}
+@media(max-width:650px){
+ .cover.garden-cover .cover-content{padding:24px 12px}
+ .garden-branch{width:clamp(92px,27vw,138px);opacity:.82}
+ .flying-duo{width:82px}
+ .garden-page .intro{padding:76px 18px 54px}
+ .garden-page .event{border-radius:32% 32% 8px 8px / 10% 10% 8px 8px}
+}
+
 </style>
 </head>
 <body>
 <div id="state" class="loading"><span>Preparing your invitation…</span></div>
 <div id="invitation" hidden><audio id="backgroundMusic" loop preload="none"></audio>
 <section id="cover" class="cover"><div class="cover-art"></div><div class="cover-content"><p id="bismillah" class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p><div class="eyebrow" id="coverEyebrow">A sacred beginning</div><h1 id="coverNames">Bride <i class="amp">&amp;</i> Groom</h1><div class="rule"></div><p id="coverWelcome" class="welcome"></p><button id="openInvitation" class="open-btn">Open invitation ✧</button></div></section>
-<main id="mainInvitation">
 <div class="garden-life" aria-hidden="true">
 <svg class="garden-branch left" viewBox="0 0 180 310"><path class="stem" d="M12 300 Q55 230 72 170 T150 20"/><path class="leaf" d="M48 238 Q5 210 8 174 Q50 182 48 238Z"/><path class="leaf" d="M69 190 Q112 190 125 154 Q83 151 69 190Z"/><path class="leaf" d="M94 127 Q48 118 44 82 Q88 88 94 127Z"/><path class="leaf" d="M119 78 Q155 91 169 60 Q133 48 119 78Z"/><g transform="translate(78 167)"><ellipse class="bloom-petal" cy="-12" rx="8" ry="13"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(72)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(144)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(216)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(288)"/><circle class="center" r="5"/></g><g transform="translate(142 75) scale(.72)"><ellipse class="bloom-petal" cy="-12" rx="8" ry="13"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(72)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(144)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(216)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(288)"/><circle class="center" r="5"/></g></svg>
 <svg class="garden-branch right" viewBox="0 0 180 310"><path class="stem" d="M12 300 Q55 230 72 170 T150 20"/><path class="leaf" d="M48 238 Q5 210 8 174 Q50 182 48 238Z"/><path class="leaf" d="M69 190 Q112 190 125 154 Q83 151 69 190Z"/><path class="leaf" d="M94 127 Q48 118 44 82 Q88 88 94 127Z"/><path class="leaf" d="M119 78 Q155 91 169 60 Q133 48 119 78Z"/><g transform="translate(78 167)"><ellipse class="bloom-petal" cy="-12" rx="8" ry="13"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(72)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(144)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(216)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(288)"/><circle class="center" r="5"/></g><g transform="translate(142 75) scale(.72)"><ellipse class="bloom-petal" cy="-12" rx="8" ry="13"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(72)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(144)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(216)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(288)"/><circle class="center" r="5"/></g></svg>
 <svg class="flying-duo" viewBox="0 0 140 75"><path class="bird" d="M8 36 Q27 7 48 34 Q62 11 81 28 Q61 24 49 45 Q30 24 8 36Z"/><path class="bird b" d="M59 49 Q78 22 98 45 Q113 23 132 39 Q111 35 99 58 Q80 37 59 49Z"/></svg>
 </div>
+<main id="mainInvitation" class="garden-page">
 <section class="intro"><div class="kicker" id="introKicker">With the blessings of Allah</div><h2 id="introNames">Bride & Groom</h2><p class="copy" id="introWelcome"></p><div id="countdown" class="countdown"><div><strong>--</strong><span>Days</span></div><div><strong>--</strong><span>Hours</span></div><div><strong>--</strong><span>Minutes</span></div><div><strong>--</strong><span>Seconds</span></div></div></section>
 <section class="scratch-wrap" id="scratchSection">
 <div class="kicker">A little surprise</div><h3 id="scratchSectionHeading">Scratch the golden heart</h3><p class="hint">Gently rub the heart to reveal the wedding details</p>
@@ -226,8 +320,8 @@ async function loadInvitation(){
  document.documentElement.dataset.palette=theme.palette||'emerald';
  if(theme.primary&&/^#[0-9a-f]{6}$/i.test(theme.primary))document.documentElement.style.setProperty('--green',theme.primary);
  if(theme.accent&&/^#[0-9a-f]{6}$/i.test(theme.accent))document.documentElement.style.setProperty('--gold',theme.accent);
- $('cover').classList.add(config.cover_template||'cover-01');
- $('mainInvitation').classList.add('layout-'+(config.page_template||'page-01'));
+ $('cover').classList.add(config.cover_template||'cover-01','garden-cover');
+ $('mainInvitation').classList.add('layout-'+(config.page_template||'page-01'),'garden-page');
  const names=project.couple_names||project.client_name||'Wedding Celebration';
  setText('coverNames',names);setText('introNames',names);setText('coverEyebrow',t.eyebrow);setText('introKicker',t.intro);
  setText('eventKicker',t.celebrate);setText('eventTitle',t.event);setText('eventCouple',t.ceremony);setText('familyTitle',t.family);setText('familyMessage',t.familyMessage);
