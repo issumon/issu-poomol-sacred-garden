@@ -49,6 +49,7 @@
 <div class="editor-pane hidden" data-pane="style">
 <div class="grid">
 <div class="field"><label>Primary language</label><select id="edLanguage"><option value="en">English</option><option value="ml">Malayalam</option><option value="ar">Arabic</option></select></div>
+<div class="field"><label>Luxury colour theme</label><select id="edPalette"><option value="emerald">Emerald Green &amp; Gold</option><option value="burgundy">Burgundy &amp; Champagne Gold</option><option value="pink">Blush Pink &amp; Rose Gold</option><option value="silver">Silver &amp; Pearl White</option><option value="navy">Navy Blue &amp; Gold</option><option value="ivory">Ivory &amp; Antique Gold</option></select></div>
 <div class="field"><label>Primary colour</label><input id="edPrimary" type="color" value="#103b2f"></div>
 <div class="field"><label>Accent / gold colour</label><input id="edAccent" type="color" value="#c8a66a"></div>
 </div>
@@ -143,6 +144,8 @@ const templateLooks=[
 {bg:'linear-gradient(145deg,#101b31,#343d65 55%,#090f20)',fg:'#e9d9ae',kind:'celestial',orn:'☾',kicker:'WRITTEN IN THE STARS',sub:'A DESTINY TOGETHER'}
 ];
 let activeProject=null, editorConfig={};
+const paletteColors={emerald:{primary:'#103b2f',accent:'#c8a66a'},burgundy:{primary:'#63263a',accent:'#d6b16f'},pink:{primary:'#b86f82',accent:'#c58b70'},silver:{primary:'#64717e',accent:'#a9aeb7'},navy:{primary:'#182c4e',accent:'#d5b56f'},ivory:{primary:'#78613f',accent:'#b18b50'}};
+$('edPalette').addEventListener('change',()=>{const p=paletteColors[$('edPalette').value]||paletteColors.emerald;$('edPrimary').value=p.primary;$('edAccent').value=p.accent;refreshEditorPreview();});
 function artworkMarkup(index,type){
  const t=templateLooks[index],isPage=type==='page';
  let deco='';
@@ -191,8 +194,9 @@ async function openDesignEditor(projectId){
  $('edWelcome').value=editorConfig.welcome_message||'';
  $('edMusicUrl').value=editorConfig.music_url||'';$('edMusicPreview').src=editorConfig.music_url||'';
  $('edLanguage').value=editorConfig.language||'en';
- $('edPrimary').value=editorConfig.theme?.primary||'#103b2f';
- $('edAccent').value=editorConfig.theme?.accent||'#c8a66a';
+ $('edPalette').value=editorConfig.theme?.palette||'emerald';
+ $('edPrimary').value=editorConfig.theme?.primary||paletteColors[$('edPalette').value]?.primary||'#103b2f';
+ $('edAccent').value=editorConfig.theme?.accent||paletteColors[$('edPalette').value]?.accent||'#c8a66a';
  renderTemplateChoices('cover',editorConfig.cover_template||'cover-01');
  renderTemplateChoices('page',editorConfig.page_template||'page-01');
  document.querySelectorAll('.editor-tab').forEach(b=>b.classList.toggle('active',b.dataset.tab==='details'));
@@ -224,7 +228,7 @@ $('saveDesign').addEventListener('click',async()=>{
  if(!activeProject)return;
  $('saveDesign').disabled=true;say('editorStatus','Saving project design…');
  try{
-  const config={...editorConfig,location:$('edLocation').value.trim(),wedding_date:$('edDate').value,wedding_time:$('edTime').value.trim(),venue:$('edVenue').value.trim(),welcome_message:$('edWelcome').value.trim(),music_url:$('edMusicUrl').value.trim(),language:$('edLanguage').value,theme:{primary:$('edPrimary').value,accent:$('edAccent').value},translations:editorConfig.translations||{en:{},ml:{},ar:{}}};
+  const config={...editorConfig,location:$('edLocation').value.trim(),wedding_date:$('edDate').value,wedding_time:$('edTime').value.trim(),venue:$('edVenue').value.trim(),welcome_message:$('edWelcome').value.trim(),music_url:$('edMusicUrl').value.trim(),language:$('edLanguage').value,theme:{palette:$('edPalette').value,primary:$('edPrimary').value,accent:$('edAccent').value},translations:editorConfig.translations||{en:{},ml:{},ar:{}}};
   const {error:projectErr}=await db.from('sacred_garden_projects').update({client_name:$('edClient').value.trim(),couple_names:$('edCouple').value.trim(),updated_at:new Date().toISOString()}).eq('id',activeProject.id);
   if(projectErr)throw projectErr;
   const {error:configErr}=await db.from('sacred_garden_project_settings').upsert({project_id:activeProject.id,config,updated_at:new Date().toISOString()},{onConflict:'project_id'});
