@@ -119,7 +119,7 @@ $('createStudioProject').addEventListener('click',async()=>{
   if(error)throw error;
   const {error:settingsError}=await db.from('sacred_garden_project_settings').insert({
    project_id:data.id,
-   config:{cover_template:'cover-01',page_template:'page-01',language:'en',translations:{en:{},ml:{},ar:{}},theme:{primary:'#103b2f',accent:'#c8a66a'}}
+   config:{cover_template:'cover-01',page_template:'page-01',language:'en',translations:{en:{},ml:{},ar:{}},theme:{palette:'emerald',primary:'#103b2f',accent:'#c8a66a'}}
   });
   if(settingsError)throw settingsError;
   $('studioClientName').value='';$('studioCoupleNames').value='';
@@ -253,7 +253,7 @@ $('publishProject').addEventListener('click',async()=>{
  $('publishProject').disabled=true;say('editorStatus','Publishing invitation…');
  try{
   // Save the latest editor values before changing the project status.
-  const config={...editorConfig,location:$('edLocation').value.trim(),wedding_date:$('edDate').value,wedding_time:$('edTime').value.trim(),venue:$('edVenue').value.trim(),welcome_message:$('edWelcome').value.trim(),music_url:$('edMusicUrl').value.trim(),language:$('edLanguage').value,theme:{primary:$('edPrimary').value,accent:$('edAccent').value},translations:editorConfig.translations||{en:{},ml:{},ar:{}}};
+  const config={...editorConfig,location:$('edLocation').value.trim(),wedding_date:$('edDate').value,wedding_time:$('edTime').value.trim(),venue:$('edVenue').value.trim(),welcome_message:$('edWelcome').value.trim(),music_url:$('edMusicUrl').value.trim(),language:$('edLanguage').value,theme:{palette:$('edPalette').value,primary:$('edPrimary').value,accent:$('edAccent').value},translations:editorConfig.translations||{en:{},ml:{},ar:{}}};
   const {error:projectSaveError}=await db.from('sacred_garden_projects').update({client_name:$('edClient').value.trim(),couple_names:$('edCouple').value.trim(),updated_at:new Date().toISOString()}).eq('id',activeProject.id);
   if(projectSaveError)throw projectSaveError;
   const {error:configSaveError}=await db.from('sacred_garden_project_settings').upsert({project_id:activeProject.id,config,updated_at:new Date().toISOString()},{onConflict:'project_id'});
