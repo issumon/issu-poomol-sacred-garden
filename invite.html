@@ -353,11 +353,55 @@ main.garden-page{position:relative;overflow:hidden;background:#f8f4e9}
 @media(max-width:650px){.style-modern.cover .cover-content{margin:0}.style-modern.cover{text-align:center}.style-modern.cover .rule{margin:25px auto}.style-modern .intro,.style-modern .section{text-align:center}.style-modern .intro .countdown{justify-content:center;margin-left:auto}}
 
 
+
+/* Cinematic garden gate opening */
+#cinematicOpening{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;overflow:hidden;padding:24px;background:radial-gradient(ellipse at 50% 45%,#315b42 0%,#123729 48%,#061b15 100%);color:#fff7e8;isolation:isolate}
+#cinematicOpening[hidden]{display:none!important}
+#cinematicOpening:before{content:"";position:absolute;inset:-20%;background:radial-gradient(ellipse at 50% 48%,#e3c98b25,transparent 42%),radial-gradient(circle at 20% 20%,#f3dfad22 0 1px,transparent 2px),radial-gradient(circle at 80% 27%,#f3dfad33 0 1px,transparent 2px);animation:cinemaGlow 8s ease-in-out infinite alternate;z-index:-2}
+.cinema-stars{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(#f4dfad 1px,transparent 1.8px),radial-gradient(#fff5dc 1px,transparent 2px);background-size:93px 111px,151px 137px;background-position:10px 18px,55px 72px;opacity:.4;animation:starDrift 18s linear infinite}
+.cinema-content{position:relative;z-index:4;width:min(760px,100%);text-align:center;padding:22px 12px;animation:cinemaRise 1.5s both}
+.cinema-bismillah{font:26px/1.8 Amiri,serif;color:#e8d4a4;margin:0 0 18px;text-shadow:0 0 20px #e7cb8a55}
+.cinema-title{font:clamp(34px,7vw,68px)/.98 "Cormorant Garamond",Georgia,serif;font-weight:500;letter-spacing:.035em;margin:0;color:#fff6e5;text-shadow:0 4px 30px #0008}
+.cinema-subtitle{font:11px/1.8 "DM Sans",sans-serif;letter-spacing:.28em;text-transform:uppercase;color:#dfc58d;margin:18px 0 28px}
+.cinema-gate{position:absolute;inset:0;z-index:2;pointer-events:none;perspective:1000px}
+.cinema-gate:before,.cinema-gate:after{content:"";position:absolute;top:0;bottom:0;width:50.5%;background:linear-gradient(90deg,#071f17,#174631 48%,#0a2a1e);border:1px solid #d4b879;box-shadow:inset 0 0 0 8px #d6bd7c14,inset 0 0 55px #0008;transition:transform 1.65s cubic-bezier(.7,0,.2,1);background-image:repeating-linear-gradient(90deg,transparent 0 28px,#d9bd7530 29px 30px),linear-gradient(110deg,#09251b,#28563a 50%,#0b2c20)}
+.cinema-gate:before{left:0;transform-origin:left center;border-radius:0 45% 0 0}
+.cinema-gate:after{right:0;transform-origin:right center;border-radius:45% 0 0 0}
+.cinema-gate-frame{position:absolute;inset:5vh 8vw;z-index:3;border:1px solid #d8c18b88;border-radius:48% 48% 0 0 / 22% 22% 0 0;box-shadow:inset 0 0 0 7px #d9c18b15,0 0 45px #0004;pointer-events:none}
+.cinema-moon{position:absolute;top:9%;left:50%;transform:translateX(-50%);font-size:clamp(44px,8vw,76px);line-height:1;color:#e7cc8c;text-shadow:0 0 34px #e8ce8a88;z-index:4;animation:moonFloat 5s ease-in-out infinite}
+.cinema-flower{position:absolute;z-index:3;pointer-events:none;color:#e9d6a9;opacity:0;animation:cinemaPetal 8s linear infinite}
+.cinema-flower:nth-of-type(1){left:12%;top:18%;animation-delay:.2s}.cinema-flower:nth-of-type(2){left:78%;top:12%;animation-delay:2s}.cinema-flower:nth-of-type(3){left:23%;top:72%;animation-delay:3.6s}.cinema-flower:nth-of-type(4){left:84%;top:68%;animation-delay:5s}
+.cinema-open{position:relative;z-index:5;border:1px solid #e1c98f;background:linear-gradient(135deg,#e7d3a3,#b38b4e);color:#163528;border-radius:999px;padding:14px 28px;min-width:190px;font:600 11px "DM Sans",sans-serif;letter-spacing:.18em;text-transform:uppercase;box-shadow:0 8px 28px #0005;cursor:pointer;transition:transform .25s,box-shadow .25s}
+.cinema-open:hover{transform:translateY(-3px);box-shadow:0 12px 34px #0007}
+#cinematicOpening.gate-opening .cinema-gate:before{transform:rotateY(-105deg)}
+#cinematicOpening.gate-opening .cinema-gate:after{transform:rotateY(105deg)}
+#cinematicOpening.gate-opening .cinema-content{opacity:0;transform:translateY(-12px);transition:opacity .5s,transform .7s}
+#cinematicOpening.gate-opening .cinema-moon{opacity:0;transition:opacity .6s}
+@keyframes cinemaGlow{to{transform:scale(1.12) rotate(4deg);opacity:.7}}
+@keyframes starDrift{to{background-position:110px 180px,205px 12px}}
+@keyframes cinemaRise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes moonFloat{50%{transform:translate(-50%,-9px)}}
+@keyframes cinemaPetal{0%{opacity:0;transform:translate3d(0,-30px,0) rotate(0)}15%{opacity:.8}85%{opacity:.65}100%{opacity:0;transform:translate3d(45px,105vh,0) rotate(300deg)}}
+@media(max-width:600px){.cinema-gate-frame{inset:4vh 5vw}.cinema-bismillah{font-size:22px}.cinema-subtitle{letter-spacing:.18em}.cinema-gate:before,.cinema-gate:after{width:51%}}
+@media(prefers-reduced-motion:reduce){#cinematicOpening *,#cinematicOpening *:before,#cinematicOpening *:after{animation:none!important;transition:none!important}}
+
 </style>
 </head>
 <body>
 <div id="state" class="loading"><span>Preparing your invitation…</span></div>
-<div id="invitation" hidden><audio id="backgroundMusic" loop preload="none"></audio>
+<div id="invitation" hidden><div id="cinematicOpening" hidden aria-label="The Sacred Garden cinematic opening">
+ <div class="cinema-stars" aria-hidden="true"></div>
+ <span class="cinema-flower" aria-hidden="true">✿</span><span class="cinema-flower" aria-hidden="true">❀</span><span class="cinema-flower" aria-hidden="true">✧</span><span class="cinema-flower" aria-hidden="true">❁</span>
+ <div class="cinema-moon" aria-hidden="true">☾</div>
+ <div class="cinema-gate" aria-hidden="true"></div><div class="cinema-gate-frame" aria-hidden="true"></div>
+ <div class="cinema-content">
+  <p class="cinema-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+  <h1 class="cinema-title">The Sacred Garden</h1>
+  <p class="cinema-subtitle">A beautiful beginning · Written by Allah</p>
+  <button id="enterGarden" class="cinema-open" type="button">Enter the Garden ✧</button>
+ </div>
+</div>
+<audio id="backgroundMusic" loop preload="none"></audio>
 <section id="cover" class="cover"><div class="cover-art"></div><div class="cover-content"><p id="bismillah" class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p><div class="eyebrow" id="coverEyebrow">A sacred beginning</div><h1 id="coverNames">Bride <i class="amp">&amp;</i> Groom</h1><div class="rule"></div><p id="coverWelcome" class="welcome"></p><button id="openInvitation" class="open-btn">Open invitation ✧</button></div></section>
 <div class="garden-life" aria-hidden="true">
 <svg class="garden-branch left" viewBox="0 0 180 310"><path class="stem" d="M12 300 Q55 230 72 170 T150 20"/><path class="leaf" d="M48 238 Q5 210 8 174 Q50 182 48 238Z"/><path class="leaf" d="M69 190 Q112 190 125 154 Q83 151 69 190Z"/><path class="leaf" d="M94 127 Q48 118 44 82 Q88 88 94 127Z"/><path class="leaf" d="M119 78 Q155 91 169 60 Q133 48 119 78Z"/><g transform="translate(78 167)"><ellipse class="bloom-petal" cy="-12" rx="8" ry="13"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(72)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(144)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(216)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(288)"/><circle class="center" r="5"/></g><g transform="translate(142 75) scale(.72)"><ellipse class="bloom-petal" cy="-12" rx="8" ry="13"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(72)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(144)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(216)"/><ellipse class="bloom-petal" cy="-12" rx="8" ry="13" transform="rotate(288)"/><circle class="center" r="5"/></g></svg>
@@ -428,6 +472,12 @@ async function loadInvitation(){
  }
  if(!grid.children.length){const p=document.createElement('p');p.className='copy';p.textContent='Beautiful moments will appear here.';grid.appendChild(p)}
  $('state').hidden=true;$('invitation').hidden=false;
+ const cinema=$('cinematicOpening');cinema.hidden=false;
+ $('enterGarden').addEventListener('click',()=>{
+  cinema.classList.add('gate-opening');
+  if($('backgroundMusic').src){$('backgroundMusic').play().catch(()=>{});}
+  setTimeout(()=>{cinema.hidden=true;cinema.classList.remove('gate-opening')},1750);
+ });
  $('openInvitation').addEventListener('click',()=>{if($('backgroundMusic').src){$('backgroundMusic').play().catch(()=>{});}$('cover').style.transition='opacity 1s ease';$('cover').style.opacity='0';setTimeout(()=>{$('cover').style.display='none';$('mainInvitation').style.display='block';$('mainInvitation').style.animation='fadein 1s ease'},850)});
  setupScratchReveal(config,lang);
  const labels=[t.days,t.hours,t.minutes,t.seconds];$('countdown').querySelectorAll('span').forEach((el,i)=>el.textContent=labels[i]);
