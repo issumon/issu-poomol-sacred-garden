@@ -475,15 +475,24 @@ async function loadInvitation(){
  const cinema=$('cinematicOpening');cinema.hidden=true;
  const videoIntro=document.createElement('div');videoIntro.id='mp4Opening';
  Object.assign(videoIntro.style,{position:'fixed',inset:'0',zIndex:'9999',background:'#061b15',display:'grid',placeItems:'center',overflow:'hidden'});
- const introVideo=document.createElement('video');introVideo.src='https://fuwhzkktivbzggiywgnr.supabase.co/storage/v1/object/public/sacred-garden-media/videos/From%20Klickpin.com-%20Need%20fresh%20inspiration%20Save%20these%20creative%20lunchbox%20idea%20ideas%20that%20feel%20luxe%20without%20spending%20a%20fortune%20designed%20to%20feel%20inspi.mp4';
+ const introVideo=document.createElement('video');introVideo.crossOrigin='anonymous';introVideo.src='https://fuwhzkktivbzggiywgnr.supabase.co/storage/v1/object/public/sacred-garden-media/videos/From%20Klickpin.com-%20Need%20fresh%20inspiration%20Save%20these%20creative%20lunchbox%20idea%20ideas%20that%20feel%20luxe%20without%20spending%20a%20fortune%20designed%20to%20feel%20inspi.mp4';
  Object.assign(introVideo.style,{width:'100%',height:'100%',objectFit:'cover'});
  introVideo.autoplay=true;introVideo.muted=true;introVideo.playsInline=true;introVideo.preload='auto';
  videoIntro.appendChild(introVideo);document.body.appendChild(videoIntro);
  const finishMp4=()=>{if(!videoIntro.isConnected)return;videoIntro.style.transition='opacity .7s ease';videoIntro.style.opacity='0';setTimeout(()=>{videoIntro.remove();$('cover').scrollIntoView({behavior:'instant',block:'start'});},720)};
+ const mp4Timer=setTimeout(()=>{
+  try{
+   if(introVideo.readyState>=2){
+    const canvas=document.createElement('canvas');canvas.width=introVideo.videoWidth||1280;canvas.height=introVideo.videoHeight||720;
+    const ctx=canvas.getContext('2d');ctx.drawImage(introVideo,0,0,canvas.width,canvas.height);
+    const finalFrame=canvas.toDataURL('image/jpeg',0.9);
+    Object.assign($('cover').style,{backgroundImage:'url("'+finalFrame+'")',backgroundSize:'cover',backgroundPosition:'center',backgroundRepeat:'no-repeat'});
+   }
+  }catch(frameError){console.warn('Could not capture final MP4 frame',frameError)}
+  finishMp4();
+ },10000);
  introVideo.play().catch(()=>{});
- const mp4Timer=setTimeout(finishMp4,6000);
  introVideo.addEventListener('error',()=>{clearTimeout(mp4Timer);finishMp4()},{once:true});
- $('enterGarden').addEventListener('click',()=>{});
 
  $('enterGarden').addEventListener('click',()=>{
   cinema.classList.add('gate-opening');
