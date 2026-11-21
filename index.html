@@ -634,7 +634,7 @@ function revealHeartScratch(){
   if(revealed)return;revealed=true;
   if(progressLabel)progressLabel.textContent='30% revealed · Unlocked';
   canvas.style.transition='opacity .8s ease';canvas.style.opacity='0';
-  setTimeout(()=>{reveal.hidden=true;document.getElementById('revealedDate').hidden=false;const cd=document.getElementById('countdown');cd.classList.remove('is-locked');cd.style.display='flex';document.getElementById('revealedNote').hidden=false;startCountdown();startPetalShower();},650);
+  setTimeout(()=>{reveal.hidden=true;document.getElementById('revealedDate').hidden=false;const cd=document.getElementById('countdown');cd.classList.remove('is-locked');cd.style.display='flex';document.getElementById('revealedNote').hidden=false;startCountdown();},650);
  }
  canvas.addEventListener('pointerdown',e=>{scratching=true;canvas.setPointerCapture(e.pointerId);erase(e)});
  canvas.addEventListener('pointermove',erase);
@@ -701,4 +701,22 @@ document.getElementById('rsvpForm').addEventListener('submit',e=>{e.preventDefau
 .garden-date{display:none!important}
 @media(max-height:700px){.garden-bismillah{font-size:clamp(22px,5.5vw,31px);margin-bottom:10px}.garden-cta{margin-top:20px}}
 
+</style>
+
+
+<style id="direct-royal-invitation">
+/* Latest approved guest-page opening: show invitation immediately, no cover */
+#cover{display:none!important}
+main{opacity:1!important;transform:none!important;visibility:visible!important}
+#musicToggle{display:block!important}
+.garden-backdrop,.garden-vignette,.garden-arch,.garden-vines,.garden-glow,
+.garden-content,.garden-bottom-flora,.garden-flourish,.petal-layer,.falling-petal{display:none!important}
+.hero{
+  background:radial-gradient(ellipse at 50% 35%,#174b37 0%,#0b3025 62%,#061d18 100%)!important;
+  color:#f7ecd2!important;
+}
+.hero h1,.hero .section-title{color:#f1dfb5!important}
+.hero .kicker,.hero .eyebrow,.hero .hero-date{color:#e2c58b!important}
+.hero:before{border-color:#d9bd8377!important}
+.gallery-tile{background:linear-gradient(145deg,#123d2e,#0a281f)!important;color:#e3c98f!important;border-color:#b7955f!important}
 </style>
