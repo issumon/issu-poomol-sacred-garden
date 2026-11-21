@@ -50,6 +50,7 @@
 <div class="grid">
 <div class="field"><label>Primary language</label><select id="edLanguage"><option value="en">English</option><option value="ml">Malayalam</option><option value="ar">Arabic</option></select></div>
 <div class="field"><label>Wedding tradition / cultural direction</label><select id="edTradition"><option value="universal">Universal / No specific tradition</option><option value="classic">Classic timeless</option><option value="western">Western</option><option value="arabic">Arabic heritage</option><option value="muslim">Muslim wedding</option><option value="hindu">Hindu wedding</option><option value="christian">Christian wedding</option><option value="kerala">Kerala traditional</option><option value="south-indian">South Indian traditional</option><option value="interfaith">Interfaith / Multicultural</option></select></div>
+<div class="field"><label>Wedding design style</label><select id="edStyle"><option value="royal">Royal luxury</option><option value="classic">Classic timeless</option><option value="western">Western editorial</option><option value="floral">Natural floral garden</option><option value="modern">Modern minimal</option><option value="vfx">Cinematic VFX</option></select></div>
 <div class="field"><label>Luxury colour theme</label><select id="edPalette"><option value="emerald">Emerald Green &amp; Gold</option><option value="burgundy">Burgundy &amp; Champagne Gold</option><option value="pink">Blush Pink &amp; Rose Gold</option><option value="silver">Silver &amp; Pearl White</option><option value="navy">Navy Blue &amp; Gold</option><option value="ivory">Ivory &amp; Antique Gold</option></select></div>
 <div class="field"><label>Primary colour</label><input id="edPrimary" type="color" value="#103b2f"></div>
 <div class="field"><label>Accent / gold colour</label><input id="edAccent" type="color" value="#c8a66a"></div>
@@ -173,9 +174,11 @@ function refreshEditorPreview(){
  $('previewNames').textContent=$('edCouple').value||'Bride & Groom';
  const traditionLabel=$('edTradition')?.selectedOptions[0]?.textContent||'Universal';
  $('editorPreview').dataset.tradition=$('edTradition')?.value||'universal';
+ $('editorPreview').dataset.style=$('edStyle')?.value||'royal';
  $('previewVenue').textContent=[$('edVenue').value,$('edDate').value].filter(Boolean).join(' · ')||'Your venue · Your date';
  $('editorPreview').querySelector('span').textContent=look.kicker;
  $('editorPreview').querySelector('i').textContent=look.sub+' · '+($('edDate').value||'2027');
+ $('editorPreview').querySelector('i').textContent+=' · '+($('edStyle')?.selectedOptions[0]?.textContent||'Royal luxury');
 }
 async function openDesignEditor(projectId){
  say('editorStatus','Loading project settings…');
@@ -198,6 +201,7 @@ async function openDesignEditor(projectId){
  $('edMusicUrl').value=editorConfig.music_url||'';$('edMusicPreview').src=editorConfig.music_url||'';
  $('edLanguage').value=editorConfig.language||'en';
  $('edTradition').value=editorConfig.tradition||'universal';
+ $('edStyle').value=editorConfig.style||'royal';
  $('edPalette').value=editorConfig.theme?.palette||'emerald';
  $('edPrimary').value=editorConfig.theme?.primary||paletteColors[$('edPalette').value]?.primary||'#103b2f';
  $('edAccent').value=editorConfig.theme?.accent||paletteColors[$('edPalette').value]?.accent||'#c8a66a';
@@ -224,7 +228,7 @@ document.addEventListener('click',e=>{
  editorConfig[type==='cover'?'cover_template':'page_template']=b.dataset.templateId;
  if(type==='cover')refreshEditorPreview();
 });
-['edCouple','edVenue','edDate','edPrimary','edAccent','edTradition'].forEach(id=>$(id).addEventListener('input',refreshEditorPreview));
+['edCouple','edVenue','edDate','edPrimary','edAccent','edTradition','edStyle'].forEach(id=>$(id).addEventListener('input',refreshEditorPreview));
 $('edMusicUrl').addEventListener('input',()=>{$('edMusicPreview').src=$('edMusicUrl').value.trim();});
 $('previewProjectMusic').addEventListener('click',()=>{const u=$('edMusicUrl').value.trim();if(!u){say('editorStatus','Add a direct song URL first.');return;}$('edMusicPreview').src=u;$('edMusicPreview').play().catch(()=>say('editorStatus','Could not play this URL. Check that it is a direct audio-file link.'));});
 $('clearProjectMusic').addEventListener('click',()=>{$('edMusicUrl').value='';$('edMusicPreview').pause();$('edMusicPreview').removeAttribute('src');$('edMusicPreview').load();});
@@ -232,7 +236,7 @@ $('saveDesign').addEventListener('click',async()=>{
  if(!activeProject)return;
  $('saveDesign').disabled=true;say('editorStatus','Saving project design…');
  try{
-  const config={...editorConfig,location:$('edLocation').value.trim(),wedding_date:$('edDate').value,wedding_time:$('edTime').value.trim(),venue:$('edVenue').value.trim(),welcome_message:$('edWelcome').value.trim(),music_url:$('edMusicUrl').value.trim(),language:$('edLanguage').value,tradition:$('edTradition').value,theme:{palette:$('edPalette').value,primary:$('edPrimary').value,accent:$('edAccent').value},translations:editorConfig.translations||{en:{},ml:{},ar:{}}};
+  const config={...editorConfig,location:$('edLocation').value.trim(),wedding_date:$('edDate').value,wedding_time:$('edTime').value.trim(),venue:$('edVenue').value.trim(),welcome_message:$('edWelcome').value.trim(),music_url:$('edMusicUrl').value.trim(),language:$('edLanguage').value,tradition:$('edTradition').value,style:$('edStyle').value,theme:{palette:$('edPalette').value,primary:$('edPrimary').value,accent:$('edAccent').value},translations:editorConfig.translations||{en:{},ml:{},ar:{}}};
   const {error:projectErr}=await db.from('sacred_garden_projects').update({client_name:$('edClient').value.trim(),couple_names:$('edCouple').value.trim(),updated_at:new Date().toISOString()}).eq('id',activeProject.id);
   if(projectErr)throw projectErr;
   const {error:configErr}=await db.from('sacred_garden_project_settings').upsert({project_id:activeProject.id,config,updated_at:new Date().toISOString()},{onConflict:'project_id'});
@@ -257,7 +261,7 @@ $('publishProject').addEventListener('click',async()=>{
  $('publishProject').disabled=true;say('editorStatus','Publishing invitation…');
  try{
   // Save the latest editor values before changing the project status.
-  const config={...editorConfig,location:$('edLocation').value.trim(),wedding_date:$('edDate').value,wedding_time:$('edTime').value.trim(),venue:$('edVenue').value.trim(),welcome_message:$('edWelcome').value.trim(),music_url:$('edMusicUrl').value.trim(),language:$('edLanguage').value,tradition:$('edTradition').value,theme:{palette:$('edPalette').value,primary:$('edPrimary').value,accent:$('edAccent').value},translations:editorConfig.translations||{en:{},ml:{},ar:{}}};
+  const config={...editorConfig,location:$('edLocation').value.trim(),wedding_date:$('edDate').value,wedding_time:$('edTime').value.trim(),venue:$('edVenue').value.trim(),welcome_message:$('edWelcome').value.trim(),music_url:$('edMusicUrl').value.trim(),language:$('edLanguage').value,tradition:$('edTradition').value,style:$('edStyle').value,theme:{palette:$('edPalette').value,primary:$('edPrimary').value,accent:$('edAccent').value},translations:editorConfig.translations||{en:{},ml:{},ar:{}}};
   const {error:projectSaveError}=await db.from('sacred_garden_projects').update({client_name:$('edClient').value.trim(),couple_names:$('edCouple').value.trim(),updated_at:new Date().toISOString()}).eq('id',activeProject.id);
   if(projectSaveError)throw projectSaveError;
   const {error:configSaveError}=await db.from('sacred_garden_project_settings').upsert({project_id:activeProject.id,config,updated_at:new Date().toISOString()},{onConflict:'project_id'});
