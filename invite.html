@@ -386,6 +386,27 @@ main.garden-page{position:relative;overflow:hidden;background:#f8f4e9}
 @media(prefers-reduced-motion:reduce){#cinematicOpening *,#cinematicOpening *:before,#cinematicOpening *:after{animation:none!important;transition:none!important}}
 
 </style>
+
+<style>
+/* One captured 5-second video frame is shared across every guest invitation section. */
+main.garden-page.video-frame-ready{background:transparent!important}
+main.garden-page.video-frame-ready .intro,
+main.garden-page.video-frame-ready .scratch-wrap,
+main.garden-page.video-frame-ready .section{
+ background-image:linear-gradient(rgba(248,246,238,.80),rgba(248,246,238,.80)),var(--invitation-frame)!important;
+ background-size:auto,cover!important;
+ background-position:center,center!important;
+ background-repeat:no-repeat!important;
+ background-attachment:scroll,fixed!important;
+}
+main.garden-page.video-frame-ready .footer{
+ background-image:linear-gradient(rgba(13,48,35,.88),rgba(13,48,35,.88)),var(--invitation-frame)!important;
+ background-size:auto,cover!important;
+ background-position:center,center!important;
+ background-repeat:no-repeat!important;
+ background-attachment:scroll,fixed!important;
+}
+</style>
 </head>
 <body>
 <div id="state" class="loading"><span>Preparing your invitation…</span></div>
@@ -489,30 +510,33 @@ async function loadInvitation(){
   videoIntro.style.transition='opacity .7s ease';videoIntro.style.opacity='0';
   setTimeout(()=>{videoIntro.remove();$('cover').scrollIntoView({behavior:'instant',block:'start'});},720);
  };
- const captureSevenSecondFrame=()=>{
+ const captureFiveSecondFrame=()=>{
   try{
    if(introVideo.readyState>=2){
     const canvas=document.createElement('canvas');
     canvas.width=introVideo.videoWidth||1280;canvas.height=introVideo.videoHeight||720;
     const ctx=canvas.getContext('2d');ctx.drawImage(introVideo,0,0,canvas.width,canvas.height);
     const frame=canvas.toDataURL('image/jpeg',0.92);
-    Object.assign($('cover').style,{backgroundImage:'url("'+frame+'")',backgroundSize:'cover',backgroundPosition:'center',backgroundRepeat:'no-repeat'});
+    const frameUrl='url("'+frame+'")';
+    Object.assign($('cover').style,{backgroundImage:'linear-gradient(rgba(5,22,16,.28),rgba(5,22,16,.28)),'+frameUrl,backgroundSize:'cover',backgroundPosition:'center',backgroundRepeat:'no-repeat'});
+    $('mainInvitation').style.setProperty('--invitation-frame',frameUrl);
+    $('mainInvitation').classList.add('video-frame-ready');
    }
-  }catch(frameError){console.warn('Could not capture 7-second MP4 frame',frameError)}
+  }catch(frameError){console.warn('Could not capture 5-second MP4 frame',frameError)}
   finishMp4();
  };
- const stopAtSeven=()=>{
+ const stopAtFive=()=>{
   if(openingFinished)return;
-  if(introVideo.currentTime>=7){
+  if(introVideo.currentTime>=5){
    introVideo.pause();
-   if(Math.abs(introVideo.currentTime-7)>.08){
-    introVideo.currentTime=7;
-    introVideo.addEventListener('seeked',captureSevenSecondFrame,{once:true});
-   }else captureSevenSecondFrame();
+   if(Math.abs(introVideo.currentTime-5)>.04){
+    introVideo.currentTime=5;
+    introVideo.addEventListener('seeked',captureFiveSecondFrame,{once:true});
+   }else captureFiveSecondFrame();
   }
  };
- introVideo.addEventListener('timeupdate',stopAtSeven);
- introVideo.addEventListener('ended',captureSevenSecondFrame,{once:true});
+ introVideo.addEventListener('timeupdate',stopAtFive);
+ introVideo.addEventListener('ended',captureFiveSecondFrame,{once:true});
  introVideo.addEventListener('error',()=>{console.warn('Opening MP4 could not be played');finishMp4()},{once:true});
  const startOpening=()=>introVideo.play().catch(err=>{
   console.warn('Muted autoplay was blocked by the browser',err);
